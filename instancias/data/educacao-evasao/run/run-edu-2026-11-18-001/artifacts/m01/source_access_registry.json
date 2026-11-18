@@ -1,0 +1,87 @@
+{
+  "note": "Descritores de acesso e referências a segredos; credenciais nunca são persistidas.",
+  "sources": [
+    {
+      "source_id": "alunos_csv",
+      "connector": "file",
+      "access_descriptor": {
+        "path": "input/alunos.csv"
+      },
+      "credential_ref": null,
+      "access_check": {
+        "status": "ACCESSIBLE",
+        "method": "filesystem_exists+read_header",
+        "checked_at": "2026-11-18T10:00:00-03:00",
+        "latency_ms": 2,
+        "profile_method": "local_scan"
+      }
+    },
+    {
+      "source_id": "matriculas_pg",
+      "connector": "postgresql",
+      "access_descriptor": {
+        "host_alias": "sistema-academico",
+        "database": "academico",
+        "object": "public.matriculas",
+        "query_template": "SELECT matricula_id, aluno_id, semestre, situacao FROM public.matriculas WHERE semestre = :semestre"
+      },
+      "credential_ref": "secret://academic-postgres",
+      "access_check": {
+        "status": "ACCESSIBLE",
+        "method": "postgres_metadata+profile_query",
+        "checked_at": "2026-11-18T10:00:01-03:00",
+        "latency_ms": 18,
+        "profile_query": "SELECT count(*) AS rows_observed FROM public.matriculas WHERE semestre = :semestre",
+        "query_parameters": {
+          "semestre": "2026-1"
+        }
+      }
+    },
+    {
+      "source_id": "notas_pg",
+      "connector": "postgresql",
+      "access_descriptor": {
+        "host_alias": "sistema-academico",
+        "database": "academico",
+        "object": "public.vw_notas_faltas",
+        "query_template": "SELECT aluno_id, disciplina_id, semestre, nota, faltas FROM public.vw_notas_faltas WHERE semestre = :semestre"
+      },
+      "credential_ref": "secret://academic-postgres",
+      "access_check": {
+        "status": "ACCESSIBLE",
+        "method": "postgres_metadata+profile_query",
+        "checked_at": "2026-11-18T10:00:02-03:00",
+        "latency_ms": 21,
+        "profile_query": "SELECT count(*) AS rows_observed FROM public.vw_notas_faltas WHERE semestre = :semestre",
+        "query_parameters": {
+          "semestre": "2026-1"
+        }
+      }
+    },
+    {
+      "source_id": "apoio_api",
+      "connector": "rest_api",
+      "access_descriptor": {
+        "method": "GET",
+        "base_url": "https://api.exemplo.edu.br",
+        "endpoint": "/v1/beneficios-estudantis",
+        "pagination": "page/page_size"
+      },
+      "credential_ref": "secret://student-support-api",
+      "access_check": {
+        "status": "ACCESSIBLE",
+        "method": "http_get_profile",
+        "checked_at": "2026-11-18T10:00:03-03:00",
+        "latency_ms": 34,
+        "http_status": 200,
+        "pagination": {
+          "strategy": "page/page_size",
+          "page": 1,
+          "page_size": 100,
+          "pages_observed": 1,
+          "objects_observed": 6
+        }
+      }
+    }
+  ]
+}

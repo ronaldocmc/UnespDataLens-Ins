@@ -1,0 +1,27 @@
+{
+  "operations": [
+    {
+      "field": "sexo",
+      "operation": "trim+upper"
+    },
+    {
+      "field": "situacao",
+      "operation": "trim+upper"
+    },
+    {
+      "field": "idade",
+      "operation": "derive_from_date",
+      "source": "data_nascimento",
+      "reference_date": "2026-11-18"
+    },
+    {
+      "field": "faixa_etaria",
+      "operation": "bucket_age"
+    },
+    {
+      "field": "evadiu",
+      "operation": "derive_target",
+      "rule": "situacao == EVADIDO"
+    }
+  ]
+}

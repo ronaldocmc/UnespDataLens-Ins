@@ -1,0 +1,308 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M14",
+  "module_name": "Feature Engineering e Feature Store",
+  "kind": "transversal",
+  "status": "SUCCESS",
+  "objective": "Criar e catalogar atributos analíticos derivados com fórmula, origem, versão e significado explícitos.",
+  "input_summary": "ativo analítico + catálogo de colunas + regras de feature engineering",
+  "output_summary": "feature_set de 6 estudantes-semestre + catálogo de 4 features/regras",
+  "inputs": [
+    {
+      "id": "dataset:analytical:student_risk:v1",
+      "name": "student_risk.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/analytical/student_risk.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/analytical/student_risk.csv",
+      "role": "",
+      "records": 6,
+      "columns": 15
+    }
+  ],
+  "outputs": [
+    {
+      "id": "feature_set:student_risk:v1",
+      "name": "feature_set.csv",
+      "kind": "feature_set",
+      "format": "CSV",
+      "path": "data/features/feature_set.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/features/feature_set.csv",
+      "role": "",
+      "records": 6,
+      "columns": 8
+    },
+    {
+      "id": "artifact:feature_catalog",
+      "name": "feature_catalog.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m14/feature_catalog.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m14/feature_catalog.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:feature_store",
+      "name": "feature_store.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m14/feature_store.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m14/feature_store.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:feature_rules",
+      "name": "feature_rules.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m14/feature_rules.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m14/feature_rules.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "data/features/feature_set.csv",
+    "artifacts/m14/feature_catalog.json",
+    "artifacts/m14/feature_store.json",
+    "artifacts/m14/feature_rules.json"
+  ],
+  "metrics": [
+    {
+      "label": "Registros",
+      "value": "6"
+    },
+    {
+      "label": "Features centrais",
+      "value": "4"
+    },
+    {
+      "label": "Risco ALTO",
+      "value": "2"
+    },
+    {
+      "label": "Target incluído",
+      "value": "sim"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "selecionar atributos de origem",
+      "concreteAction": "media_nota, faltas, apoio, target",
+      "input": "analytical asset",
+      "result": "base de features",
+      "registers": "source columns",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "data/features/feature_set.csv",
+        "artifacts/m14/feature_catalog.json",
+        "artifacts/m14/feature_store.json"
+      ]
+    },
+    {
+      "responsibility": "calcular features derivadas",
+      "concreteAction": "OR lógico",
+      "input": "bolsa/auxílio/monitoria",
+      "result": "recebe_apoio",
+      "registers": "formula",
+      "events": [
+        "FEATURE_DERIVED"
+      ],
+      "transversals": [
+        "M09",
+        "M11"
+      ],
+      "evidence": [
+        "data/features/feature_set.csv",
+        "artifacts/m14/feature_catalog.json",
+        "artifacts/m14/feature_store.json"
+      ]
+    },
+    {
+      "responsibility": "registrar fórmula e janela temporal",
+      "concreteAction": "Heurística didática explícita",
+      "input": "media_nota + total_faltas",
+      "result": "risco_academico_simples",
+      "registers": "rule + warning:not_model",
+      "events": [
+        "FEATURE_DERIVED"
+      ],
+      "transversals": [
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/features/feature_set.csv",
+        "artifacts/m14/feature_catalog.json",
+        "artifacts/m14/feature_store.json"
+      ]
+    },
+    {
+      "responsibility": "associar cada feature às colunas e ativos de origem",
+      "concreteAction": "Salvar conjunto + catálogo",
+      "input": "features",
+      "result": "feature_set:student_risk:v1",
+      "registers": "feature ids",
+      "events": [
+        "FEATURE_SET_CREATED"
+      ],
+      "transversals": [
+        "M09",
+        "M15"
+      ],
+      "evidence": [
+        "data/features/feature_set.csv",
+        "artifacts/m14/feature_catalog.json",
+        "artifacts/m14/feature_store.json"
+      ]
+    },
+    {
+      "responsibility": "persistir feature set e catálogo",
+      "concreteAction": "Salvar conjunto + catálogo",
+      "input": "features",
+      "result": "feature_set:student_risk:v1",
+      "registers": "feature ids",
+      "events": [
+        "FEATURE_SET_CREATED"
+      ],
+      "transversals": [
+        "M09",
+        "M15"
+      ],
+      "evidence": [
+        "data/features/feature_set.csv",
+        "artifacts/m14/feature_catalog.json",
+        "artifacts/m14/feature_store.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Selecionar campos",
+      "input": "analytical asset",
+      "operation": "media_nota, faltas, apoio, target",
+      "output": "base de features",
+      "registers": "source columns",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Derivar recebe_apoio",
+      "input": "bolsa/auxílio/monitoria",
+      "operation": "OR lógico",
+      "output": "recebe_apoio",
+      "registers": "formula",
+      "events": [
+        "FEATURE_DERIVED"
+      ],
+      "transversal": [
+        "M09",
+        "M11"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Derivar risco simples",
+      "input": "media_nota + total_faltas",
+      "operation": "Heurística didática explícita",
+      "output": "risco_academico_simples",
+      "registers": "rule + warning:not_model",
+      "events": [
+        "FEATURE_DERIVED"
+      ],
+      "transversal": [
+        "M10",
+        "M11",
+        "M12"
+      ]
+    },
+    {
+      "step": 4,
+      "title": "Persistir feature set",
+      "input": "features",
+      "operation": "Salvar conjunto + catálogo",
+      "output": "feature_set:student_risk:v1",
+      "registers": "feature ids",
+      "events": [
+        "FEATURE_SET_CREATED"
+      ],
+      "transversal": [
+        "M09",
+        "M15"
+      ]
+    }
+  ],
+  "contract_ref": "contracts/m14_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "prov-m14-001",
+      "activity": "FEATURE_DERIVED",
+      "used": [
+        "media_nota",
+        "total_faltas"
+      ],
+      "generated": [
+        "risco_academico_simples"
+      ],
+      "rule": "ALTO if media<5 or faltas>30; MEDIO if media<7 or faltas>15; else BAIXO",
+      "note": "heurística didática; não modelo preditivo"
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M09",
+      "consumes": [
+        "FEATURE_DERIVED",
+        "FEATURE_SET_CREATED"
+      ],
+      "action": "Cataloga features e definições.",
+      "stores": [
+        "metadata/catalog/dicionario_dados.json"
+      ]
+    },
+    {
+      "id": "M10",
+      "consumes": [
+        "FEATURE_DERIVED"
+      ],
+      "action": "Avalia uso de atributos sensíveis/protegidos.",
+      "stores": [
+        "metadata/governance/plano_conformidade.json"
+      ]
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "FEATURE_DERIVED"
+      ],
+      "action": "Rastreia feature até colunas de origem.",
+      "stores": [
+        "metadata/lineage/grafo_linhagem.json"
+      ]
+    },
+    {
+      "id": "M12",
+      "consumes": [
+        "FEATURE_SET_CREATED"
+      ],
+      "action": "Versiona feature set e regras.",
+      "stores": [
+        "metadata/versions/registro_versoes.json"
+      ]
+    },
+    {
+      "id": "M15",
+      "consumes": [
+        "FEATURE_SET_CREATED"
+      ],
+      "action": "Monitora distribuição de features.",
+      "stores": [
+        "metadata/monitoring/baseline_current.json"
+      ]
+    }
+  ]
+}

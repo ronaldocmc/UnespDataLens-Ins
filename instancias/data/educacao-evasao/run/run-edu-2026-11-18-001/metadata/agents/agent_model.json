@@ -1,0 +1,15 @@
+{
+  "agent_id": "agent-pipeline-evidence",
+  "allowed_sources": [
+    "catalog",
+    "quality",
+    "fairness",
+    "lineage",
+    "versions",
+    "monitoring"
+  ],
+  "forbidden": [
+    "raw personal data unless authorized"
+  ],
+  "retrieval": "keyword/metadata demonstrativo"
+}

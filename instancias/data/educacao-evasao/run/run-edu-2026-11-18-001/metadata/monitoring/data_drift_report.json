@@ -1,0 +1,22 @@
+{
+  "comparisons": [
+    {
+      "metric": "media_nota_mean",
+      "reference": 6.8,
+      "current": 5.75,
+      "status": "OK"
+    },
+    {
+      "metric": "total_faltas_mean",
+      "reference": 14.0,
+      "current": 22.833,
+      "status": "ALERT"
+    },
+    {
+      "metric": "evadiu_rate",
+      "reference": 0.167,
+      "current": 0.333,
+      "status": "ALERT"
+    }
+  ]
+}

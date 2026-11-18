@@ -1,0 +1,20 @@
+{
+  "protected_attribute": "sexo",
+  "target": "evadiu",
+  "group_rates": {
+    "F": 0.0,
+    "M": 0.6666666666666666
+  },
+  "statistical_parity_difference_M_minus_F": 0.667,
+  "disparate_impact_F_over_M": 0,
+  "alert_threshold": 0.2,
+  "alerts": [
+    {
+      "metric": "statistical_parity_difference",
+      "value": 0.667,
+      "threshold": 0.2,
+      "status": "ALERT",
+      "interpretation": "Diferença observada na amostra didática; requer investigação, não implica causalidade ou discriminação por si só."
+    }
+  ]
+}

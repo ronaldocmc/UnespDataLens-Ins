@@ -1,0 +1,32 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "version": "1.2.0",
+  "status": "SUCCESS",
+  "modules": {
+    "M01": "SUCCESS",
+    "M02": "SUCCESS",
+    "M03": "SUCCESS",
+    "M04": "SUCCESS",
+    "M05": "SUCCESS",
+    "M06": "SUCCESS",
+    "M07": "SUCCESS",
+    "M08": "SUCCESS",
+    "M09": "SUCCESS",
+    "M10": "SUCCESS",
+    "M11": "SUCCESS",
+    "M12": "SUCCESS",
+    "M13": "SUCCESS",
+    "M14": "SUCCESS",
+    "M15": "SUCCESS",
+    "M16": "SUCCESS"
+  },
+  "main_assets": [
+    "dataset:integrated:student_semester:v1",
+    "dataset:prepared:student_semester:v1",
+    "dataset:validated:student_semester:v1",
+    "dataset:analytical:student_risk:v1",
+    "feature_set:student_risk:v1",
+    "product:DP-EDU-001"
+  ]
+}

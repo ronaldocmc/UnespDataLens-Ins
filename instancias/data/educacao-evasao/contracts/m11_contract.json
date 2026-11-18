@@ -1,0 +1,12 @@
+{
+  "module_id": "M11",
+  "observes": [
+    "PROVENANCE_EVENT"
+  ],
+  "produces": [
+    "nodes",
+    "edges",
+    "dependency_map",
+    "impact_report"
+  ]
+}

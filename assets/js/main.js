@@ -1,0 +1,1 @@
+(function(){"use strict";const p=document.querySelector('.reading-progress span');if(p){const u=()=>{const r=document.documentElement,d=r.scrollHeight-r.clientHeight;p.style.width=`${d>0?Math.min(100,Math.max(0,(r.scrollTop/d)*100)):0}%`};document.addEventListener('scroll',u,{passive:true});u();}})();

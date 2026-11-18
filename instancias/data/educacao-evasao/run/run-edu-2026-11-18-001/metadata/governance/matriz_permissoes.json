@@ -1,0 +1,17 @@
+{
+  "assets": {
+    "raw/*": {
+      "engenheiro_dados": "RW",
+      "pesquisador_autorizado": "R",
+      "gestor_academico": "NONE"
+    },
+    "analytical/student_risk": {
+      "engenheiro_dados": "RW",
+      "pesquisador_autorizado": "R",
+      "gestor_academico": "R_AGGREGATED"
+    },
+    "product:DP-EDU-001": {
+      "gestor_academico": "R"
+    }
+  }
+}

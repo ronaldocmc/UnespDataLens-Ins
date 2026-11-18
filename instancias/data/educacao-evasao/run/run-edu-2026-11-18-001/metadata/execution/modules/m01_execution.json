@@ -1,0 +1,969 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M01",
+  "module_name": "Fontes e Inventário de Dados",
+  "kind": "operational",
+  "status": "SUCCESS",
+  "objective": "Identificar, mapear, caracterizar, classificar e documentar todas as fontes que entrarão no pipeline antes de qualquer transformação.",
+  "input_summary": "pipeline.yml + 4 fontes heterogêneas (CSV, 2 objetos PostgreSQL e 1 endpoint REST API)",
+  "output_summary": "Inventário das 4 fontes + schemas + relacionamentos + classificação + registro de acesso + proveniência de origem",
+  "inputs": [
+    {
+      "id": "config:pipeline",
+      "name": "pipeline.yml",
+      "kind": "config",
+      "format": "YAML",
+      "path": "pipeline.yml",
+      "href": "data/educacao-evasao/pipeline.yml",
+      "role": "Declara a instância, fontes, chaves, granularidade e políticas"
+    },
+    {
+      "id": "source:alunos_csv",
+      "name": "Cadastro complementar de alunos",
+      "kind": "source",
+      "format": "CSV",
+      "path": "input/alunos.csv",
+      "href": "data/educacao-evasao/input/alunos.csv",
+      "role": "Fonte arquivo",
+      "records": 6,
+      "columns": 7
+    },
+    {
+      "id": "source:matriculas_pg",
+      "name": "Matrículas do Sistema Acadêmico",
+      "kind": "source",
+      "format": "PostgreSQL table",
+      "path": "mock/postgres/matriculas_snapshot.csv",
+      "href": "data/educacao-evasao/mock/postgres/matriculas_snapshot.csv",
+      "role": "Snapshot didático de public.matriculas",
+      "records": 6,
+      "columns": 4
+    },
+    {
+      "id": "source:notas_pg",
+      "name": "Notas e faltas",
+      "kind": "source",
+      "format": "PostgreSQL view",
+      "path": "mock/postgres/notas_snapshot.csv",
+      "href": "data/educacao-evasao/mock/postgres/notas_snapshot.csv",
+      "role": "Snapshot didático de public.vw_notas_faltas",
+      "records": 12,
+      "columns": 5
+    },
+    {
+      "id": "source:apoio_api",
+      "name": "Benefícios e apoio estudantil",
+      "kind": "source",
+      "format": "REST/JSON",
+      "path": "mock/api/apoio_response.json",
+      "href": "data/educacao-evasao/mock/api/apoio_response.json",
+      "role": "Resposta didática do endpoint",
+      "records": 6,
+      "columns": 4
+    }
+  ],
+  "outputs": [
+    {
+      "id": "artifact:source_inventory",
+      "name": "source_inventory.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m01/source_inventory.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m01/source_inventory.json",
+      "role": "Inventário consolidado"
+    },
+    {
+      "id": "artifact:source_schemas",
+      "name": "source_schemas.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m01/source_schemas.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m01/source_schemas.json",
+      "role": "Schemas observados"
+    },
+    {
+      "id": "artifact:source_relationships",
+      "name": "source_relationships.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m01/source_relationships.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m01/source_relationships.json",
+      "role": "Relações entre fontes"
+    },
+    {
+      "id": "artifact:source_classification",
+      "name": "source_classification.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m01/source_classification.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m01/source_classification.json",
+      "role": "Sensibilidade e dados pessoais"
+    },
+    {
+      "id": "artifact:source_access",
+      "name": "source_access_registry.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m01/source_access_registry.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m01/source_access_registry.json",
+      "role": "Descritores de acesso sem segredos"
+    },
+    {
+      "id": "artifact:m01_prov",
+      "name": "m01_source_provenance.json",
+      "kind": "provenance",
+      "format": "JSON",
+      "path": "artifacts/m01/m01_source_provenance.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m01/m01_source_provenance.json",
+      "role": "Eventos de proveniência de origem"
+    }
+  ],
+  "artifacts": [
+    "artifacts/m01/source_inventory.json",
+    "artifacts/m01/source_schemas.json",
+    "artifacts/m01/source_relationships.json",
+    "artifacts/m01/source_classification.json",
+    "artifacts/m01/source_access_registry.json",
+    "artifacts/m01/m01_source_provenance.json"
+  ],
+  "metrics": [
+    {
+      "label": "Fontes",
+      "value": "4"
+    },
+    {
+      "label": "Acessíveis",
+      "value": "4/4"
+    },
+    {
+      "label": "Registros observados",
+      "value": "30"
+    },
+    {
+      "label": "Conectores",
+      "value": "3 tipos"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "Verificar se cada fonte existe e pode ser acessada usando o conector apropriado.",
+      "concreteAction": "CSV: verificou input/alunos.csv. PostgreSQL: simulou conexão por secret://academic-postgres e verificou public.matriculas e public.vw_notas_faltas. API: verificou GET /v1/beneficios-estudantis com auth_ref.",
+      "evidence": [
+        "artifacts/m01/source_access_registry.json",
+        "metadata/execution/modules/m01_execution.json"
+      ],
+      "result": "4/4 fontes acessíveis",
+      "events": [
+        "SOURCE_REGISTERED",
+        "SOURCE_PROFILED"
+      ],
+      "transversals": [
+        "M09",
+        "M10",
+        "M11",
+        "M15"
+      ]
+    },
+    {
+      "responsibility": "Identificar tipo, formato, tecnologia e objeto lógico da fonte.",
+      "concreteAction": "Registrou file/CSV para alunos_csv; PostgreSQL table public.matriculas; PostgreSQL view public.vw_notas_faltas; REST/JSON endpoint para apoio_api.",
+      "evidence": [
+        "artifacts/m01/source_inventory.json",
+        "artifacts/m01/source_access_registry.json"
+      ],
+      "result": "3 tipos de conectores e 4 objetos lógicos identificados",
+      "events": [
+        "SOURCE_REGISTERED"
+      ],
+      "transversals": [
+        "M09",
+        "M10",
+        "M11"
+      ]
+    },
+    {
+      "responsibility": "Ler o schema observado sem alterar os dados.",
+      "concreteAction": "Leu cabeçalho e tipos do CSV; metadados das colunas dos objetos PostgreSQL; campos observados no payload JSON da API. Nenhuma transformação foi aplicada.",
+      "evidence": [
+        "artifacts/m01/source_schemas.json"
+      ],
+      "result": "4 schemas observados e fingerprintados",
+      "events": [
+        "SCHEMA_OBSERVED"
+      ],
+      "transversals": [
+        "M09",
+        "M11",
+        "M12",
+        "M15"
+      ]
+    },
+    {
+      "responsibility": "Contar registros e atributos; registrar paginação da API e consulta de perfil do banco.",
+      "concreteAction": "Contou 6 registros no CSV, 6 em matrículas, 12 em notas e 6 objetos na resposta da API; registrou column_count e o modo de observação de cada fonte.",
+      "evidence": [
+        "artifacts/m01/source_inventory.json",
+        "metadata/monitoring/source_baseline.json"
+      ],
+      "result": "30 registros observados no exemplo didático",
+      "events": [
+        "SOURCE_PROFILED"
+      ],
+      "transversals": [
+        "M09",
+        "M15"
+      ]
+    },
+    {
+      "responsibility": "Calcular checksum/fingerprint da versão observada.",
+      "concreteAction": "Arquivo: SHA-256 dos bytes de alunos.csv. PostgreSQL: query_fingerprint + schema_fingerprint. API: response_fingerprint + schema_fingerprint.",
+      "evidence": [
+        "artifacts/m01/m01_source_provenance.json",
+        "metadata/versions/source_versions.json"
+      ],
+      "result": "4 versões de origem identificadas",
+      "events": [
+        "SOURCE_VERSION_OBSERVED"
+      ],
+      "transversals": [
+        "M11",
+        "M12"
+      ]
+    },
+    {
+      "responsibility": "Identificar granularidade e possíveis chaves candidatas.",
+      "concreteAction": "alunos_csv→aluno/aluno_id; matriculas_pg→aluno_semestre/matricula_id; notas_pg→aluno_disciplina_semestre/(aluno_id,disciplina_id,semestre); apoio_api→aluno/aluno_id.",
+      "evidence": [
+        "artifacts/m01/source_inventory.json",
+        "artifacts/m01/source_schemas.json"
+      ],
+      "result": "Granularidade e candidate_keys registradas para 4 fontes",
+      "events": [
+        "SOURCE_PROFILED"
+      ],
+      "transversals": [
+        "M09",
+        "M11"
+      ]
+    },
+    {
+      "responsibility": "Classificar sensibilidade, dados pessoais e restrições de acesso.",
+      "concreteAction": "Classificou alunos, matrículas e apoio como alta sensibilidade; notas como média; marcou presença de dados pessoais e enviou classificação para governança.",
+      "evidence": [
+        "artifacts/m01/source_classification.json",
+        "metadata/governance/source_classification.json",
+        "metadata/governance/access_policy.json"
+      ],
+      "result": "4 fontes classificadas",
+      "events": [
+        "SOURCE_CLASSIFIED"
+      ],
+      "transversals": [
+        "M10",
+        "M11"
+      ]
+    },
+    {
+      "responsibility": "Registrar sistema de origem, owner, periodicidade, localização lógica e referência de credencial sem armazenar segredo.",
+      "concreteAction": "Persistiu owner, system, path/object/endpoint, update_frequency e apenas secret://... para fontes protegidas.",
+      "evidence": [
+        "artifacts/m01/source_access_registry.json",
+        "metadata/catalog/source_catalog.json"
+      ],
+      "result": "Descritores de acesso persistidos sem segredo em claro",
+      "events": [
+        "SOURCE_REGISTERED",
+        "SOURCE_CLASSIFIED"
+      ],
+      "transversals": [
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ]
+    },
+    {
+      "responsibility": "Emitir eventos padronizados para os módulos transversais.",
+      "concreteAction": "Publicou SOURCE_REGISTERED, SCHEMA_OBSERVED, SOURCE_PROFILED, SOURCE_CLASSIFIED e SOURCE_VERSION_OBSERVED no registro da execução.",
+      "evidence": [
+        "metadata/execution/events.json",
+        "metadata/lineage/provenance_events.json"
+      ],
+      "result": "Eventos disponíveis no PipelineContext para consumo transversal",
+      "events": [
+        "SOURCE_REGISTERED",
+        "SCHEMA_OBSERVED",
+        "SOURCE_PROFILED",
+        "SOURCE_CLASSIFIED",
+        "SOURCE_VERSION_OBSERVED"
+      ],
+      "transversals": [
+        "M09",
+        "M10",
+        "M11",
+        "M12",
+        "M15"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Ler declaração",
+      "input": "pipeline.yml",
+      "operation": "Carregar identificação da instância e lista de sources",
+      "output": "4 SourceSpec",
+      "registers": "run_id, source_id, connector, owner",
+      "events": [
+        "SOURCE_REGISTERED"
+      ],
+      "transversal": [
+        "M09",
+        "M10",
+        "M11"
+      ]
+    },
+    {
+      "step": 2,
+      "title": "Verificar acesso",
+      "input": "4 SourceSpec",
+      "operation": "file exists / PostgreSQL metadata query / HTTP GET de perfil",
+      "output": "4 fontes acessíveis",
+      "registers": "status, latência, credential_ref; nunca segredo",
+      "events": [
+        "SOURCE_PROFILED"
+      ],
+      "transversal": [
+        "M15"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Observar schema",
+      "input": "fonte acessível",
+      "operation": "Ler metadados/schema sem alterar dados",
+      "output": "4 schemas observados",
+      "registers": "tipo, nullable, chaves, schema_fingerprint",
+      "events": [
+        "SCHEMA_OBSERVED"
+      ],
+      "transversal": [
+        "M09",
+        "M11",
+        "M12",
+        "M15"
+      ]
+    },
+    {
+      "step": 4,
+      "title": "Perfilar volume",
+      "input": "schema + fonte",
+      "operation": "Contar registros e atributos",
+      "output": "30 registros observados",
+      "registers": "row_count, column_count, paginação/consulta de perfil",
+      "events": [
+        "SOURCE_PROFILED"
+      ],
+      "transversal": [
+        "M09",
+        "M15"
+      ]
+    },
+    {
+      "step": 5,
+      "title": "Fixar versão/origem",
+      "input": "conteúdo observado",
+      "operation": "SHA-256 para arquivo; fingerprint para banco/API",
+      "output": "4 versões observadas",
+      "registers": "checksum/query_fingerprint/response_fingerprint",
+      "events": [
+        "SOURCE_VERSION_OBSERVED"
+      ],
+      "transversal": [
+        "M11",
+        "M12"
+      ]
+    },
+    {
+      "step": 6,
+      "title": "Classificar",
+      "input": "metadados de negócio",
+      "operation": "Granularidade, chaves, sensibilidade, dados pessoais",
+      "output": "classificação das 4 fontes",
+      "registers": "owner, sensitivity, candidate_keys",
+      "events": [
+        "SOURCE_CLASSIFIED"
+      ],
+      "transversal": [
+        "M10",
+        "M11"
+      ]
+    }
+  ],
+  "contract_ref": "contracts/m01_contract.json",
+  "provenance_records": [
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "alunos_csv",
+      "connector": "file",
+      "source_system": "Arquivo institucional / legado",
+      "object": "input/alunos.csv",
+      "owner": "Graduação",
+      "event_id": "m01-001",
+      "event": "SOURCE_REGISTERED",
+      "occurred_at": "2026-11-18T10:00:00-03:00",
+      "payload": {
+        "access_status": "ACCESSIBLE",
+        "granularity": "aluno",
+        "candidate_keys": [
+          "aluno_id"
+        ],
+        "update_frequency": "mensal"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "alunos_csv",
+      "connector": "file",
+      "source_system": "Arquivo institucional / legado",
+      "object": "input/alunos.csv",
+      "owner": "Graduação",
+      "event_id": "m01-002",
+      "event": "SCHEMA_OBSERVED",
+      "occurred_at": "2026-11-18T10:00:00-03:00",
+      "payload": {
+        "schema": [
+          {
+            "name": "aluno_id",
+            "type": "integer",
+            "nullable": false,
+            "candidate_key": true
+          },
+          {
+            "name": "nome",
+            "type": "string",
+            "nullable": false,
+            "personal_data": true
+          },
+          {
+            "name": "sexo",
+            "type": "string",
+            "nullable": false,
+            "protected_attribute": true
+          },
+          {
+            "name": "data_nascimento",
+            "type": "date",
+            "nullable": false,
+            "personal_data": true
+          },
+          {
+            "name": "cidade",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "curso",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "ano_ingresso",
+            "type": "integer",
+            "nullable": false
+          }
+        ],
+        "schema_fingerprint": "sha256:2b3eaffe30873b46871a2481a8788895af90073ac2a54bb4e381361c1a1aec93",
+        "column_count": 7
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "alunos_csv",
+      "connector": "file",
+      "source_system": "Arquivo institucional / legado",
+      "object": "input/alunos.csv",
+      "owner": "Graduação",
+      "event_id": "m01-003",
+      "event": "SOURCE_PROFILED",
+      "occurred_at": "2026-11-18T10:00:00-03:00",
+      "payload": {
+        "row_count": 6,
+        "column_count": 7,
+        "granularity": "aluno"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "alunos_csv",
+      "connector": "file",
+      "source_system": "Arquivo institucional / legado",
+      "object": "input/alunos.csv",
+      "owner": "Graduação",
+      "event_id": "m01-004",
+      "event": "SOURCE_CLASSIFIED",
+      "occurred_at": "2026-11-18T10:00:00-03:00",
+      "payload": {
+        "sensitivity": "alta",
+        "contains_personal_data": true,
+        "access_class": "RESTRICTED"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "alunos_csv",
+      "connector": "file",
+      "source_system": "Arquivo institucional / legado",
+      "object": "input/alunos.csv",
+      "owner": "Graduação",
+      "event_id": "m01-005",
+      "event": "SOURCE_VERSION_OBSERVED",
+      "occurred_at": "2026-11-18T10:00:01-03:00",
+      "payload": {
+        "integrity_method": "sha256",
+        "version_ref": "sha256:1e9c4b12a29629ec752ad6187db82d4dd620e8bf6888a84611794ef57958071f",
+        "schema_fingerprint": "sha256:2b3eaffe30873b46871a2481a8788895af90073ac2a54bb4e381361c1a1aec93"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "matriculas_pg",
+      "connector": "postgresql",
+      "source_system": "Sistema Acadêmico",
+      "object": "public.matriculas",
+      "owner": "STI / Graduação",
+      "event_id": "m01-006",
+      "event": "SOURCE_REGISTERED",
+      "occurred_at": "2026-11-18T10:00:01-03:00",
+      "payload": {
+        "access_status": "ACCESSIBLE",
+        "granularity": "aluno_semestre",
+        "candidate_keys": [
+          "matricula_id"
+        ],
+        "update_frequency": "diaria"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "matriculas_pg",
+      "connector": "postgresql",
+      "source_system": "Sistema Acadêmico",
+      "object": "public.matriculas",
+      "owner": "STI / Graduação",
+      "event_id": "m01-007",
+      "event": "SCHEMA_OBSERVED",
+      "occurred_at": "2026-11-18T10:00:01-03:00",
+      "payload": {
+        "schema": [
+          {
+            "name": "matricula_id",
+            "type": "integer",
+            "nullable": false,
+            "candidate_key": true
+          },
+          {
+            "name": "aluno_id",
+            "type": "integer",
+            "nullable": false,
+            "foreign_key": "alunos_csv.aluno_id"
+          },
+          {
+            "name": "semestre",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "situacao",
+            "type": "string",
+            "nullable": false
+          }
+        ],
+        "schema_fingerprint": "sha256:731015bad528436f1cc2fe9da4e6d8fe3d820b7dc6f0fc38a22bd8a482146d1c",
+        "column_count": 4
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "matriculas_pg",
+      "connector": "postgresql",
+      "source_system": "Sistema Acadêmico",
+      "object": "public.matriculas",
+      "owner": "STI / Graduação",
+      "event_id": "m01-008",
+      "event": "SOURCE_PROFILED",
+      "occurred_at": "2026-11-18T10:00:01-03:00",
+      "payload": {
+        "row_count": 6,
+        "column_count": 4,
+        "granularity": "aluno_semestre",
+        "profile_query": "SELECT count(*) AS rows_observed FROM public.matriculas WHERE semestre = :semestre",
+        "query_parameters": {
+          "semestre": "2026-1"
+        }
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "matriculas_pg",
+      "connector": "postgresql",
+      "source_system": "Sistema Acadêmico",
+      "object": "public.matriculas",
+      "owner": "STI / Graduação",
+      "event_id": "m01-009",
+      "event": "SOURCE_CLASSIFIED",
+      "occurred_at": "2026-11-18T10:00:01-03:00",
+      "payload": {
+        "sensitivity": "alta",
+        "contains_personal_data": true,
+        "access_class": "RESTRICTED"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "matriculas_pg",
+      "connector": "postgresql",
+      "source_system": "Sistema Acadêmico",
+      "object": "public.matriculas",
+      "owner": "STI / Graduação",
+      "event_id": "m01-010",
+      "event": "SOURCE_VERSION_OBSERVED",
+      "occurred_at": "2026-11-18T10:00:02-03:00",
+      "payload": {
+        "integrity_method": "query+schema_fingerprint",
+        "version_ref": "fingerprint:586352710de81a63b28f",
+        "schema_fingerprint": "sha256:731015bad528436f1cc2fe9da4e6d8fe3d820b7dc6f0fc38a22bd8a482146d1c"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "notas_pg",
+      "connector": "postgresql",
+      "source_system": "Sistema Acadêmico",
+      "object": "public.vw_notas_faltas",
+      "owner": "STI / Graduação",
+      "event_id": "m01-011",
+      "event": "SOURCE_REGISTERED",
+      "occurred_at": "2026-11-18T10:00:02-03:00",
+      "payload": {
+        "access_status": "ACCESSIBLE",
+        "granularity": "aluno_disciplina_semestre",
+        "candidate_keys": [
+          "aluno_id",
+          "disciplina_id",
+          "semestre"
+        ],
+        "update_frequency": "diaria"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "notas_pg",
+      "connector": "postgresql",
+      "source_system": "Sistema Acadêmico",
+      "object": "public.vw_notas_faltas",
+      "owner": "STI / Graduação",
+      "event_id": "m01-012",
+      "event": "SCHEMA_OBSERVED",
+      "occurred_at": "2026-11-18T10:00:02-03:00",
+      "payload": {
+        "schema": [
+          {
+            "name": "aluno_id",
+            "type": "integer",
+            "nullable": false
+          },
+          {
+            "name": "disciplina_id",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "semestre",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "nota",
+            "type": "numeric",
+            "nullable": false
+          },
+          {
+            "name": "faltas",
+            "type": "integer",
+            "nullable": false
+          }
+        ],
+        "schema_fingerprint": "sha256:76e3c930544b636db23ed6c18666142934099adc7716300a4fd5703f2ef9c1fc",
+        "column_count": 5
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "notas_pg",
+      "connector": "postgresql",
+      "source_system": "Sistema Acadêmico",
+      "object": "public.vw_notas_faltas",
+      "owner": "STI / Graduação",
+      "event_id": "m01-013",
+      "event": "SOURCE_PROFILED",
+      "occurred_at": "2026-11-18T10:00:02-03:00",
+      "payload": {
+        "row_count": 12,
+        "column_count": 5,
+        "granularity": "aluno_disciplina_semestre",
+        "profile_query": "SELECT count(*) AS rows_observed FROM public.vw_notas_faltas WHERE semestre = :semestre",
+        "query_parameters": {
+          "semestre": "2026-1"
+        }
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "notas_pg",
+      "connector": "postgresql",
+      "source_system": "Sistema Acadêmico",
+      "object": "public.vw_notas_faltas",
+      "owner": "STI / Graduação",
+      "event_id": "m01-014",
+      "event": "SOURCE_CLASSIFIED",
+      "occurred_at": "2026-11-18T10:00:02-03:00",
+      "payload": {
+        "sensitivity": "media",
+        "contains_personal_data": true,
+        "access_class": "INTERNAL"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "notas_pg",
+      "connector": "postgresql",
+      "source_system": "Sistema Acadêmico",
+      "object": "public.vw_notas_faltas",
+      "owner": "STI / Graduação",
+      "event_id": "m01-015",
+      "event": "SOURCE_VERSION_OBSERVED",
+      "occurred_at": "2026-11-18T10:00:03-03:00",
+      "payload": {
+        "integrity_method": "query+schema_fingerprint",
+        "version_ref": "fingerprint:f1f5a5a544fbb20d6a50",
+        "schema_fingerprint": "sha256:76e3c930544b636db23ed6c18666142934099adc7716300a4fd5703f2ef9c1fc"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "apoio_api",
+      "connector": "rest_api",
+      "source_system": "Serviço de Assistência Estudantil",
+      "object": "GET /v1/beneficios-estudantis",
+      "owner": "Assistência Estudantil",
+      "event_id": "m01-016",
+      "event": "SOURCE_REGISTERED",
+      "occurred_at": "2026-11-18T10:00:03-03:00",
+      "payload": {
+        "access_status": "ACCESSIBLE",
+        "granularity": "aluno",
+        "candidate_keys": [
+          "aluno_id"
+        ],
+        "update_frequency": "diaria"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "apoio_api",
+      "connector": "rest_api",
+      "source_system": "Serviço de Assistência Estudantil",
+      "object": "GET /v1/beneficios-estudantis",
+      "owner": "Assistência Estudantil",
+      "event_id": "m01-017",
+      "event": "SCHEMA_OBSERVED",
+      "occurred_at": "2026-11-18T10:00:03-03:00",
+      "payload": {
+        "schema": [
+          {
+            "name": "aluno_id",
+            "type": "integer",
+            "nullable": false,
+            "candidate_key": true
+          },
+          {
+            "name": "bolsa",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "auxilio_permanencia",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "monitoria",
+            "type": "string",
+            "nullable": false
+          }
+        ],
+        "schema_fingerprint": "sha256:9d2e2d914cb7117ba026dbb8c70659ef98b3b94464843c2586fdbc69ab3d0caf",
+        "column_count": 4
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "apoio_api",
+      "connector": "rest_api",
+      "source_system": "Serviço de Assistência Estudantil",
+      "object": "GET /v1/beneficios-estudantis",
+      "owner": "Assistência Estudantil",
+      "event_id": "m01-018",
+      "event": "SOURCE_PROFILED",
+      "occurred_at": "2026-11-18T10:00:03-03:00",
+      "payload": {
+        "row_count": 6,
+        "column_count": 4,
+        "granularity": "aluno",
+        "pagination": {
+          "strategy": "page/page_size",
+          "page": 1,
+          "page_size": 100,
+          "pages_observed": 1,
+          "objects_observed": 6
+        }
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "apoio_api",
+      "connector": "rest_api",
+      "source_system": "Serviço de Assistência Estudantil",
+      "object": "GET /v1/beneficios-estudantis",
+      "owner": "Assistência Estudantil",
+      "event_id": "m01-019",
+      "event": "SOURCE_CLASSIFIED",
+      "occurred_at": "2026-11-18T10:00:03-03:00",
+      "payload": {
+        "sensitivity": "alta",
+        "contains_personal_data": true,
+        "access_class": "RESTRICTED"
+      }
+    },
+    {
+      "run_id": "run-edu-2026-11-18-001",
+      "module_id": "M01",
+      "source_id": "apoio_api",
+      "connector": "rest_api",
+      "source_system": "Serviço de Assistência Estudantil",
+      "object": "GET /v1/beneficios-estudantis",
+      "owner": "Assistência Estudantil",
+      "event_id": "m01-020",
+      "event": "SOURCE_VERSION_OBSERVED",
+      "occurred_at": "2026-11-18T10:00:04-03:00",
+      "payload": {
+        "integrity_method": "response+schema_fingerprint",
+        "version_ref": "fingerprint:33f0e6c2cadb760744dd",
+        "schema_fingerprint": "sha256:9d2e2d914cb7117ba026dbb8c70659ef98b3b94464843c2586fdbc69ab3d0caf"
+      }
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M09",
+      "consumes": [
+        "SOURCE_REGISTERED",
+        "SCHEMA_OBSERVED",
+        "SOURCE_PROFILED"
+      ],
+      "action": "Cataloga cada fonte, schema, owner e granularidade.",
+      "stores": [
+        "metadata/catalog/catalogo_dados.json",
+        "metadata/catalog/dicionario_dados.json"
+      ],
+      "sample": {
+        "source_id": "matriculas_pg",
+        "owner": "STI / Graduação",
+        "granularity": "aluno_semestre"
+      }
+    },
+    {
+      "id": "M10",
+      "consumes": [
+        "SOURCE_REGISTERED",
+        "SOURCE_CLASSIFIED"
+      ],
+      "action": "Define classificação, finalidade e política de acesso.",
+      "stores": [
+        "metadata/governance/politica_acesso.json"
+      ],
+      "sample": {
+        "source_id": "alunos_csv",
+        "classification": "RESTRICTED"
+      }
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "SOURCE_REGISTERED",
+        "SCHEMA_OBSERVED",
+        "SOURCE_VERSION_OBSERVED"
+      ],
+      "action": "Cria nós de origem e preserva eventos de proveniência.",
+      "stores": [
+        "metadata/lineage/grafo_linhagem.json",
+        "metadata/lineage/registro_proveniencia.json"
+      ],
+      "sample": {
+        "node": "source:alunos_csv",
+        "type": "source"
+      }
+    },
+    {
+      "id": "M12",
+      "consumes": [
+        "SCHEMA_OBSERVED",
+        "SOURCE_VERSION_OBSERVED"
+      ],
+      "action": "Versiona checksum/fingerprint e schema.",
+      "stores": [
+        "metadata/versions/registro_versoes.json"
+      ],
+      "sample": {
+        "source_id": "alunos_csv",
+        "version_ref": "sha256:1e9c4b12a29629ec752ad6187db82d4dd620e8bf6888a84611794ef57958071f"
+      }
+    },
+    {
+      "id": "M15",
+      "consumes": [
+        "SOURCE_PROFILED",
+        "SCHEMA_OBSERVED"
+      ],
+      "action": "Cria baseline inicial de volume e schema.",
+      "stores": [
+        "metadata/monitoring/baseline_current.json"
+      ],
+      "sample": {
+        "sources_count": 4,
+        "rows_observed_total": 30
+      }
+    }
+  ]
+}

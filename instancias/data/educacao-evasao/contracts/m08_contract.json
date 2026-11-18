@@ -1,0 +1,16 @@
+{
+  "module_id": "M08",
+  "requires": {
+    "dataset": "dataset:analytical:student_risk:v1"
+  },
+  "produces": {
+    "product": "product:DP-EDU-001",
+    "channels": [
+      "report",
+      "api",
+      "dashboard"
+    ],
+    "access_policy": "restricted"
+  },
+  "next_operational_module": null
+}

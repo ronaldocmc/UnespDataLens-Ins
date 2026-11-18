@@ -1,0 +1,19 @@
+{
+  "module_id": "M06",
+  "requires": {
+    "dataset": "dataset:validated:student_semester:v1",
+    "target": "evadiu",
+    "protected_attributes": [
+      "sexo"
+    ]
+  },
+  "produces": {
+    "artifacts": [
+      "group_distribution",
+      "fairness_report",
+      "bias_mitigation_plan"
+    ],
+    "alerts": 1
+  },
+  "next_operational_module": "M07"
+}

@@ -1,0 +1,65 @@
+{
+  "dataset": "dataset:analytical:student_risk:v1",
+  "columns": [
+    {
+      "name": "aluno_id",
+      "semantic_role": "identifier"
+    },
+    {
+      "name": "sexo",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "idade",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "cidade",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "curso",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "ano_ingresso",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "semestre",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "situacao",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "evadiu",
+      "semantic_role": "target"
+    },
+    {
+      "name": "media_nota",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "total_faltas",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "qtd_disciplinas",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "bolsa",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "auxilio_permanencia",
+      "semantic_role": "attribute"
+    },
+    {
+      "name": "monitoria",
+      "semantic_role": "attribute"
+    }
+  ]
+}

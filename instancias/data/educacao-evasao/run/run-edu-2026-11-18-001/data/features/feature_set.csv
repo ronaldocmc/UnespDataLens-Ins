@@ -1,0 +1,7 @@
+aluno_id,semestre,media_nota,total_faltas,qtd_disciplinas,recebe_apoio,risco_academico_simples,evadiu
+1001,2026-1,7.5,10,2,1,BAIXO,0
+1002,2026-1,3.75,38,2,0,ALTO,1
+1003,2026-1,8.75,5,2,1,BAIXO,0
+1004,2026-1,5.25,26,2,1,MEDIO,0
+1005,2026-1,6.75,12,2,1,MEDIO,0
+1006,2026-1,2.5,46,2,0,ALTO,1

@@ -1,0 +1,7 @@
+{
+  "policy_id": "GOV-EDU-001",
+  "classification": "RESTRICTED",
+  "external_sharing": false,
+  "personal_data": true,
+  "secret_handling": "credential_ref only"
+}

@@ -1,0 +1,87 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "module_id": "M01",
+  "status": "SUCCESS",
+  "summary": {
+    "sources_count": 4,
+    "accessible_sources": 4,
+    "inaccessible_sources": 0,
+    "rows_observed_total": 30
+  },
+  "sources": [
+    {
+      "source_id": "alunos_csv",
+      "name": "Cadastro complementar de alunos",
+      "connector": "file",
+      "format": "CSV",
+      "system": "Arquivo institucional / legado",
+      "object": "input/alunos.csv",
+      "owner": "Graduação",
+      "granularity": "aluno",
+      "candidate_keys": [
+        "aluno_id"
+      ],
+      "sensitivity": "alta",
+      "rows": 6,
+      "columns": 7,
+      "integrity_method": "sha256",
+      "version_ref": "sha256:1e9c4b12a29629ec752ad6187db82d4dd620e8bf6888a84611794ef57958071f"
+    },
+    {
+      "source_id": "matriculas_pg",
+      "name": "Matrículas do Sistema Acadêmico",
+      "connector": "postgresql",
+      "format": "Tabela PostgreSQL",
+      "system": "Sistema Acadêmico",
+      "object": "public.matriculas",
+      "owner": "STI / Graduação",
+      "granularity": "aluno_semestre",
+      "candidate_keys": [
+        "matricula_id"
+      ],
+      "sensitivity": "alta",
+      "rows": 6,
+      "columns": 4,
+      "integrity_method": "query+schema_fingerprint",
+      "version_ref": "fingerprint:586352710de81a63b28f"
+    },
+    {
+      "source_id": "notas_pg",
+      "name": "Notas e faltas do Sistema Acadêmico",
+      "connector": "postgresql",
+      "format": "View PostgreSQL",
+      "system": "Sistema Acadêmico",
+      "object": "public.vw_notas_faltas",
+      "owner": "STI / Graduação",
+      "granularity": "aluno_disciplina_semestre",
+      "candidate_keys": [
+        "aluno_id",
+        "disciplina_id",
+        "semestre"
+      ],
+      "sensitivity": "media",
+      "rows": 12,
+      "columns": 5,
+      "integrity_method": "query+schema_fingerprint",
+      "version_ref": "fingerprint:f1f5a5a544fbb20d6a50"
+    },
+    {
+      "source_id": "apoio_api",
+      "name": "Benefícios e apoio estudantil",
+      "connector": "rest_api",
+      "format": "JSON",
+      "system": "Serviço de Assistência Estudantil",
+      "object": "GET /v1/beneficios-estudantis",
+      "owner": "Assistência Estudantil",
+      "granularity": "aluno",
+      "candidate_keys": [
+        "aluno_id"
+      ],
+      "sensitivity": "alta",
+      "rows": 6,
+      "columns": 4,
+      "integrity_method": "response+schema_fingerprint",
+      "version_ref": "fingerprint:33f0e6c2cadb760744dd"
+    }
+  ]
+}

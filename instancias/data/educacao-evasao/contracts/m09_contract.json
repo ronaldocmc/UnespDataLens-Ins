@@ -1,0 +1,15 @@
+{
+  "module_id": "M09",
+  "observes": [
+    "SOURCE_REGISTERED",
+    "DATASET_CREATED",
+    "ANALYTICAL_ASSET_CREATED",
+    "PRODUCT_PUBLISHED"
+  ],
+  "produces": [
+    "catalogo_dados",
+    "dicionario_dados",
+    "glossario_negocio",
+    "modelo_semantico"
+  ]
+}

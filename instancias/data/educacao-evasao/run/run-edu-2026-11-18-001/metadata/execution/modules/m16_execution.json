@@ -1,0 +1,323 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M16",
+  "module_name": "Agentes Inteligentes de Apoio ao Pipeline",
+  "kind": "transversal",
+  "status": "SUCCESS",
+  "objective": "Permitir consultas sobre o pipeline usando evidências governadas e rastreáveis produzidas pelos próprios módulos.",
+  "input_summary": "catálogo + qualidade + fairness + lineage + versões + monitoramento, filtrados por governança",
+  "output_summary": "base de evidências + modelo de agente + registro de consulta + plano de governança do agente",
+  "inputs": [
+    {
+      "id": "metadata:catalog",
+      "name": "catálogo",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/catalog/catalogo_dados.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/catalog/catalogo_dados.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:quality_report",
+      "name": "quality report",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m05/quality_report.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m05/quality_report.json",
+      "role": ""
+    },
+    {
+      "id": "lineage:graph",
+      "name": "lineage",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/lineage/grafo_linhagem.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/lineage/grafo_linhagem.json",
+      "role": ""
+    },
+    {
+      "id": "versions:manifest",
+      "name": "manifest",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/versions/manifesto_execucao.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/versions/manifesto_execucao.json",
+      "role": ""
+    },
+    {
+      "id": "monitoring:drift",
+      "name": "drift",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/monitoring/data_drift_report.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/monitoring/data_drift_report.json",
+      "role": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": "agent:evidence",
+      "name": "evidence_base.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/agents/evidence_base.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/agents/evidence_base.json",
+      "role": ""
+    },
+    {
+      "id": "agent:model",
+      "name": "agent_model.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/agents/agent_model.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/agents/agent_model.json",
+      "role": ""
+    },
+    {
+      "id": "agent:queries",
+      "name": "query_register.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/agents/query_register.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/agents/query_register.json",
+      "role": ""
+    },
+    {
+      "id": "agent:governance",
+      "name": "agent_governance_plan.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/agents/agent_governance_plan.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/agents/agent_governance_plan.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "metadata/agents/evidence_base.json",
+    "metadata/agents/agent_model.json",
+    "metadata/agents/query_register.json",
+    "metadata/agents/agent_governance_plan.json"
+  ],
+  "metrics": [
+    {
+      "label": "Evidências",
+      "value": "6"
+    },
+    {
+      "label": "Consulta exemplo",
+      "value": "1"
+    },
+    {
+      "label": "Status",
+      "value": "SUPPORTED"
+    },
+    {
+      "label": "Acesso",
+      "value": "governado"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "indexar evidências permitidas",
+      "concreteAction": "Criar evidence_id + path + run_id",
+      "input": "artefatos permitidos",
+      "result": "6 evidence items",
+      "registers": "evidence metadata",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/agents/evidence_base.json",
+        "metadata/agents/agent_model.json",
+        "metadata/agents/query_register.json"
+      ]
+    },
+    {
+      "responsibility": "associar cada trecho ao artefato e versão de origem",
+      "concreteAction": "Filtrar fontes conforme M10",
+      "input": "query context",
+      "result": "evidências autorizadas",
+      "registers": "access context",
+      "events": [
+        "EVIDENCE_FILTERED"
+      ],
+      "transversals": [
+        "M10"
+      ],
+      "evidence": [
+        "metadata/agents/evidence_base.json",
+        "metadata/agents/agent_model.json",
+        "metadata/agents/query_register.json"
+      ]
+    },
+    {
+      "responsibility": "recuperar evidências relevantes para a pergunta",
+      "concreteAction": "Buscar evidências relevantes",
+      "input": "pergunta",
+      "result": "4 evidence refs",
+      "registers": "evidence_ids",
+      "events": [
+        "EVIDENCE_RETRIEVED"
+      ],
+      "transversals": [
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "metadata/agents/evidence_base.json",
+        "metadata/agents/agent_model.json",
+        "metadata/agents/query_register.json"
+      ]
+    },
+    {
+      "responsibility": "responder indicando as evidências usadas",
+      "concreteAction": "Compor resposta com suporte explícito",
+      "input": "evidence refs",
+      "result": "SUPPORTED_BY_EVIDENCE",
+      "registers": "query_id + answer + evidence_ids",
+      "events": [
+        "AGENT_QUERY_COMPLETED"
+      ],
+      "transversals": [
+        "M09",
+        "M15"
+      ],
+      "evidence": [
+        "metadata/agents/evidence_base.json",
+        "metadata/agents/agent_model.json",
+        "metadata/agents/query_register.json"
+      ]
+    },
+    {
+      "responsibility": "registrar consulta, fontes recuperadas e contexto",
+      "concreteAction": "Compor resposta com suporte explícito",
+      "input": "evidence refs",
+      "result": "SUPPORTED_BY_EVIDENCE",
+      "registers": "query_id + answer + evidence_ids",
+      "events": [
+        "AGENT_QUERY_COMPLETED"
+      ],
+      "transversals": [
+        "M09",
+        "M15"
+      ],
+      "evidence": [
+        "metadata/agents/evidence_base.json",
+        "metadata/agents/agent_model.json",
+        "metadata/agents/query_register.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Indexar evidências",
+      "input": "artefatos permitidos",
+      "operation": "Criar evidence_id + path + run_id",
+      "output": "6 evidence items",
+      "registers": "evidence metadata",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Aplicar governança",
+      "input": "query context",
+      "operation": "Filtrar fontes conforme M10",
+      "output": "evidências autorizadas",
+      "registers": "access context",
+      "events": [
+        "EVIDENCE_FILTERED"
+      ],
+      "transversal": [
+        "M10"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Recuperar",
+      "input": "pergunta",
+      "operation": "Buscar evidências relevantes",
+      "output": "4 evidence refs",
+      "registers": "evidence_ids",
+      "events": [
+        "EVIDENCE_RETRIEVED"
+      ],
+      "transversal": [
+        "M11",
+        "M12"
+      ]
+    },
+    {
+      "step": 4,
+      "title": "Responder e registrar",
+      "input": "evidence refs",
+      "operation": "Compor resposta com suporte explícito",
+      "output": "SUPPORTED_BY_EVIDENCE",
+      "registers": "query_id + answer + evidence_ids",
+      "events": [
+        "AGENT_QUERY_COMPLETED"
+      ],
+      "transversal": [
+        "M09",
+        "M15"
+      ]
+    }
+  ],
+  "contract_ref": "contracts/m16_contract.json",
+  "provenance_records": [
+    {
+      "query_id": "Q-001",
+      "question": "Qual foi a qualidade do dataset usado no indicador de evasão?",
+      "evidence_ids": [
+        "EV-M05-QUALITY",
+        "EV-M07-ASSET",
+        "EV-M11-LINEAGE",
+        "EV-M12-MANIFEST"
+      ],
+      "answer_status": "SUPPORTED_BY_EVIDENCE"
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M10",
+      "consumes": [
+        "query access context"
+      ],
+      "action": "Define quais evidências podem ser consultadas.",
+      "stores": [
+        "metadata/agents/agent_governance_plan.json"
+      ]
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "lineage"
+      ],
+      "action": "Permite explicar origem das evidências.",
+      "stores": [
+        "metadata/agents/evidence_base.json"
+      ]
+    },
+    {
+      "id": "M12",
+      "consumes": [
+        "versions"
+      ],
+      "action": "Garante que a resposta cite a versão certa.",
+      "stores": [
+        "metadata/agents/query_register.json"
+      ]
+    },
+    {
+      "id": "M15",
+      "consumes": [
+        "alerts"
+      ],
+      "action": "Inclui alertas atuais nas evidências.",
+      "stores": [
+        "metadata/agents/evidence_base.json"
+      ]
+    }
+  ]
+}

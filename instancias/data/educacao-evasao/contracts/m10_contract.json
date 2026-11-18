@@ -1,0 +1,14 @@
+{
+  "module_id": "M10",
+  "observes": [
+    "SOURCE_CLASSIFIED",
+    "DATASET_CREATED",
+    "ASSET_PUBLISHED",
+    "PRODUCT_PUBLISHED"
+  ],
+  "produces": [
+    "access_decision",
+    "purpose_record",
+    "compliance_record"
+  ]
+}

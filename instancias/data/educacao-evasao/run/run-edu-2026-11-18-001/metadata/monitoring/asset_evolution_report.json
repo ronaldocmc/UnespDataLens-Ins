@@ -1,0 +1,5 @@
+{
+  "schema_drift": false,
+  "data_drift_alerts": 2,
+  "asset_status": "AVAILABLE"
+}

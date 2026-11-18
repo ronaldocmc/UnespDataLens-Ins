@@ -1,0 +1,77 @@
+{
+  "rules": [
+    {
+      "rule_id": "Q01",
+      "column": "aluno_id",
+      "type": "not_null",
+      "status": "PASS"
+    },
+    {
+      "rule_id": "Q02",
+      "column": "aluno_id+semestre",
+      "type": "unique",
+      "status": "PASS"
+    },
+    {
+      "rule_id": "Q03",
+      "column": "media_nota",
+      "type": "range[0,10]",
+      "status": "PASS"
+    },
+    {
+      "rule_id": "Q04",
+      "column": "total_faltas",
+      "type": "range[0,+inf]",
+      "status": "PASS"
+    },
+    {
+      "rule_id": "Q05",
+      "column": "situacao",
+      "type": "accepted_values",
+      "status": "PASS"
+    },
+    {
+      "rule_id": "Q06",
+      "column": "sexo",
+      "type": "accepted_values[F,M]",
+      "status": "PASS"
+    },
+    {
+      "rule_id": "Q07",
+      "column": "curso",
+      "type": "not_null",
+      "status": "PASS"
+    },
+    {
+      "rule_id": "Q08",
+      "column": "semestre",
+      "type": "pattern",
+      "status": "PASS"
+    },
+    {
+      "rule_id": "Q09",
+      "column": "data_nascimento",
+      "type": "valid_date",
+      "status": "PASS"
+    },
+    {
+      "rule_id": "Q10",
+      "column": "qtd_disciplinas",
+      "type": "min>=1",
+      "status": "PASS"
+    },
+    {
+      "rule_id": "Q11",
+      "column": "monitoria",
+      "type": "accepted_values[SIM,NAO]",
+      "status": "PASS"
+    },
+    {
+      "rule_id": "Q12",
+      "column": "cidade",
+      "type": "completeness",
+      "status": "WARNING",
+      "detail": "Regra não crítica; limiar de completude 100%, observado 100% nesta amostra didática. Mantido como exemplo de warning operacional."
+    }
+  ]
+}

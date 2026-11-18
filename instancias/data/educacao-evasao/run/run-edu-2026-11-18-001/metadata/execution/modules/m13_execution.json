@@ -1,0 +1,232 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M13",
+  "module_name": "Representações Analíticas",
+  "kind": "transversal",
+  "status": "SUCCESS",
+  "objective": "Gerar representações adequadas à análise mantendo explícita a relação com o ativo analítico de origem.",
+  "input_summary": "ativo analítico student_risk + objetivo analítico",
+  "output_summary": "representação tabular unidade×atributo + representação em grafo estudante→curso/status",
+  "inputs": [
+    {
+      "id": "dataset:analytical:student_risk:v1",
+      "name": "student_risk.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/analytical/student_risk.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/analytical/student_risk.csv",
+      "role": "",
+      "records": 6,
+      "columns": 15
+    }
+  ],
+  "outputs": [
+    {
+      "id": "representation:matrix",
+      "name": "matriz_unidade_atributo.csv",
+      "kind": "representation",
+      "format": "CSV",
+      "path": "data/analytical/matriz_unidade_atributo.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/analytical/matriz_unidade_atributo.csv",
+      "role": "",
+      "records": 6,
+      "columns": 5
+    },
+    {
+      "id": "representation:graph",
+      "name": "nodes_edges.json",
+      "kind": "representation",
+      "format": "JSON",
+      "path": "artifacts/m13/nodes_edges.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m13/nodes_edges.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:repr_manifest",
+      "name": "representation_manifest.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m13/representation_manifest.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m13/representation_manifest.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "data/analytical/matriz_unidade_atributo.csv",
+    "artifacts/m13/nodes_edges.json",
+    "artifacts/m13/representation_manifest.json"
+  ],
+  "metrics": [
+    {
+      "label": "Matriz",
+      "value": "6 × 5"
+    },
+    {
+      "label": "Nós grafo",
+      "value": "9"
+    },
+    {
+      "label": "Arestas",
+      "value": "12"
+    },
+    {
+      "label": "Representações",
+      "value": "2"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "gerar matriz tabular aluno × atributos",
+      "concreteAction": "Escolher tabular e grafo",
+      "input": "analytical asset",
+      "result": "2 representações",
+      "registers": "representation_id",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "data/analytical/matriz_unidade_atributo.csv",
+        "artifacts/m13/nodes_edges.json",
+        "artifacts/m13/representation_manifest.json"
+      ]
+    },
+    {
+      "responsibility": "gerar visão temporal aluno × semestre",
+      "concreteAction": "Selecionar id + atributos numéricos + target",
+      "input": "student_risk",
+      "result": "6 × 5",
+      "registers": "schema",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "data/analytical/matriz_unidade_atributo.csv",
+        "artifacts/m13/nodes_edges.json",
+        "artifacts/m13/representation_manifest.json"
+      ]
+    },
+    {
+      "responsibility": "gerar representação em grafo quando pertinente",
+      "concreteAction": "Criar student/course/status nodes e edges",
+      "input": "student_risk",
+      "result": "9 nós / 12 arestas",
+      "registers": "node/edge types",
+      "events": [
+        "REPRESENTATION_CREATED"
+      ],
+      "transversals": [
+        "M09",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/analytical/matriz_unidade_atributo.csv",
+        "artifacts/m13/nodes_edges.json",
+        "artifacts/m13/representation_manifest.json"
+      ]
+    },
+    {
+      "responsibility": "registrar regras de derivação e identificadores",
+      "concreteAction": "Criar student/course/status nodes e edges",
+      "input": "student_risk",
+      "result": "9 nós / 12 arestas",
+      "registers": "node/edge types",
+      "events": [
+        "REPRESENTATION_CREATED"
+      ],
+      "transversals": [
+        "M09",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/analytical/matriz_unidade_atributo.csv",
+        "artifacts/m13/nodes_edges.json",
+        "artifacts/m13/representation_manifest.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Selecionar representação",
+      "input": "analytical asset",
+      "operation": "Escolher tabular e grafo",
+      "output": "2 representações",
+      "registers": "representation_id",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Materializar matriz",
+      "input": "student_risk",
+      "operation": "Selecionar id + atributos numéricos + target",
+      "output": "6 × 5",
+      "registers": "schema",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 3,
+      "title": "Materializar grafo",
+      "input": "student_risk",
+      "operation": "Criar student/course/status nodes e edges",
+      "output": "9 nós / 12 arestas",
+      "registers": "node/edge types",
+      "events": [
+        "REPRESENTATION_CREATED"
+      ],
+      "transversal": [
+        "M09",
+        "M11",
+        "M12"
+      ]
+    }
+  ],
+  "contract_ref": "contracts/m13_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "prov-m13-001",
+      "activity": "REPRESENTATION_CREATED",
+      "used": [
+        "dataset:analytical:student_risk:v1"
+      ],
+      "generated": [
+        "representation:matrix",
+        "representation:graph"
+      ]
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M09",
+      "consumes": [
+        "REPRESENTATION_CREATED"
+      ],
+      "action": "Cataloga representações.",
+      "stores": [
+        "metadata/catalog/catalogo_dados.json"
+      ]
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "REPRESENTATION_CREATED"
+      ],
+      "action": "Liga representações ao ativo original.",
+      "stores": [
+        "metadata/lineage/grafo_linhagem.json"
+      ]
+    },
+    {
+      "id": "M12",
+      "consumes": [
+        "REPRESENTATION_CREATED"
+      ],
+      "action": "Versiona representações.",
+      "stores": [
+        "metadata/versions/registro_versoes.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+sources:
+- source_id: matriculas_pg
+  name: Matriculas do Sistema Academico
+  connector: postgresql
+  connection_ref: secret://academic-postgres
+  host_alias: sistema-academico
+  database: academico
+  object: public.matriculas
+  extraction_mode: snapshot
+  owner: STI / Graduacao
+  granularity: aluno_semestre
+  candidate_keys:
+  - matricula_id
+  sensitivity: alta
+  update_frequency: diaria

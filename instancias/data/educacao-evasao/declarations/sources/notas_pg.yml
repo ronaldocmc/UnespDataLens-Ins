@@ -1,0 +1,17 @@
+sources:
+- source_id: notas_pg
+  name: Notas e faltas do Sistema Academico
+  connector: postgresql
+  connection_ref: secret://academic-postgres
+  host_alias: sistema-academico
+  database: academico
+  object: public.vw_notas_faltas
+  extraction_mode: snapshot
+  owner: STI / Graduacao
+  granularity: aluno_disciplina_semestre
+  candidate_keys:
+  - aluno_id
+  - disciplina_id
+  - semestre
+  sensitivity: media
+  update_frequency: diaria

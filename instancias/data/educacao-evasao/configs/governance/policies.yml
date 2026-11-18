@@ -1,0 +1,19 @@
+roles:
+  administrador:
+    can_access: [restricted, internal, public]
+  pesquisador:
+    can_access: [internal, public]
+  gestor:
+    can_access: [restricted, internal, public]
+policies:
+  - id: G01
+    purpose: analise_risco_evasao
+    allowed_roles: [pesquisador, gestor]
+    external_sharing: false
+  - id: G02
+    personal_data:
+      minimization_required: true
+      audit_required: true
+secrets:
+  storage: external
+  rule: "Nunca persistir senha, token ou chave em pipeline.yml; usar apenas secret://..."

@@ -1,0 +1,1 @@
+{"producer":"M15","consumed_events":["SOURCE_PROFILED","SCHEMA_OBSERVED"],"baseline":[{"source_id":"alunos_csv","rows":3,"columns":7},{"source_id":"matriculas_pg","rows":3,"columns":4},{"source_id":"notas_pg","rows":5,"columns":5},{"source_id":"apoio_api","rows":3,"columns":4}]}

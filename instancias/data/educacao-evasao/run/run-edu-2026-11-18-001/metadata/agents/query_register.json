@@ -1,0 +1,16 @@
+{
+  "queries": [
+    {
+      "query_id": "Q-001",
+      "question": "Qual foi a qualidade do dataset usado no indicador de evasão?",
+      "retrieved": [
+        "EV-M05-QUALITY",
+        "EV-M07-ASSET",
+        "EV-M11-LINEAGE",
+        "EV-M12-MANIFEST"
+      ],
+      "answer": "A execução foi aceita com warning: 12 regras avaliadas, 11 PASS e 1 WARNING não crítico; o ativo publicado deriva do dataset validado da mesma execução.",
+      "status": "SUPPORTED_BY_EVIDENCE"
+    }
+  ]
+}

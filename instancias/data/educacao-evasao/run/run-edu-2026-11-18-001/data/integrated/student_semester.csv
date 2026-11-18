@@ -1,0 +1,7 @@
+aluno_id,nome,sexo,data_nascimento,cidade,curso,ano_ingresso,semestre,situacao,media_nota,total_faltas,qtd_disciplinas,bolsa,auxilio_permanencia,monitoria
+1001,Ana Silva,F,2004-02-10,Presidente Prudente,Computacao,2023,2026-1,ATIVO,7.5,10,2,NAO,SIM,NAO
+1002,Joao Santos,M,2003-06-17,Presidente Prudente,Computacao,2022,2026-1,EVADIDO,3.75,38,2,NAO,NAO,NAO
+1003,Maria Costa,F,2005-01-22,Assis,Computacao,2024,2026-1,ATIVO,8.75,5,2,SIM,SIM,SIM
+1004,Carlos Lima,M,2002-09-05,Bauru,Computacao,2021,2026-1,ATIVO,5.25,26,2,NAO,NAO,SIM
+1005,Luiza Rocha,F,2004-11-29,Presidente Prudente,Computacao,2023,2026-1,ATIVO,6.75,12,2,SIM,NAO,NAO
+1006,Pedro Alves,M,2003-03-14,Marilia,Computacao,2022,2026-1,EVADIDO,2.5,46,2,NAO,NAO,NAO

@@ -1,0 +1,310 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M05",
+  "module_name": "Qualidade e Validação de Dados",
+  "kind": "operational",
+  "status": "SUCCESS",
+  "objective": "Avaliar se o dataset preparado atende às expectativas de qualidade necessárias para continuar no pipeline.",
+  "input_summary": "dataset preparado + 12 regras de qualidade",
+  "output_summary": "dataset validado (6 × 18) + quality_report: ACCEPTED_WITH_WARNING",
+  "inputs": [
+    {
+      "id": "dataset:prepared:student_semester:v1",
+      "name": "student_semester_prepared.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/prepared/student_semester_prepared.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/prepared/student_semester_prepared.csv",
+      "role": "",
+      "records": 6,
+      "columns": 18
+    },
+    {
+      "id": "config:quality_rules",
+      "name": "quality_rules.json",
+      "kind": "rules",
+      "format": "JSON",
+      "path": "artifacts/m05/quality_rules.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m05/quality_rules.json",
+      "role": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": "dataset:validated:student_semester:v1",
+      "name": "student_semester_validated.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/validated/student_semester_validated.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/validated/student_semester_validated.csv",
+      "role": "",
+      "records": 6,
+      "columns": 18
+    },
+    {
+      "id": "artifact:quality_report",
+      "name": "quality_report.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m05/quality_report.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m05/quality_report.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:exceptions",
+      "name": "exceptions_register.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m05/exceptions_register.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m05/exceptions_register.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "data/validated/student_semester_validated.csv",
+    "artifacts/m05/quality_rules.json",
+    "artifacts/m05/quality_report.json",
+    "artifacts/m05/exceptions_register.json"
+  ],
+  "metrics": [
+    {
+      "label": "Regras",
+      "value": "12"
+    },
+    {
+      "label": "PASS",
+      "value": "11"
+    },
+    {
+      "label": "WARNING",
+      "value": "1"
+    },
+    {
+      "label": "Críticas falhas",
+      "value": "0"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "executar regras not_null, unique, range e accepted_values",
+      "concreteAction": "Validar tipos e severidades",
+      "input": "quality rules",
+      "result": "12 regras ativas",
+      "registers": "rule_id, column, type",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "data/validated/student_semester_validated.csv",
+        "artifacts/m05/quality_rules.json",
+        "artifacts/m05/quality_report.json"
+      ]
+    },
+    {
+      "responsibility": "calcular completude e outras métricas",
+      "concreteAction": "not_null, unique, range, accepted_values, pattern",
+      "input": "prepared dataset",
+      "result": "11 PASS + 1 WARNING",
+      "registers": "result por regra",
+      "events": [
+        "QUALITY_CHECKED"
+      ],
+      "transversals": [
+        "M09",
+        "M11",
+        "M15"
+      ],
+      "evidence": [
+        "data/validated/student_semester_validated.csv",
+        "artifacts/m05/quality_rules.json",
+        "artifacts/m05/quality_report.json"
+      ]
+    },
+    {
+      "responsibility": "classificar regras como críticas ou não críticas",
+      "concreteAction": "Falha crítica=0 → aceitar com warning",
+      "input": "resultados",
+      "result": "validated dataset",
+      "registers": "decision + warnings",
+      "events": [
+        "DATASET_VALIDATED"
+      ],
+      "transversals": [
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/validated/student_semester_validated.csv",
+        "artifacts/m05/quality_rules.json",
+        "artifacts/m05/quality_report.json"
+      ]
+    },
+    {
+      "responsibility": "registrar violações e exceções",
+      "concreteAction": "Falha crítica=0 → aceitar com warning",
+      "input": "resultados",
+      "result": "validated dataset",
+      "registers": "decision + warnings",
+      "events": [
+        "DATASET_VALIDATED"
+      ],
+      "transversals": [
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/validated/student_semester_validated.csv",
+        "artifacts/m05/quality_rules.json",
+        "artifacts/m05/quality_report.json"
+      ]
+    },
+    {
+      "responsibility": "aprovar, aprovar com alerta ou rejeitar o dataset",
+      "concreteAction": "Falha crítica=0 → aceitar com warning",
+      "input": "resultados",
+      "result": "validated dataset",
+      "registers": "decision + warnings",
+      "events": [
+        "DATASET_VALIDATED"
+      ],
+      "transversals": [
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/validated/student_semester_validated.csv",
+        "artifacts/m05/quality_rules.json",
+        "artifacts/m05/quality_report.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Carregar regras",
+      "input": "quality rules",
+      "operation": "Validar tipos e severidades",
+      "output": "12 regras ativas",
+      "registers": "rule_id, column, type",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Executar validações",
+      "input": "prepared dataset",
+      "operation": "not_null, unique, range, accepted_values, pattern",
+      "output": "11 PASS + 1 WARNING",
+      "registers": "result por regra",
+      "events": [
+        "QUALITY_CHECKED"
+      ],
+      "transversal": [
+        "M09",
+        "M11",
+        "M15"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Decidir aceitação",
+      "input": "resultados",
+      "operation": "Falha crítica=0 → aceitar com warning",
+      "output": "validated dataset",
+      "registers": "decision + warnings",
+      "events": [
+        "DATASET_VALIDATED"
+      ],
+      "transversal": [
+        "M10",
+        "M11",
+        "M12"
+      ]
+    }
+  ],
+  "contract_ref": "contracts/m05_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "prov-m05-001",
+      "activity": "QUALITY_CHECK",
+      "used": [
+        "dataset:prepared:student_semester:v1"
+      ],
+      "generated": [
+        "artifact:quality_report:v1"
+      ],
+      "rules_executed": 12,
+      "passed": 11,
+      "warnings": 1,
+      "critical_failures": 0
+    },
+    {
+      "event_id": "prov-m05-002",
+      "activity": "DATASET_VALIDATED",
+      "used": [
+        "dataset:prepared:student_semester:v1",
+        "artifact:quality_report:v1"
+      ],
+      "generated": [
+        "dataset:validated:student_semester:v1"
+      ],
+      "decision": "ACCEPTED_WITH_WARNING"
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M09",
+      "consumes": [
+        "QUALITY_CHECKED"
+      ],
+      "action": "Cataloga métricas e estado de qualidade.",
+      "stores": [
+        "metadata/catalog/catalogo_dados.json"
+      ]
+    },
+    {
+      "id": "M10",
+      "consumes": [
+        "DATASET_VALIDATED"
+      ],
+      "action": "Permite publicação analítica apenas conforme política.",
+      "stores": [
+        "metadata/governance/politica_acesso.json"
+      ]
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "QUALITY_CHECKED",
+        "DATASET_VALIDATED"
+      ],
+      "action": "Registra que o validado deriva do preparado após 12 regras.",
+      "stores": [
+        "metadata/lineage/registro_proveniencia.json"
+      ]
+    },
+    {
+      "id": "M12",
+      "consumes": [
+        "DATASET_VALIDATED"
+      ],
+      "action": "Versiona dataset e relatório de qualidade.",
+      "stores": [
+        "metadata/versions/registro_versoes.json"
+      ]
+    },
+    {
+      "id": "M15",
+      "consumes": [
+        "QUALITY_CHECKED"
+      ],
+      "action": "Observa degradação de qualidade entre execuções.",
+      "stores": [
+        "metadata/monitoring/alerts.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "module_id": "M15",
+  "requires": {
+    "current": "dataset:validated:student_semester:v1",
+    "reference": "baseline previous run"
+  },
+  "produces": {
+    "baseline": "current",
+    "drift_report": "2 alerts",
+    "schema_drift": false
+  }
+}

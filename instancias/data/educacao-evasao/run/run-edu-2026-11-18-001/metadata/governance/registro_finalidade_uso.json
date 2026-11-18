@@ -1,0 +1,7 @@
+{
+  "purpose_id": "PURPOSE-EDU-001",
+  "purpose": "pesquisa e apoio acadêmico em ambiente didático",
+  "prohibited": [
+    "decisão automatizada individual sem revisão humana"
+  ]
+}

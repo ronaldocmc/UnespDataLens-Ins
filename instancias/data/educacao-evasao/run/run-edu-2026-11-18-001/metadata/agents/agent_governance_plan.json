@@ -1,0 +1,8 @@
+{
+  "rules": [
+    "respeitar M10",
+    "citar evidence_id e run_id",
+    "não inferir causalidade",
+    "não expor dados pessoais sem autorização"
+  ]
+}

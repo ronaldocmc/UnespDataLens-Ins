@@ -1,0 +1,235 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M09",
+  "module_name": "Metadados, Catálogo e Semântica dos Dados",
+  "kind": "transversal",
+  "status": "SUCCESS",
+  "objective": "Manter uma visão catalogada e semanticamente compreensível de fontes, datasets, artefatos e produtos ao longo de toda a execução.",
+  "input_summary": "Eventos/ativos de M01–M08 e metadados técnicos de M11–M16",
+  "output_summary": "catálogo consolidado + dicionário + glossário + modelo semântico",
+  "inputs": [
+    {
+      "id": "events:assets",
+      "name": "Eventos de registro de ativos",
+      "kind": "events",
+      "format": "JSON/event bus",
+      "path": "metadata/lineage/registro_proveniencia.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/lineage/registro_proveniencia.json",
+      "role": ""
+    },
+    {
+      "id": "dataset:analytical:student_risk:v1",
+      "name": "Ativo analítico",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/analytical/student_risk.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/analytical/student_risk.csv",
+      "role": "",
+      "records": 6,
+      "columns": 15
+    }
+  ],
+  "outputs": [
+    {
+      "id": "metadata:catalog",
+      "name": "catalogo_dados.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/catalog/catalogo_dados.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/catalog/catalogo_dados.json",
+      "role": ""
+    },
+    {
+      "id": "metadata:dictionary",
+      "name": "dicionario_dados.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/catalog/dicionario_dados.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/catalog/dicionario_dados.json",
+      "role": ""
+    },
+    {
+      "id": "metadata:glossary",
+      "name": "glossario_negocio.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/catalog/glossario_negocio.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/catalog/glossario_negocio.json",
+      "role": ""
+    },
+    {
+      "id": "metadata:semantic",
+      "name": "modelo_semantico.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/catalog/modelo_semantico.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/catalog/modelo_semantico.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "metadata/catalog/catalogo_dados.json",
+    "metadata/catalog/dicionario_dados.json",
+    "metadata/catalog/glossario_negocio.json",
+    "metadata/catalog/modelo_semantico.json"
+  ],
+  "metrics": [
+    {
+      "label": "Entradas catálogo",
+      "value": "10"
+    },
+    {
+      "label": "Termos de negócio",
+      "value": "3"
+    },
+    {
+      "label": "Produto catalogado",
+      "value": "1"
+    },
+    {
+      "label": "Run",
+      "value": "001"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "registrar fontes e datasets no catálogo",
+      "concreteAction": "Normalizar asset_id, owner, schema, granularidade",
+      "input": "asset events",
+      "result": "catalog entries",
+      "registers": "metadata version",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/catalog/catalogo_dados.json",
+        "metadata/catalog/dicionario_dados.json",
+        "metadata/catalog/glossario_negocio.json"
+      ]
+    },
+    {
+      "responsibility": "atualizar schema e descrição a cada derivação",
+      "concreteAction": "Upsert por asset_id/version",
+      "input": "entries",
+      "result": "catálogo consolidado",
+      "registers": "cataloged_at",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/catalog/catalogo_dados.json",
+        "metadata/catalog/dicionario_dados.json",
+        "metadata/catalog/glossario_negocio.json"
+      ]
+    },
+    {
+      "responsibility": "gerar dicionário de dados",
+      "concreteAction": "Dicionário/glossário/relacionamentos",
+      "input": "schemas + termos",
+      "result": "modelo semântico",
+      "registers": "semantic terms",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/catalog/catalogo_dados.json",
+        "metadata/catalog/dicionario_dados.json",
+        "metadata/catalog/glossario_negocio.json"
+      ]
+    },
+    {
+      "responsibility": "associar termos de negócio",
+      "concreteAction": "Dicionário/glossário/relacionamentos",
+      "input": "schemas + termos",
+      "result": "modelo semântico",
+      "registers": "semantic terms",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/catalog/catalogo_dados.json",
+        "metadata/catalog/dicionario_dados.json",
+        "metadata/catalog/glossario_negocio.json"
+      ]
+    },
+    {
+      "responsibility": "preservar relações entre ativos",
+      "concreteAction": "Dicionário/glossário/relacionamentos",
+      "input": "schemas + termos",
+      "result": "modelo semântico",
+      "registers": "semantic terms",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/catalog/catalogo_dados.json",
+        "metadata/catalog/dicionario_dados.json",
+        "metadata/catalog/glossario_negocio.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Consumir eventos",
+      "input": "asset events",
+      "operation": "Normalizar asset_id, owner, schema, granularidade",
+      "output": "catalog entries",
+      "registers": "metadata version",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Atualizar catálogo",
+      "input": "entries",
+      "operation": "Upsert por asset_id/version",
+      "output": "catálogo consolidado",
+      "registers": "cataloged_at",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 3,
+      "title": "Associar semântica",
+      "input": "schemas + termos",
+      "operation": "Dicionário/glossário/relacionamentos",
+      "output": "modelo semântico",
+      "registers": "semantic terms",
+      "events": [],
+      "transversal": []
+    }
+  ],
+  "contract_ref": "contracts/m09_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "meta-m09-001",
+      "activity": "CATALOG_UPSERT",
+      "used": [
+        "dataset:analytical:student_risk:v1"
+      ],
+      "generated": [
+        "catalog_entry:dataset:analytical:student_risk:v1"
+      ],
+      "metadata_version": "1.0"
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M01–M08",
+      "consumes": [
+        "asset events"
+      ],
+      "action": "Recebe registros de fontes, datasets e produtos.",
+      "stores": [
+        "metadata/catalog/catalogo_dados.json"
+      ]
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "lineage refs"
+      ],
+      "action": "Associa dependências ao catálogo.",
+      "stores": [
+        "metadata/catalog/modelo_semantico.json"
+      ]
+    }
+  ]
+}

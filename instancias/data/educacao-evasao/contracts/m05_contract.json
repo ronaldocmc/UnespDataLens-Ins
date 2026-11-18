@@ -1,0 +1,16 @@
+{
+  "module_id": "M05",
+  "requires": {
+    "dataset": "dataset:prepared:student_semester:v1",
+    "rules": 12
+  },
+  "produces": {
+    "dataset": "dataset:validated:student_semester:v1",
+    "quality_status": "ACCEPTED_WITH_WARNING",
+    "artifacts": [
+      "quality_report",
+      "exceptions_register"
+    ]
+  },
+  "next_operational_module": "M06"
+}

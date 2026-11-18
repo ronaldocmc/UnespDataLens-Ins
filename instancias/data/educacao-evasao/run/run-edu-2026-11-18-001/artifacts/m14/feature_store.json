@@ -1,0 +1,7 @@
+{
+  "feature_set_id": "feature_set:student_risk:v1",
+  "path": "data/features/feature_set.csv",
+  "entity": "student_semester",
+  "rows": 6,
+  "features": 5
+}

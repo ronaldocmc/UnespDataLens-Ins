@@ -1,0 +1,14 @@
+{
+  "entities": [
+    "Estudante",
+    "Matrícula",
+    "Desempenho",
+    "Apoio",
+    "ProdutoAnalítico"
+  ],
+  "relationships": [
+    "Estudante possui Matrícula",
+    "Estudante possui Desempenho",
+    "Estudante pode receber Apoio"
+  ]
+}

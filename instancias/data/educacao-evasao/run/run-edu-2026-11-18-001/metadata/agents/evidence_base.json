@@ -1,0 +1,46 @@
+{
+  "evidence_items": [
+    {
+      "evidence_id": "EV-M05-QUALITY",
+      "module": "M05",
+      "path": "artifacts/m05/quality_report.json",
+      "description": "Qualidade do dataset validado",
+      "run_id": "run-edu-2026-11-18-001"
+    },
+    {
+      "evidence_id": "EV-M06-FAIRNESS",
+      "module": "M06",
+      "path": "artifacts/m06/fairness_report.json",
+      "description": "Métricas de fairness",
+      "run_id": "run-edu-2026-11-18-001"
+    },
+    {
+      "evidence_id": "EV-M07-ASSET",
+      "module": "M07",
+      "path": "artifacts/m07/analytical_assets_catalog.json",
+      "description": "Ativo analítico publicado",
+      "run_id": "run-edu-2026-11-18-001"
+    },
+    {
+      "evidence_id": "EV-M11-LINEAGE",
+      "module": "M11",
+      "path": "metadata/lineage/grafo_linhagem.json",
+      "description": "Grafo de linhagem",
+      "run_id": "run-edu-2026-11-18-001"
+    },
+    {
+      "evidence_id": "EV-M12-MANIFEST",
+      "module": "M12",
+      "path": "metadata/versions/manifesto_execucao.json",
+      "description": "Manifesto da execução",
+      "run_id": "run-edu-2026-11-18-001"
+    },
+    {
+      "evidence_id": "EV-M15-DRIFT",
+      "module": "M15",
+      "path": "metadata/monitoring/data_drift_report.json",
+      "description": "Monitoramento e drift",
+      "run_id": "run-edu-2026-11-18-001"
+    }
+  ]
+}

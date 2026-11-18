@@ -1,0 +1,15 @@
+{
+  "module_id": "M12",
+  "observes": [
+    "ASSET_CREATED",
+    "CONFIG_USED",
+    "RULE_USED",
+    "SOURCE_VERSION_OBSERVED"
+  ],
+  "produces": [
+    "artifact_versions",
+    "execution_manifest",
+    "environment_manifest",
+    "reproducibility_package"
+  ]
+}

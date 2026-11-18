@@ -1,0 +1,437 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M03",
+  "module_name": "Integração e Harmonização",
+  "kind": "operational",
+  "status": "SUCCESS",
+  "objective": "Combinar as fontes raw respeitando granularidade, chaves e cardinalidades para produzir uma visão integrada aluno × semestre.",
+  "input_summary": "4 datasets raw com granularidades diferentes",
+  "output_summary": "dataset integrado aluno × semestre (6 linhas × 15 colunas) + plano/relatório/grafo de integração",
+  "inputs": [
+    {
+      "id": "dataset:raw:alunos:v1",
+      "name": "raw/alunos.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/raw/alunos.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/raw/alunos.csv",
+      "role": "",
+      "records": 6,
+      "columns": 7
+    },
+    {
+      "id": "dataset:raw:matriculas:v1",
+      "name": "raw/matriculas.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/raw/matriculas.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/raw/matriculas.csv",
+      "role": "",
+      "records": 6,
+      "columns": 4
+    },
+    {
+      "id": "dataset:raw:notas:v1",
+      "name": "raw/notas.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/raw/notas.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/raw/notas.csv",
+      "role": "",
+      "records": 12,
+      "columns": 5
+    },
+    {
+      "id": "dataset:raw:apoio:v1",
+      "name": "raw/apoio.json",
+      "kind": "dataset",
+      "format": "JSON",
+      "path": "data/raw/apoio.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/raw/apoio.json",
+      "role": "",
+      "records": 6,
+      "columns": 4
+    }
+  ],
+  "outputs": [
+    {
+      "id": "dataset:integrated:student_semester:v1",
+      "name": "student_semester.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/integrated/student_semester.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/integrated/student_semester.csv",
+      "role": "Uma linha por estudante/semestre",
+      "records": 6,
+      "columns": 15
+    },
+    {
+      "id": "artifact:integration_plan",
+      "name": "integration_plan.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m03/integration_plan.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m03/integration_plan.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:integration_report",
+      "name": "integration_report.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m03/integration_report.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m03/integration_report.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:integration_graph",
+      "name": "integration_graph.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m03/integration_graph.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m03/integration_graph.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "data/integrated/student_semester.csv",
+    "artifacts/m03/integration_plan.json",
+    "artifacts/m03/integration_report.json",
+    "artifacts/m03/conflict_report.json",
+    "artifacts/m03/integration_graph.json"
+  ],
+  "metrics": [
+    {
+      "label": "Entradas",
+      "value": "4 datasets"
+    },
+    {
+      "label": "Saída",
+      "value": "6 linhas"
+    },
+    {
+      "label": "Órfãos",
+      "value": "0"
+    },
+    {
+      "label": "Conflitos",
+      "value": "0"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "validar granularidade de cada fonte",
+      "concreteAction": "Fixar alvo aluno_semestre",
+      "input": "4 raw assets",
+      "result": "student_semester",
+      "registers": "target_granularity",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "data/integrated/student_semester.csv",
+        "artifacts/m03/integration_plan.json",
+        "artifacts/m03/integration_report.json"
+      ]
+    },
+    {
+      "responsibility": "agregar notas por aluno_id + semestre",
+      "concreteAction": "group_by aluno_id, semestre; mean(nota), sum(faltas), count(disciplina)",
+      "input": "raw:notas",
+      "result": "notas_agregadas 6 linhas",
+      "registers": "regra de agregação",
+      "events": [
+        "TRANSFORMATION_APPLIED"
+      ],
+      "transversals": [
+        "M11"
+      ],
+      "evidence": [
+        "data/integrated/student_semester.csv",
+        "artifacts/m03/integration_plan.json",
+        "artifacts/m03/integration_report.json"
+      ]
+    },
+    {
+      "responsibility": "calcular media_nota, total_faltas e qtd_disciplinas",
+      "concreteAction": "INNER JOIN aluno_id",
+      "input": "raw:alunos + raw:matriculas",
+      "result": "6 linhas",
+      "registers": "join keys + cardinalidade",
+      "events": [
+        "DATASET_DERIVED"
+      ],
+      "transversals": [
+        "M09",
+        "M11"
+      ],
+      "evidence": [
+        "data/integrated/student_semester.csv",
+        "artifacts/m03/integration_plan.json",
+        "artifacts/m03/integration_report.json"
+      ]
+    },
+    {
+      "responsibility": "relacionar alunos e matrículas",
+      "concreteAction": "LEFT JOINs controlados",
+      "input": "base estudante-semestre + agregados + apoio",
+      "result": "6 × 15",
+      "registers": "órfãos=0; conflitos=0",
+      "events": [
+        "DATASET_CREATED"
+      ],
+      "transversals": [
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/integrated/student_semester.csv",
+        "artifacts/m03/integration_plan.json",
+        "artifacts/m03/integration_report.json"
+      ]
+    },
+    {
+      "responsibility": "relacionar notas agregadas e apoio",
+      "concreteAction": "LEFT JOINs controlados",
+      "input": "base estudante-semestre + agregados + apoio",
+      "result": "6 × 15",
+      "registers": "órfãos=0; conflitos=0",
+      "events": [
+        "DATASET_CREATED"
+      ],
+      "transversals": [
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/integrated/student_semester.csv",
+        "artifacts/m03/integration_plan.json",
+        "artifacts/m03/integration_report.json"
+      ]
+    },
+    {
+      "responsibility": "validar cardinalidades dos joins",
+      "concreteAction": "LEFT JOINs controlados",
+      "input": "base estudante-semestre + agregados + apoio",
+      "result": "6 × 15",
+      "registers": "órfãos=0; conflitos=0",
+      "events": [
+        "DATASET_CREATED"
+      ],
+      "transversals": [
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/integrated/student_semester.csv",
+        "artifacts/m03/integration_plan.json",
+        "artifacts/m03/integration_report.json"
+      ]
+    },
+    {
+      "responsibility": "registrar registros órfãos e conflitos",
+      "concreteAction": "LEFT JOINs controlados",
+      "input": "base estudante-semestre + agregados + apoio",
+      "result": "6 × 15",
+      "registers": "órfãos=0; conflitos=0",
+      "events": [
+        "DATASET_CREATED"
+      ],
+      "transversals": [
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/integrated/student_semester.csv",
+        "artifacts/m03/integration_plan.json",
+        "artifacts/m03/integration_report.json"
+      ]
+    },
+    {
+      "responsibility": "gerar dataset integrado",
+      "concreteAction": "LEFT JOINs controlados",
+      "input": "base estudante-semestre + agregados + apoio",
+      "result": "6 × 15",
+      "registers": "órfãos=0; conflitos=0",
+      "events": [
+        "DATASET_CREATED"
+      ],
+      "transversals": [
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/integrated/student_semester.csv",
+        "artifacts/m03/integration_plan.json",
+        "artifacts/m03/integration_report.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Definir granularidade",
+      "input": "4 raw assets",
+      "operation": "Fixar alvo aluno_semestre",
+      "output": "student_semester",
+      "registers": "target_granularity",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Agregar notas",
+      "input": "raw:notas",
+      "operation": "group_by aluno_id, semestre; mean(nota), sum(faltas), count(disciplina)",
+      "output": "notas_agregadas 6 linhas",
+      "registers": "regra de agregação",
+      "events": [
+        "TRANSFORMATION_APPLIED"
+      ],
+      "transversal": [
+        "M11"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Integrar cadastro + matrícula",
+      "input": "raw:alunos + raw:matriculas",
+      "operation": "INNER JOIN aluno_id",
+      "output": "6 linhas",
+      "registers": "join keys + cardinalidade",
+      "events": [
+        "DATASET_DERIVED"
+      ],
+      "transversal": [
+        "M09",
+        "M11"
+      ]
+    },
+    {
+      "step": 4,
+      "title": "Juntar desempenho e apoio",
+      "input": "base estudante-semestre + agregados + apoio",
+      "operation": "LEFT JOINs controlados",
+      "output": "6 × 15",
+      "registers": "órfãos=0; conflitos=0",
+      "events": [
+        "DATASET_CREATED"
+      ],
+      "transversal": [
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ]
+    }
+  ],
+  "contract_ref": "contracts/m03_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "prov-m03-001",
+      "activity": "AGGREGATION",
+      "used": [
+        "dataset:raw:notas:v1"
+      ],
+      "generated": [
+        "derived:notas_agregadas"
+      ],
+      "rule": {
+        "group_by": [
+          "aluno_id",
+          "semestre"
+        ],
+        "nota": "mean",
+        "faltas": "sum",
+        "disciplina_id": "count"
+      }
+    },
+    {
+      "event_id": "prov-m03-002",
+      "activity": "INTEGRATION",
+      "used": [
+        "dataset:raw:alunos:v1",
+        "dataset:raw:matriculas:v1",
+        "derived:notas_agregadas",
+        "dataset:raw:apoio:v1"
+      ],
+      "generated": [
+        "dataset:integrated:student_semester:v1"
+      ],
+      "joins": [
+        {
+          "on": [
+            "aluno_id"
+          ],
+          "how": "inner"
+        },
+        {
+          "on": [
+            "aluno_id",
+            "semestre"
+          ],
+          "how": "left"
+        },
+        {
+          "on": [
+            "aluno_id"
+          ],
+          "how": "left"
+        }
+      ]
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M09",
+      "consumes": [
+        "DATASET_CREATED"
+      ],
+      "action": "Cataloga o dataset integrado e seu schema.",
+      "stores": [
+        "metadata/catalog/catalogo_dados.json"
+      ]
+    },
+    {
+      "id": "M10",
+      "consumes": [
+        "DATASET_CREATED"
+      ],
+      "action": "Mantém classificação RESTRICTED.",
+      "stores": [
+        "metadata/governance/politica_acesso.json"
+      ]
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "TRANSFORMATION_APPLIED",
+        "DATASET_DERIVED"
+      ],
+      "action": "Registra agregações e joins no lineage.",
+      "stores": [
+        "metadata/lineage/grafo_linhagem.json"
+      ]
+    },
+    {
+      "id": "M12",
+      "consumes": [
+        "DATASET_CREATED"
+      ],
+      "action": "Versiona o integrado.",
+      "stores": [
+        "metadata/versions/registro_versoes.json"
+      ]
+    }
+  ]
+}

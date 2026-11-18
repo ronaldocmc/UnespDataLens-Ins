@@ -1,0 +1,15 @@
+{
+  "assets": [
+    {
+      "asset_id": "dataset:analytical:student_risk:v1",
+      "path": "data/analytical/student_risk.csv",
+      "rows": 6,
+      "columns": 15,
+      "granularity": "student_semester",
+      "owner": "Laboratório de Dados",
+      "sensitivity": "alta",
+      "source": "dataset:validated:student_semester:v1",
+      "status": "PUBLISHED"
+    }
+  ]
+}

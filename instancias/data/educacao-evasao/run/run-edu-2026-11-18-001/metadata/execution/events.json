@@ -1,0 +1,1020 @@
+[
+  {
+    "event": "INGESTION_STARTED",
+    "module_id": "M02",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 2,
+    "title": "Extrair"
+  },
+  {
+    "event": "DATASET_CREATED",
+    "module_id": "M02",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 3,
+    "title": "Materializar raw"
+  },
+  {
+    "event": "INGESTION_COMPLETED",
+    "module_id": "M02",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 4,
+    "title": "Validar integridade"
+  },
+  {
+    "event": "INGESTION",
+    "module_id": "M02",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m02-001",
+      "activity": "INGESTION",
+      "used": [
+        "source:alunos_csv"
+      ],
+      "generated": [
+        "dataset:raw:alunos:v1"
+      ],
+      "copy_mode": "BYTE_PRESERVING_COPY",
+      "checksum_after": "1e9c4b12a29629ec752ad6187db82d4dd620e8bf6888a84611794ef57958071f",
+      "status": "MATCH"
+    }
+  },
+  {
+    "event": "INGESTION",
+    "module_id": "M02",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m02-002",
+      "activity": "INGESTION",
+      "used": [
+        "source:matriculas_pg"
+      ],
+      "generated": [
+        "dataset:raw:matriculas:v1"
+      ],
+      "extraction": "snapshot from public.matriculas",
+      "status": "SUCCESS"
+    }
+  },
+  {
+    "event": "TRANSFORMATION_APPLIED",
+    "module_id": "M03",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 2,
+    "title": "Agregar notas"
+  },
+  {
+    "event": "DATASET_DERIVED",
+    "module_id": "M03",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 3,
+    "title": "Integrar cadastro + matrícula"
+  },
+  {
+    "event": "DATASET_CREATED",
+    "module_id": "M03",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 4,
+    "title": "Juntar desempenho e apoio"
+  },
+  {
+    "event": "AGGREGATION",
+    "module_id": "M03",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m03-001",
+      "activity": "AGGREGATION",
+      "used": [
+        "dataset:raw:notas:v1"
+      ],
+      "generated": [
+        "derived:notas_agregadas"
+      ],
+      "rule": {
+        "group_by": [
+          "aluno_id",
+          "semestre"
+        ],
+        "nota": "mean",
+        "faltas": "sum",
+        "disciplina_id": "count"
+      }
+    }
+  },
+  {
+    "event": "INTEGRATION",
+    "module_id": "M03",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m03-002",
+      "activity": "INTEGRATION",
+      "used": [
+        "dataset:raw:alunos:v1",
+        "dataset:raw:matriculas:v1",
+        "derived:notas_agregadas",
+        "dataset:raw:apoio:v1"
+      ],
+      "generated": [
+        "dataset:integrated:student_semester:v1"
+      ],
+      "joins": [
+        {
+          "on": [
+            "aluno_id"
+          ],
+          "how": "inner"
+        },
+        {
+          "on": [
+            "aluno_id",
+            "semestre"
+          ],
+          "how": "left"
+        },
+        {
+          "on": [
+            "aluno_id"
+          ],
+          "how": "left"
+        }
+      ]
+    }
+  },
+  {
+    "event": "TRANSFORMATION_APPLIED",
+    "module_id": "M04",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 1,
+    "title": "Padronizar"
+  },
+  {
+    "event": "TRANSFORMATION_APPLIED",
+    "module_id": "M04",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 2,
+    "title": "Tratar qualidade básica"
+  },
+  {
+    "event": "FIELD_DERIVED",
+    "module_id": "M04",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 3,
+    "title": "Derivar idade"
+  },
+  {
+    "event": "LABEL_DERIVED",
+    "module_id": "M04",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 4,
+    "title": "Criar target"
+  },
+  {
+    "event": "FIELD_DERIVED",
+    "module_id": "M04",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m04-idade",
+      "activity": "FIELD_DERIVED",
+      "used": [
+        "data_nascimento"
+      ],
+      "generated": [
+        "idade"
+      ],
+      "rule": "age_at(data_nascimento, 2026-11-18)"
+    }
+  },
+  {
+    "event": "LABEL_DERIVED",
+    "module_id": "M04",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m04-target",
+      "activity": "LABEL_DERIVED",
+      "used": [
+        "situacao"
+      ],
+      "generated": [
+        "evadiu"
+      ],
+      "rule": "1 if situacao == EVADIDO else 0"
+    }
+  },
+  {
+    "event": "QUALITY_CHECKED",
+    "module_id": "M05",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 2,
+    "title": "Executar validações"
+  },
+  {
+    "event": "DATASET_VALIDATED",
+    "module_id": "M05",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 3,
+    "title": "Decidir aceitação"
+  },
+  {
+    "event": "QUALITY_CHECK",
+    "module_id": "M05",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m05-001",
+      "activity": "QUALITY_CHECK",
+      "used": [
+        "dataset:prepared:student_semester:v1"
+      ],
+      "generated": [
+        "artifact:quality_report:v1"
+      ],
+      "rules_executed": 12,
+      "passed": 11,
+      "warnings": 1,
+      "critical_failures": 0
+    }
+  },
+  {
+    "event": "DATASET_VALIDATED",
+    "module_id": "M05",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m05-002",
+      "activity": "DATASET_VALIDATED",
+      "used": [
+        "dataset:prepared:student_semester:v1",
+        "artifact:quality_report:v1"
+      ],
+      "generated": [
+        "dataset:validated:student_semester:v1"
+      ],
+      "decision": "ACCEPTED_WITH_WARNING"
+    }
+  },
+  {
+    "event": "FAIRNESS_MEASURED",
+    "module_id": "M06",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 2,
+    "title": "Calcular taxas"
+  },
+  {
+    "event": "FAIRNESS_ALERT",
+    "module_id": "M06",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 3,
+    "title": "Comparar limiar"
+  },
+  {
+    "event": "FAIRNESS_MEASURED",
+    "module_id": "M06",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m06-001",
+      "activity": "FAIRNESS_MEASURED",
+      "used": [
+        "dataset:validated:student_semester:v1",
+        "sexo",
+        "evadiu"
+      ],
+      "generated": [
+        "artifact:fairness_report:v1"
+      ],
+      "metrics": {
+        "F_rate": 0.0,
+        "M_rate": 0.6666666666666666,
+        "SPD_M_minus_F": 0.667
+      }
+    }
+  },
+  {
+    "event": "ANALYTICAL_ASSET_CREATED",
+    "module_id": "M07",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 2,
+    "title": "Minimizar/publicar"
+  },
+  {
+    "event": "ASSET_PUBLISHED",
+    "module_id": "M07",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 3,
+    "title": "Registrar ativo"
+  },
+  {
+    "event": "PUBLISH_ANALYTICAL_ASSET",
+    "module_id": "M07",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m07-001",
+      "activity": "PUBLISH_ANALYTICAL_ASSET",
+      "used": [
+        "dataset:validated:student_semester:v1"
+      ],
+      "generated": [
+        "dataset:analytical:student_risk:v1"
+      ],
+      "minimized_fields_removed": [
+        "nome",
+        "data_nascimento"
+      ],
+      "classification": "RESTRICTED"
+    }
+  },
+  {
+    "event": "PRODUCT_DEFINED",
+    "module_id": "M08",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 1,
+    "title": "Definir produto"
+  },
+  {
+    "event": "PRODUCT_PUBLISHED",
+    "module_id": "M08",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 2,
+    "title": "Gerar canais"
+  },
+  {
+    "event": "PUBLISH_DATA_PRODUCT",
+    "module_id": "M08",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m08-001",
+      "activity": "PUBLISH_DATA_PRODUCT",
+      "used": [
+        "dataset:analytical:student_risk:v1"
+      ],
+      "generated": [
+        "product:DP-EDU-001"
+      ],
+      "audience": [
+        "coordenador_curso"
+      ],
+      "access_policy": "restricted"
+    }
+  },
+  {
+    "event": "CATALOG_UPSERT",
+    "module_id": "M09",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "meta-m09-001",
+      "activity": "CATALOG_UPSERT",
+      "used": [
+        "dataset:analytical:student_risk:v1"
+      ],
+      "generated": [
+        "catalog_entry:dataset:analytical:student_risk:v1"
+      ],
+      "metadata_version": "1.0"
+    }
+  },
+  {
+    "event": "ACCESS_POLICY_APPLIED",
+    "module_id": "M10",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "gov-m10-001",
+      "activity": "ACCESS_POLICY_APPLIED",
+      "asset_id": "dataset:analytical:student_risk:v1",
+      "policy_id": "GOV-EDU-001",
+      "decision": "RESTRICT",
+      "allowed_roles": [
+        "pesquisador_autorizado",
+        "gestor_academico"
+      ]
+    }
+  },
+  {
+    "event": "AGGREGATION+INTEGRATION",
+    "module_id": "M11",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "lineage-m11-001",
+      "from": "dataset:raw:notas:v1",
+      "to": "dataset:integrated:student_semester:v1",
+      "activity": "AGGREGATION+INTEGRATION",
+      "module": "M03"
+    }
+  },
+  {
+    "event": "PUBLISH_DATA_PRODUCT",
+    "module_id": "M11",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "lineage-m11-002",
+      "from": "dataset:analytical:student_risk:v1",
+      "to": "product:DP-EDU-001",
+      "activity": "PUBLISH_DATA_PRODUCT",
+      "module": "M08"
+    }
+  },
+  {
+    "event": "EXECUTION_VERSIONED",
+    "module_id": "M12",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "version-m12-001",
+      "activity": "EXECUTION_VERSIONED",
+      "run_id": "run-edu-2026-11-18-001",
+      "pipeline_version": "1.2.0",
+      "git_commit": "demo-5ad91c2"
+    }
+  },
+  {
+    "event": "REPRESENTATION_CREATED",
+    "module_id": "M13",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 3,
+    "title": "Materializar grafo"
+  },
+  {
+    "event": "REPRESENTATION_CREATED",
+    "module_id": "M13",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m13-001",
+      "activity": "REPRESENTATION_CREATED",
+      "used": [
+        "dataset:analytical:student_risk:v1"
+      ],
+      "generated": [
+        "representation:matrix",
+        "representation:graph"
+      ]
+    }
+  },
+  {
+    "event": "FEATURE_DERIVED",
+    "module_id": "M14",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 2,
+    "title": "Derivar recebe_apoio"
+  },
+  {
+    "event": "FEATURE_DERIVED",
+    "module_id": "M14",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 3,
+    "title": "Derivar risco simples"
+  },
+  {
+    "event": "FEATURE_SET_CREATED",
+    "module_id": "M14",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 4,
+    "title": "Persistir feature set"
+  },
+  {
+    "event": "FEATURE_DERIVED",
+    "module_id": "M14",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "prov-m14-001",
+      "activity": "FEATURE_DERIVED",
+      "used": [
+        "media_nota",
+        "total_faltas"
+      ],
+      "generated": [
+        "risco_academico_simples"
+      ],
+      "rule": "ALTO if media<5 or faltas>30; MEDIO if media<7 or faltas>15; else BAIXO",
+      "note": "heurística didática; não modelo preditivo"
+    }
+  },
+  {
+    "event": "DRIFT_CHECKED",
+    "module_id": "M15",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 2,
+    "title": "Comparar referência"
+  },
+  {
+    "event": "MONITORING_ALERT",
+    "module_id": "M15",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 3,
+    "title": "Emitir alertas"
+  },
+  {
+    "event": "DRIFT_CHECKED",
+    "module_id": "M15",
+    "run_id": "run-edu-2026-11-18-001",
+    "record": {
+      "event_id": "mon-m15-001",
+      "activity": "DRIFT_CHECKED",
+      "used": [
+        "run:2026-10",
+        "run:2026-11"
+      ],
+      "generated": [
+        "metadata:drift_report:v1"
+      ],
+      "alerts": [
+        "AL-001",
+        "AL-002"
+      ]
+    }
+  },
+  {
+    "event": "EVIDENCE_FILTERED",
+    "module_id": "M16",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 2,
+    "title": "Aplicar governança"
+  },
+  {
+    "event": "EVIDENCE_RETRIEVED",
+    "module_id": "M16",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 3,
+    "title": "Recuperar"
+  },
+  {
+    "event": "AGENT_QUERY_COMPLETED",
+    "module_id": "M16",
+    "run_id": "run-edu-2026-11-18-001",
+    "step": 4,
+    "title": "Responder e registrar"
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "alunos_csv",
+    "connector": "file",
+    "source_system": "Arquivo institucional / legado",
+    "object": "input/alunos.csv",
+    "owner": "Graduação",
+    "event_id": "m01-001",
+    "event": "SOURCE_REGISTERED",
+    "occurred_at": "2026-11-18T10:00:00-03:00",
+    "payload": {
+      "access_status": "ACCESSIBLE",
+      "granularity": "aluno",
+      "candidate_keys": [
+        "aluno_id"
+      ],
+      "update_frequency": "mensal"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "alunos_csv",
+    "connector": "file",
+    "source_system": "Arquivo institucional / legado",
+    "object": "input/alunos.csv",
+    "owner": "Graduação",
+    "event_id": "m01-002",
+    "event": "SCHEMA_OBSERVED",
+    "occurred_at": "2026-11-18T10:00:00-03:00",
+    "payload": {
+      "schema": [
+        {
+          "name": "aluno_id",
+          "type": "integer",
+          "nullable": false,
+          "candidate_key": true
+        },
+        {
+          "name": "nome",
+          "type": "string",
+          "nullable": false,
+          "personal_data": true
+        },
+        {
+          "name": "sexo",
+          "type": "string",
+          "nullable": false,
+          "protected_attribute": true
+        },
+        {
+          "name": "data_nascimento",
+          "type": "date",
+          "nullable": false,
+          "personal_data": true
+        },
+        {
+          "name": "cidade",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "curso",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "ano_ingresso",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "schema_fingerprint": "sha256:2b3eaffe30873b46871a2481a8788895af90073ac2a54bb4e381361c1a1aec93",
+      "column_count": 7
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "alunos_csv",
+    "connector": "file",
+    "source_system": "Arquivo institucional / legado",
+    "object": "input/alunos.csv",
+    "owner": "Graduação",
+    "event_id": "m01-003",
+    "event": "SOURCE_PROFILED",
+    "occurred_at": "2026-11-18T10:00:00-03:00",
+    "payload": {
+      "row_count": 6,
+      "column_count": 7,
+      "granularity": "aluno"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "alunos_csv",
+    "connector": "file",
+    "source_system": "Arquivo institucional / legado",
+    "object": "input/alunos.csv",
+    "owner": "Graduação",
+    "event_id": "m01-004",
+    "event": "SOURCE_CLASSIFIED",
+    "occurred_at": "2026-11-18T10:00:00-03:00",
+    "payload": {
+      "sensitivity": "alta",
+      "contains_personal_data": true,
+      "access_class": "RESTRICTED"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "alunos_csv",
+    "connector": "file",
+    "source_system": "Arquivo institucional / legado",
+    "object": "input/alunos.csv",
+    "owner": "Graduação",
+    "event_id": "m01-005",
+    "event": "SOURCE_VERSION_OBSERVED",
+    "occurred_at": "2026-11-18T10:00:01-03:00",
+    "payload": {
+      "integrity_method": "sha256",
+      "version_ref": "sha256:1e9c4b12a29629ec752ad6187db82d4dd620e8bf6888a84611794ef57958071f",
+      "schema_fingerprint": "sha256:2b3eaffe30873b46871a2481a8788895af90073ac2a54bb4e381361c1a1aec93"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "matriculas_pg",
+    "connector": "postgresql",
+    "source_system": "Sistema Acadêmico",
+    "object": "public.matriculas",
+    "owner": "STI / Graduação",
+    "event_id": "m01-006",
+    "event": "SOURCE_REGISTERED",
+    "occurred_at": "2026-11-18T10:00:01-03:00",
+    "payload": {
+      "access_status": "ACCESSIBLE",
+      "granularity": "aluno_semestre",
+      "candidate_keys": [
+        "matricula_id"
+      ],
+      "update_frequency": "diaria"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "matriculas_pg",
+    "connector": "postgresql",
+    "source_system": "Sistema Acadêmico",
+    "object": "public.matriculas",
+    "owner": "STI / Graduação",
+    "event_id": "m01-007",
+    "event": "SCHEMA_OBSERVED",
+    "occurred_at": "2026-11-18T10:00:01-03:00",
+    "payload": {
+      "schema": [
+        {
+          "name": "matricula_id",
+          "type": "integer",
+          "nullable": false,
+          "candidate_key": true
+        },
+        {
+          "name": "aluno_id",
+          "type": "integer",
+          "nullable": false,
+          "foreign_key": "alunos_csv.aluno_id"
+        },
+        {
+          "name": "semestre",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "situacao",
+          "type": "string",
+          "nullable": false
+        }
+      ],
+      "schema_fingerprint": "sha256:731015bad528436f1cc2fe9da4e6d8fe3d820b7dc6f0fc38a22bd8a482146d1c",
+      "column_count": 4
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "matriculas_pg",
+    "connector": "postgresql",
+    "source_system": "Sistema Acadêmico",
+    "object": "public.matriculas",
+    "owner": "STI / Graduação",
+    "event_id": "m01-008",
+    "event": "SOURCE_PROFILED",
+    "occurred_at": "2026-11-18T10:00:01-03:00",
+    "payload": {
+      "row_count": 6,
+      "column_count": 4,
+      "granularity": "aluno_semestre",
+      "profile_query": "SELECT count(*) AS rows_observed FROM public.matriculas WHERE semestre = :semestre",
+      "query_parameters": {
+        "semestre": "2026-1"
+      }
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "matriculas_pg",
+    "connector": "postgresql",
+    "source_system": "Sistema Acadêmico",
+    "object": "public.matriculas",
+    "owner": "STI / Graduação",
+    "event_id": "m01-009",
+    "event": "SOURCE_CLASSIFIED",
+    "occurred_at": "2026-11-18T10:00:01-03:00",
+    "payload": {
+      "sensitivity": "alta",
+      "contains_personal_data": true,
+      "access_class": "RESTRICTED"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "matriculas_pg",
+    "connector": "postgresql",
+    "source_system": "Sistema Acadêmico",
+    "object": "public.matriculas",
+    "owner": "STI / Graduação",
+    "event_id": "m01-010",
+    "event": "SOURCE_VERSION_OBSERVED",
+    "occurred_at": "2026-11-18T10:00:02-03:00",
+    "payload": {
+      "integrity_method": "query+schema_fingerprint",
+      "version_ref": "fingerprint:586352710de81a63b28f",
+      "schema_fingerprint": "sha256:731015bad528436f1cc2fe9da4e6d8fe3d820b7dc6f0fc38a22bd8a482146d1c"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "notas_pg",
+    "connector": "postgresql",
+    "source_system": "Sistema Acadêmico",
+    "object": "public.vw_notas_faltas",
+    "owner": "STI / Graduação",
+    "event_id": "m01-011",
+    "event": "SOURCE_REGISTERED",
+    "occurred_at": "2026-11-18T10:00:02-03:00",
+    "payload": {
+      "access_status": "ACCESSIBLE",
+      "granularity": "aluno_disciplina_semestre",
+      "candidate_keys": [
+        "aluno_id",
+        "disciplina_id",
+        "semestre"
+      ],
+      "update_frequency": "diaria"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "notas_pg",
+    "connector": "postgresql",
+    "source_system": "Sistema Acadêmico",
+    "object": "public.vw_notas_faltas",
+    "owner": "STI / Graduação",
+    "event_id": "m01-012",
+    "event": "SCHEMA_OBSERVED",
+    "occurred_at": "2026-11-18T10:00:02-03:00",
+    "payload": {
+      "schema": [
+        {
+          "name": "aluno_id",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "disciplina_id",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "semestre",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "nota",
+          "type": "numeric",
+          "nullable": false
+        },
+        {
+          "name": "faltas",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "schema_fingerprint": "sha256:76e3c930544b636db23ed6c18666142934099adc7716300a4fd5703f2ef9c1fc",
+      "column_count": 5
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "notas_pg",
+    "connector": "postgresql",
+    "source_system": "Sistema Acadêmico",
+    "object": "public.vw_notas_faltas",
+    "owner": "STI / Graduação",
+    "event_id": "m01-013",
+    "event": "SOURCE_PROFILED",
+    "occurred_at": "2026-11-18T10:00:02-03:00",
+    "payload": {
+      "row_count": 12,
+      "column_count": 5,
+      "granularity": "aluno_disciplina_semestre",
+      "profile_query": "SELECT count(*) AS rows_observed FROM public.vw_notas_faltas WHERE semestre = :semestre",
+      "query_parameters": {
+        "semestre": "2026-1"
+      }
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "notas_pg",
+    "connector": "postgresql",
+    "source_system": "Sistema Acadêmico",
+    "object": "public.vw_notas_faltas",
+    "owner": "STI / Graduação",
+    "event_id": "m01-014",
+    "event": "SOURCE_CLASSIFIED",
+    "occurred_at": "2026-11-18T10:00:02-03:00",
+    "payload": {
+      "sensitivity": "media",
+      "contains_personal_data": true,
+      "access_class": "INTERNAL"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "notas_pg",
+    "connector": "postgresql",
+    "source_system": "Sistema Acadêmico",
+    "object": "public.vw_notas_faltas",
+    "owner": "STI / Graduação",
+    "event_id": "m01-015",
+    "event": "SOURCE_VERSION_OBSERVED",
+    "occurred_at": "2026-11-18T10:00:03-03:00",
+    "payload": {
+      "integrity_method": "query+schema_fingerprint",
+      "version_ref": "fingerprint:f1f5a5a544fbb20d6a50",
+      "schema_fingerprint": "sha256:76e3c930544b636db23ed6c18666142934099adc7716300a4fd5703f2ef9c1fc"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "apoio_api",
+    "connector": "rest_api",
+    "source_system": "Serviço de Assistência Estudantil",
+    "object": "GET /v1/beneficios-estudantis",
+    "owner": "Assistência Estudantil",
+    "event_id": "m01-016",
+    "event": "SOURCE_REGISTERED",
+    "occurred_at": "2026-11-18T10:00:03-03:00",
+    "payload": {
+      "access_status": "ACCESSIBLE",
+      "granularity": "aluno",
+      "candidate_keys": [
+        "aluno_id"
+      ],
+      "update_frequency": "diaria"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "apoio_api",
+    "connector": "rest_api",
+    "source_system": "Serviço de Assistência Estudantil",
+    "object": "GET /v1/beneficios-estudantis",
+    "owner": "Assistência Estudantil",
+    "event_id": "m01-017",
+    "event": "SCHEMA_OBSERVED",
+    "occurred_at": "2026-11-18T10:00:03-03:00",
+    "payload": {
+      "schema": [
+        {
+          "name": "aluno_id",
+          "type": "integer",
+          "nullable": false,
+          "candidate_key": true
+        },
+        {
+          "name": "bolsa",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "auxilio_permanencia",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "monitoria",
+          "type": "string",
+          "nullable": false
+        }
+      ],
+      "schema_fingerprint": "sha256:9d2e2d914cb7117ba026dbb8c70659ef98b3b94464843c2586fdbc69ab3d0caf",
+      "column_count": 4
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "apoio_api",
+    "connector": "rest_api",
+    "source_system": "Serviço de Assistência Estudantil",
+    "object": "GET /v1/beneficios-estudantis",
+    "owner": "Assistência Estudantil",
+    "event_id": "m01-018",
+    "event": "SOURCE_PROFILED",
+    "occurred_at": "2026-11-18T10:00:03-03:00",
+    "payload": {
+      "row_count": 6,
+      "column_count": 4,
+      "granularity": "aluno",
+      "pagination": {
+        "strategy": "page/page_size",
+        "page": 1,
+        "page_size": 100,
+        "pages_observed": 1,
+        "objects_observed": 6
+      }
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "apoio_api",
+    "connector": "rest_api",
+    "source_system": "Serviço de Assistência Estudantil",
+    "object": "GET /v1/beneficios-estudantis",
+    "owner": "Assistência Estudantil",
+    "event_id": "m01-019",
+    "event": "SOURCE_CLASSIFIED",
+    "occurred_at": "2026-11-18T10:00:03-03:00",
+    "payload": {
+      "sensitivity": "alta",
+      "contains_personal_data": true,
+      "access_class": "RESTRICTED"
+    }
+  },
+  {
+    "run_id": "run-edu-2026-11-18-001",
+    "module_id": "M01",
+    "source_id": "apoio_api",
+    "connector": "rest_api",
+    "source_system": "Serviço de Assistência Estudantil",
+    "object": "GET /v1/beneficios-estudantis",
+    "owner": "Assistência Estudantil",
+    "event_id": "m01-020",
+    "event": "SOURCE_VERSION_OBSERVED",
+    "occurred_at": "2026-11-18T10:00:04-03:00",
+    "payload": {
+      "integrity_method": "response+schema_fingerprint",
+      "version_ref": "fingerprint:33f0e6c2cadb760744dd",
+      "schema_fingerprint": "sha256:9d2e2d914cb7117ba026dbb8c70659ef98b3b94464843c2586fdbc69ab3d0caf"
+    }
+  }
+]

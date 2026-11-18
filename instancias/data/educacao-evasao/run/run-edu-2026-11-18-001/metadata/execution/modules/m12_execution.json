@@ -1,0 +1,229 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M12",
+  "module_name": "Versionamento e Reprodutibilidade",
+  "kind": "transversal",
+  "status": "SUCCESS",
+  "objective": "Garantir que uma execução possa ser identificada, auditada e reproduzida com os mesmos dados, configuração, regras, código e ambiente.",
+  "input_summary": "configuração, checksums/fingerprints, artefatos, versão de código e ambiente",
+  "output_summary": "registro de versões + manifesto de execução + ambiente + pacote de reprodutibilidade",
+  "inputs": [
+    {
+      "id": "config:pipeline",
+      "name": "pipeline.yml",
+      "kind": "config",
+      "format": "YAML",
+      "path": "pipeline.yml",
+      "href": "data/educacao-evasao/pipeline.yml",
+      "role": ""
+    },
+    {
+      "id": "manifest:assets",
+      "name": "Ativos da execução",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "manifest.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/manifest.json",
+      "role": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": "versions:registry",
+      "name": "registro_versoes.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/versions/registro_versoes.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/versions/registro_versoes.json",
+      "role": ""
+    },
+    {
+      "id": "versions:manifest",
+      "name": "manifesto_execucao.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/versions/manifesto_execucao.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/versions/manifesto_execucao.json",
+      "role": ""
+    },
+    {
+      "id": "versions:env",
+      "name": "ambiente_reprodutivel.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/versions/ambiente_reprodutivel.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/versions/ambiente_reprodutivel.json",
+      "role": ""
+    },
+    {
+      "id": "versions:package",
+      "name": "pacote_reprodutibilidade.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/versions/pacote_reprodutibilidade.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/versions/pacote_reprodutibilidade.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "metadata/versions/registro_versoes.json",
+    "metadata/versions/manifesto_execucao.json",
+    "metadata/versions/ambiente_reprodutivel.json",
+    "metadata/versions/pacote_reprodutibilidade.json"
+  ],
+  "metrics": [
+    {
+      "label": "Run",
+      "value": "run-...001"
+    },
+    {
+      "label": "Pipeline",
+      "value": "1.2.0"
+    },
+    {
+      "label": "Commit",
+      "value": "demo-5ad91c2"
+    },
+    {
+      "label": "Módulos",
+      "value": "16 SUCCESS"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "registrar versões dos artefatos",
+      "concreteAction": "SHA-256 e IDs",
+      "input": "artefatos/config",
+      "result": "version registry",
+      "registers": "path + checksum",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/versions/registro_versoes.json",
+        "metadata/versions/manifesto_execucao.json",
+        "metadata/versions/ambiente_reprodutivel.json"
+      ]
+    },
+    {
+      "responsibility": "calcular ou consolidar checksums",
+      "concreteAction": "commit + pipeline version",
+      "input": "execução",
+      "result": "execution manifest",
+      "registers": "git_commit",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/versions/registro_versoes.json",
+        "metadata/versions/manifesto_execucao.json",
+        "metadata/versions/ambiente_reprodutivel.json"
+      ]
+    },
+    {
+      "responsibility": "registrar commit ou versão do código",
+      "concreteAction": "Python e dependências",
+      "input": "runtime",
+      "result": "environment manifest",
+      "registers": "package versions",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/versions/registro_versoes.json",
+        "metadata/versions/manifesto_execucao.json",
+        "metadata/versions/ambiente_reprodutivel.json"
+      ]
+    },
+    {
+      "responsibility": "registrar dependências e ambiente",
+      "concreteAction": "Gerar pacote reprodutível lógico",
+      "input": "registros",
+      "result": "reproducibility package",
+      "registers": "includes",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/versions/registro_versoes.json",
+        "metadata/versions/manifesto_execucao.json",
+        "metadata/versions/ambiente_reprodutivel.json"
+      ]
+    },
+    {
+      "responsibility": "montar pacote de reprodutibilidade",
+      "concreteAction": "Gerar pacote reprodutível lógico",
+      "input": "registros",
+      "result": "reproducibility package",
+      "registers": "includes",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/versions/registro_versoes.json",
+        "metadata/versions/manifesto_execucao.json",
+        "metadata/versions/ambiente_reprodutivel.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Coletar versões",
+      "input": "artefatos/config",
+      "operation": "SHA-256 e IDs",
+      "output": "version registry",
+      "registers": "path + checksum",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Registrar código",
+      "input": "execução",
+      "operation": "commit + pipeline version",
+      "output": "execution manifest",
+      "registers": "git_commit",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 3,
+      "title": "Registrar ambiente",
+      "input": "runtime",
+      "operation": "Python e dependências",
+      "output": "environment manifest",
+      "registers": "package versions",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 4,
+      "title": "Empacotar referências",
+      "input": "registros",
+      "operation": "Gerar pacote reprodutível lógico",
+      "output": "reproducibility package",
+      "registers": "includes",
+      "events": [],
+      "transversal": []
+    }
+  ],
+  "contract_ref": "contracts/m12_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "version-m12-001",
+      "activity": "EXECUTION_VERSIONED",
+      "run_id": "run-edu-2026-11-18-001",
+      "pipeline_version": "1.2.0",
+      "git_commit": "demo-5ad91c2"
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M01–M16",
+      "consumes": [
+        "versionable assets/events"
+      ],
+      "action": "Versiona tudo que influencia a reprodução da execução.",
+      "stores": [
+        "metadata/versions/registro_versoes.json"
+      ]
+    }
+  ]
+}

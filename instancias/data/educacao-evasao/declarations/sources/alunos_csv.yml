@@ -1,0 +1,12 @@
+sources:
+- source_id: alunos_csv
+  name: Cadastro complementar de alunos
+  connector: file
+  type: csv
+  path: input/alunos.csv
+  owner: Graduacao
+  granularity: aluno
+  candidate_keys:
+  - aluno_id
+  sensitivity: alta
+  update_frequency: mensal

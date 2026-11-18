@@ -1,0 +1,9 @@
+{
+  "python": "3.12",
+  "packages": {
+    "pandas": "2.x",
+    "PyYAML": "6.x"
+  },
+  "os": "demonstracao",
+  "timezone": "America/Sao_Paulo"
+}

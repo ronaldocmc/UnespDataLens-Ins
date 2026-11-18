@@ -1,0 +1,87 @@
+pipeline:
+  id: EDU-EVASAO-01
+  name: Pipeline educacional — risco de evasão
+  version: 1.2.0
+  domain: educacao
+  owner: Laboratório de Dados — UNESP
+  objective: Produzir ativo analítico rastreável para análise de risco de evasão
+  target_column: evadiu
+  primary_entity: student_semester
+
+run:
+  run_id: run-edu-2026-11-18-001
+
+sources:
+  - source_id: alunos_csv
+    name: Cadastro complementar de alunos
+    connector: file
+    type: csv
+    path: input/alunos.csv
+    owner: Graduacao
+    granularity: aluno
+    candidate_keys: [aluno_id]
+    sensitivity: alta
+    update_frequency: mensal
+
+  - source_id: matriculas_pg
+    name: Matriculas do Sistema Academico
+    connector: postgresql
+    connection_ref: secret://academic-postgres
+    host_alias: sistema-academico
+    database: academico
+    object: public.matriculas
+    extraction_mode: snapshot
+    owner: STI / Graduacao
+    granularity: aluno_semestre
+    candidate_keys: [matricula_id]
+    sensitivity: alta
+    update_frequency: diaria
+
+  - source_id: notas_pg
+    name: Notas e faltas do Sistema Academico
+    connector: postgresql
+    connection_ref: secret://academic-postgres
+    host_alias: sistema-academico
+    database: academico
+    object: public.vw_notas_faltas
+    extraction_mode: snapshot
+    owner: STI / Graduacao
+    granularity: aluno_disciplina_semestre
+    candidate_keys: [aluno_id, disciplina_id, semestre]
+    sensitivity: media
+    update_frequency: diaria
+
+  - source_id: apoio_api
+    name: Beneficios e apoio estudantil
+    connector: rest_api
+    base_url: https://api.exemplo.edu.br
+    endpoint: /v1/beneficios-estudantis
+    auth_ref: secret://student-support-api
+    method: GET
+    response_format: json
+    owner: Assistencia Estudantil
+    granularity: aluno
+    candidate_keys: [aluno_id]
+    sensitivity: alta
+    update_frequency: diaria
+
+integration:
+  target_granularity: aluno_semestre
+  joins:
+    - left: alunos_csv
+      right: matriculas_pg
+      on: [aluno_id]
+      how: inner
+    - left: student_enrollment
+      right: notas_agregadas
+      on: [aluno_id, semestre]
+      how: left
+    - left: student_performance
+      right: apoio_api
+      on: [aluno_id]
+      how: left
+
+quality_rules: configs/quality/evasao_rules.yml
+protected_attributes: [sexo]
+features: [media_nota,total_faltas,qtd_disciplinas,recebe_apoio,risco_academico_simples]
+products: [indicadores_risco_evasao]

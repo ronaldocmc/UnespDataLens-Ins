@@ -1,0 +1,44 @@
+{
+  "target_granularity": "aluno_semestre",
+  "operations": [
+    {
+      "id": "agg_notas",
+      "type": "aggregate",
+      "source": "raw:notas",
+      "group_by": [
+        "aluno_id",
+        "semestre"
+      ],
+      "aggregations": {
+        "nota": "mean",
+        "faltas": "sum",
+        "disciplina_id": "count"
+      }
+    },
+    {
+      "id": "join_alunos_matriculas",
+      "type": "join",
+      "how": "inner",
+      "on": [
+        "aluno_id"
+      ]
+    },
+    {
+      "id": "join_notas",
+      "type": "join",
+      "how": "left",
+      "on": [
+        "aluno_id",
+        "semestre"
+      ]
+    },
+    {
+      "id": "join_apoio",
+      "type": "join",
+      "how": "left",
+      "on": [
+        "aluno_id"
+      ]
+    }
+  ]
+}

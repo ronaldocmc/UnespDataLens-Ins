@@ -1,0 +1,121 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "module_id": "M01",
+  "schemas": {
+    "alunos_csv": [
+      {
+        "name": "aluno_id",
+        "type": "integer",
+        "nullable": false,
+        "candidate_key": true
+      },
+      {
+        "name": "nome",
+        "type": "string",
+        "nullable": false,
+        "personal_data": true
+      },
+      {
+        "name": "sexo",
+        "type": "string",
+        "nullable": false,
+        "protected_attribute": true
+      },
+      {
+        "name": "data_nascimento",
+        "type": "date",
+        "nullable": false,
+        "personal_data": true
+      },
+      {
+        "name": "cidade",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "curso",
+        "type": "string",
+        "nullable": false
+      },
+      {
+        "name": "ano_ingresso",
+        "type": "integer",
+        "nullable": false
+      }
+    ],
+    "matriculas_pg": [
+      {
+        "name": "matricula_id",
+        "type": "integer",
+        "nullable": false,
+        "candidate_key": true
+      },
+      {
+        "name": "aluno_id",
+        "type": "integer",
+        "nullable": false,
+        "foreign_key": "alunos_csv.aluno_id"
+      },
+      {
+        "name": "semestre",
+        "type": "string",
+        "nullable": false
+      },
+      {
+        "name": "situacao",
+        "type": "string",
+        "nullable": false
+      }
+    ],
+    "notas_pg": [
+      {
+        "name": "aluno_id",
+        "type": "integer",
+        "nullable": false
+      },
+      {
+        "name": "disciplina_id",
+        "type": "string",
+        "nullable": false
+      },
+      {
+        "name": "semestre",
+        "type": "string",
+        "nullable": false
+      },
+      {
+        "name": "nota",
+        "type": "numeric",
+        "nullable": false
+      },
+      {
+        "name": "faltas",
+        "type": "integer",
+        "nullable": false
+      }
+    ],
+    "apoio_api": [
+      {
+        "name": "aluno_id",
+        "type": "integer",
+        "nullable": false,
+        "candidate_key": true
+      },
+      {
+        "name": "bolsa",
+        "type": "string",
+        "nullable": false
+      },
+      {
+        "name": "auxilio_permanencia",
+        "type": "string",
+        "nullable": false
+      },
+      {
+        "name": "monitoria",
+        "type": "string",
+        "nullable": false
+      }
+    ]
+  }
+}

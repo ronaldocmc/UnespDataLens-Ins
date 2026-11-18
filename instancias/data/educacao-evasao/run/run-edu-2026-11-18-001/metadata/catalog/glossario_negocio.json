@@ -1,0 +1,16 @@
+{
+  "terms": [
+    {
+      "term": "evasão",
+      "definition": "Situação acadêmica registrada como EVADIDO na matrícula do semestre."
+    },
+    {
+      "term": "estudante-semestre",
+      "definition": "Unidade analítica composta por estudante em um semestre letivo."
+    },
+    {
+      "term": "risco acadêmico simples",
+      "definition": "Feature didática derivada de nota média e faltas; não é modelo preditivo."
+    }
+  ]
+}

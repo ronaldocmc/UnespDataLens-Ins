@@ -1,0 +1,1 @@
+{"producer":"M10","policy_id":"GOV-EDU-001","rules":[{"classification":"RESTRICTED","allowed_roles":["academic_manager","authorized_researcher"],"external_sharing":false},{"classification":"INTERNAL","allowed_roles":["academic_manager","authorized_researcher","data_engineer"],"external_sharing":false}]}

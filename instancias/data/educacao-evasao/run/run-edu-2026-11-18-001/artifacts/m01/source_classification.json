@@ -1,0 +1,28 @@
+{
+  "sources": [
+    {
+      "source_id": "alunos_csv",
+      "sensitivity": "alta",
+      "contains_personal_data": true,
+      "access_class": "RESTRICTED"
+    },
+    {
+      "source_id": "matriculas_pg",
+      "sensitivity": "alta",
+      "contains_personal_data": true,
+      "access_class": "RESTRICTED"
+    },
+    {
+      "source_id": "notas_pg",
+      "sensitivity": "media",
+      "contains_personal_data": true,
+      "access_class": "INTERNAL"
+    },
+    {
+      "source_id": "apoio_api",
+      "sensitivity": "alta",
+      "contains_personal_data": true,
+      "access_class": "RESTRICTED"
+    }
+  ]
+}

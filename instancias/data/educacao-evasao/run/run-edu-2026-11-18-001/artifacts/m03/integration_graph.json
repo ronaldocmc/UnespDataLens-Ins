@@ -1,0 +1,37 @@
+{
+  "nodes": [
+    "raw:alunos",
+    "raw:matriculas",
+    "raw:notas",
+    "raw:apoio",
+    "integrated:student_semester"
+  ],
+  "edges": [
+    {
+      "from": "raw:alunos",
+      "to": "integrated:student_semester",
+      "on": [
+        "aluno_id"
+      ]
+    },
+    {
+      "from": "raw:matriculas",
+      "to": "integrated:student_semester",
+      "on": [
+        "aluno_id"
+      ]
+    },
+    {
+      "from": "raw:notas",
+      "to": "integrated:student_semester",
+      "operation": "aggregate+join"
+    },
+    {
+      "from": "raw:apoio",
+      "to": "integrated:student_semester",
+      "on": [
+        "aluno_id"
+      ]
+    }
+  ]
+}

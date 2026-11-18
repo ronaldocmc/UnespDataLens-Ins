@@ -1,0 +1,11 @@
+{
+  "root_product": "product:DP-EDU-001",
+  "depends_on": [
+    "dataset:analytical:student_risk:v1",
+    "dataset:validated:student_semester:v1",
+    "dataset:prepared:student_semester:v1",
+    "dataset:integrated:student_semester:v1",
+    "four raw datasets",
+    "four source systems"
+  ]
+}

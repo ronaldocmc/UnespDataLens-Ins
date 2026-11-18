@@ -1,0 +1,14 @@
+{
+  "duplicates_removed": 0,
+  "nulls_imputed": 0,
+  "categories_normalized": [
+    "sexo",
+    "situacao"
+  ],
+  "derived_columns": [
+    "idade",
+    "faixa_etaria",
+    "evadiu"
+  ],
+  "output_rows": 6
+}

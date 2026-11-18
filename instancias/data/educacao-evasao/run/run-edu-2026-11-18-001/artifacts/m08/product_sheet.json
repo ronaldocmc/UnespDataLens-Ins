@@ -1,0 +1,19 @@
+{
+  "product_id": "DP-EDU-001",
+  "name": "Indicadores de Risco de Evasão",
+  "description": "Produto de dados didático para acompanhamento acadêmico",
+  "audience": [
+    "coordenador_curso"
+  ],
+  "source_assets": [
+    "dataset:analytical:student_risk:v1"
+  ],
+  "refresh_frequency": "semanal",
+  "access_policy": "restricted",
+  "channels": [
+    "dashboard",
+    "report",
+    "api"
+  ],
+  "owner": "Laboratório de Dados"
+}

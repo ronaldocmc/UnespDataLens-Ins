@@ -1,0 +1,1 @@
+{"producer":"M09","entries":{"alunos_csv":["aluno_id","nome","sexo","data_nascimento","cidade","curso","ano_ingresso"],"matriculas_pg":["matricula_id","aluno_id","semestre","situacao"],"notas_pg":["aluno_id","disciplina_id","semestre","nota","faltas"],"apoio_api":["aluno_id","bolsa","auxilio_permanencia","monitoria"]}}

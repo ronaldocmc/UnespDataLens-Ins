@@ -1,0 +1,28 @@
+{
+  "checks": [
+    {
+      "source_id": "alunos_csv",
+      "raw_asset": "dataset:raw:alunos:v1",
+      "status": "MATCH_OR_FINGERPRINT_VERIFIED",
+      "checksum_sha256": "1e9c4b12a29629ec752ad6187db82d4dd620e8bf6888a84611794ef57958071f"
+    },
+    {
+      "source_id": "matriculas_pg",
+      "raw_asset": "dataset:raw:matriculas:v1",
+      "status": "MATCH_OR_FINGERPRINT_VERIFIED",
+      "checksum_sha256": "4bfffab8c9d345245275e236a5d905833417b8eb8d239357c7ff701bd8e0c3e4"
+    },
+    {
+      "source_id": "notas_pg",
+      "raw_asset": "dataset:raw:notas:v1",
+      "status": "MATCH_OR_FINGERPRINT_VERIFIED",
+      "checksum_sha256": "8b0f848467b6521d3608b2c42bb0b029b7b0efd44aef245e7df6bf4470dab262"
+    },
+    {
+      "source_id": "apoio_api",
+      "raw_asset": "dataset:raw:apoio:v1",
+      "status": "MATCH_OR_FINGERPRINT_VERIFIED",
+      "checksum_sha256": "33f0e6c2cadb760744dda91e1bed6d91d4651b5f45742a8ab7f1dcf82c2c45bf"
+    }
+  ]
+}

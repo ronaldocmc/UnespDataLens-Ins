@@ -1,0 +1,9 @@
+{
+  "exceptions": [
+    {
+      "rule_id": "Q12",
+      "severity": "LOW",
+      "action": "monitor"
+    }
+  ]
+}

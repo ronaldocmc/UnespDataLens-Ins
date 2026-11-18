@@ -1,0 +1,72 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "entries": [
+    {
+      "asset_id": "source:alunos_csv",
+      "type": "source",
+      "name": "Cadastro complementar de alunos",
+      "owner": "Graduação",
+      "granularity": "aluno",
+      "sensitivity": "alta"
+    },
+    {
+      "asset_id": "source:matriculas_pg",
+      "type": "source",
+      "name": "Matrículas do Sistema Acadêmico",
+      "owner": "STI / Graduação",
+      "granularity": "aluno_semestre",
+      "sensitivity": "alta"
+    },
+    {
+      "asset_id": "source:notas_pg",
+      "type": "source",
+      "name": "Notas e faltas do Sistema Acadêmico",
+      "owner": "STI / Graduação",
+      "granularity": "aluno_disciplina_semestre",
+      "sensitivity": "media"
+    },
+    {
+      "asset_id": "source:apoio_api",
+      "type": "source",
+      "name": "Benefícios e apoio estudantil",
+      "owner": "Assistência Estudantil",
+      "granularity": "aluno",
+      "sensitivity": "alta"
+    },
+    {
+      "asset_id": "dataset:raw:alunos:v1",
+      "type": "dataset",
+      "layer": "raw",
+      "owner": "Laboratório de Dados"
+    },
+    {
+      "asset_id": "dataset:integrated:student_semester:v1",
+      "type": "dataset",
+      "layer": "integrated",
+      "granularity": "student_semester"
+    },
+    {
+      "asset_id": "dataset:prepared:student_semester:v1",
+      "type": "dataset",
+      "layer": "prepared",
+      "granularity": "student_semester"
+    },
+    {
+      "asset_id": "dataset:validated:student_semester:v1",
+      "type": "dataset",
+      "layer": "validated",
+      "granularity": "student_semester"
+    },
+    {
+      "asset_id": "dataset:analytical:student_risk:v1",
+      "type": "dataset",
+      "layer": "analytical",
+      "granularity": "student_semester"
+    },
+    {
+      "asset_id": "product:DP-EDU-001",
+      "type": "data_product",
+      "name": "Indicadores de Risco de Evasão"
+    }
+  ]
+}

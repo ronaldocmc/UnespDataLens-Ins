@@ -1,0 +1,16 @@
+{
+  "module_id": "M14",
+  "requires": {
+    "dataset": "dataset:analytical:student_risk:v1"
+  },
+  "produces": {
+    "feature_set": "feature_set:student_risk:v1",
+    "features": [
+      "media_nota",
+      "total_faltas",
+      "recebe_apoio",
+      "risco_academico_simples"
+    ],
+    "target": "evadiu"
+  }
+}

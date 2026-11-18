@@ -1,0 +1,270 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M15",
+  "module_name": "Monitoramento, Drift e Evolução dos Ativos",
+  "kind": "transversal",
+  "status": "SUCCESS",
+  "objective": "Comparar execuções ao longo do tempo e detectar mudanças de schema, dados, qualidade e comportamento dos ativos.",
+  "input_summary": "dataset/feature set atuais + baseline de execução anterior + schemas",
+  "output_summary": "baseline atual + comparação de drift + 2 alertas + evolução dos ativos",
+  "inputs": [
+    {
+      "id": "dataset:validated:student_semester:v1",
+      "name": "validated dataset",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/validated/student_semester_validated.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/validated/student_semester_validated.csv",
+      "role": "",
+      "records": 6,
+      "columns": 18
+    },
+    {
+      "id": "baseline:reference",
+      "name": "baseline_reference.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/monitoring/baseline_reference.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/monitoring/baseline_reference.json",
+      "role": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": "monitoring:current",
+      "name": "baseline_current.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/monitoring/baseline_current.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/monitoring/baseline_current.json",
+      "role": ""
+    },
+    {
+      "id": "monitoring:drift",
+      "name": "data_drift_report.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/monitoring/data_drift_report.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/monitoring/data_drift_report.json",
+      "role": ""
+    },
+    {
+      "id": "monitoring:alerts",
+      "name": "alerts.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/monitoring/alerts.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/monitoring/alerts.json",
+      "role": ""
+    },
+    {
+      "id": "monitoring:evolution",
+      "name": "asset_evolution_report.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/monitoring/asset_evolution_report.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/monitoring/asset_evolution_report.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "metadata/monitoring/baseline_current.json",
+    "metadata/monitoring/baseline_reference.json",
+    "metadata/monitoring/data_drift_report.json",
+    "metadata/monitoring/alerts.json",
+    "metadata/monitoring/asset_evolution_report.json"
+  ],
+  "metrics": [
+    {
+      "label": "Schema drift",
+      "value": "não"
+    },
+    {
+      "label": "Data drift alerts",
+      "value": "2"
+    },
+    {
+      "label": "Disponibilidade",
+      "value": "OK"
+    },
+    {
+      "label": "Run referência",
+      "value": "2026-10"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "criar baseline da execução atual",
+      "concreteAction": "estatísticas + schema",
+      "input": "validated",
+      "result": "current baseline",
+      "registers": "means/rates/schema",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/monitoring/baseline_current.json",
+        "metadata/monitoring/baseline_reference.json",
+        "metadata/monitoring/data_drift_report.json"
+      ]
+    },
+    {
+      "responsibility": "comparar schema atual com referência",
+      "concreteAction": "diferenças e limiares",
+      "input": "current + reference",
+      "result": "drift report",
+      "registers": "metric deltas",
+      "events": [
+        "DRIFT_CHECKED"
+      ],
+      "transversals": [
+        "M09",
+        "M11"
+      ],
+      "evidence": [
+        "metadata/monitoring/baseline_current.json",
+        "metadata/monitoring/baseline_reference.json",
+        "metadata/monitoring/data_drift_report.json"
+      ]
+    },
+    {
+      "responsibility": "comparar distribuições e métricas",
+      "concreteAction": "criar alertas operacionais",
+      "input": "drift report",
+      "result": "2 alerts",
+      "registers": "severity + field",
+      "events": [
+        "MONITORING_ALERT"
+      ],
+      "transversals": [
+        "M10",
+        "M16"
+      ],
+      "evidence": [
+        "metadata/monitoring/baseline_current.json",
+        "metadata/monitoring/baseline_reference.json",
+        "metadata/monitoring/data_drift_report.json"
+      ]
+    },
+    {
+      "responsibility": "detectar data drift e schema drift",
+      "concreteAction": "criar alertas operacionais",
+      "input": "drift report",
+      "result": "2 alerts",
+      "registers": "severity + field",
+      "events": [
+        "MONITORING_ALERT"
+      ],
+      "transversals": [
+        "M10",
+        "M16"
+      ],
+      "evidence": [
+        "metadata/monitoring/baseline_current.json",
+        "metadata/monitoring/baseline_reference.json",
+        "metadata/monitoring/data_drift_report.json"
+      ]
+    },
+    {
+      "responsibility": "registrar alertas e evolução",
+      "concreteAction": "criar alertas operacionais",
+      "input": "drift report",
+      "result": "2 alerts",
+      "registers": "severity + field",
+      "events": [
+        "MONITORING_ALERT"
+      ],
+      "transversals": [
+        "M10",
+        "M16"
+      ],
+      "evidence": [
+        "metadata/monitoring/baseline_current.json",
+        "metadata/monitoring/baseline_reference.json",
+        "metadata/monitoring/data_drift_report.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Calcular baseline atual",
+      "input": "validated",
+      "operation": "estatísticas + schema",
+      "output": "current baseline",
+      "registers": "means/rates/schema",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Comparar referência",
+      "input": "current + reference",
+      "operation": "diferenças e limiares",
+      "output": "drift report",
+      "registers": "metric deltas",
+      "events": [
+        "DRIFT_CHECKED"
+      ],
+      "transversal": [
+        "M09",
+        "M11"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Emitir alertas",
+      "input": "drift report",
+      "operation": "criar alertas operacionais",
+      "output": "2 alerts",
+      "registers": "severity + field",
+      "events": [
+        "MONITORING_ALERT"
+      ],
+      "transversal": [
+        "M10",
+        "M16"
+      ]
+    }
+  ],
+  "contract_ref": "contracts/m15_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "mon-m15-001",
+      "activity": "DRIFT_CHECKED",
+      "used": [
+        "run:2026-10",
+        "run:2026-11"
+      ],
+      "generated": [
+        "metadata:drift_report:v1"
+      ],
+      "alerts": [
+        "AL-001",
+        "AL-002"
+      ]
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M01–M08",
+      "consumes": [
+        "profiles/metrics"
+      ],
+      "action": "Acompanha schema, volume, qualidade e ativos ao longo do pipeline.",
+      "stores": [
+        "metadata/monitoring/baseline_current.json"
+      ]
+    },
+    {
+      "id": "M16",
+      "consumes": [
+        "MONITORING_ALERT"
+      ],
+      "action": "Disponibiliza alertas como evidências consultáveis.",
+      "stores": [
+        "metadata/agents/evidence_base.json"
+      ]
+    }
+  ]
+}

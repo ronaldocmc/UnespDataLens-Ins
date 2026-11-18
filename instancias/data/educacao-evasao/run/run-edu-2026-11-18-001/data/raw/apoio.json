@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "aluno_id": 1001,
+      "bolsa": "NAO",
+      "auxilio_permanencia": "SIM",
+      "monitoria": "NAO"
+    },
+    {
+      "aluno_id": 1002,
+      "bolsa": "NAO",
+      "auxilio_permanencia": "NAO",
+      "monitoria": "NAO"
+    },
+    {
+      "aluno_id": 1003,
+      "bolsa": "SIM",
+      "auxilio_permanencia": "SIM",
+      "monitoria": "SIM"
+    },
+    {
+      "aluno_id": 1004,
+      "bolsa": "NAO",
+      "auxilio_permanencia": "NAO",
+      "monitoria": "SIM"
+    },
+    {
+      "aluno_id": 1005,
+      "bolsa": "SIM",
+      "auxilio_permanencia": "NAO",
+      "monitoria": "NAO"
+    },
+    {
+      "aluno_id": 1006,
+      "bolsa": "NAO",
+      "auxilio_permanencia": "NAO",
+      "monitoria": "NAO"
+    }
+  ],
+  "page": 1,
+  "page_size": 100,
+  "has_next": false,
+  "observed_count": 6
+}

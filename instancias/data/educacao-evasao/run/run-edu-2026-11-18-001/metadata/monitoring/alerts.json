@@ -1,0 +1,16 @@
+{
+  "alerts": [
+    {
+      "id": "AL-001",
+      "type": "DATA_DRIFT",
+      "field": "total_faltas_mean",
+      "severity": "MEDIUM"
+    },
+    {
+      "id": "AL-002",
+      "type": "TARGET_RATE_CHANGE",
+      "field": "evadiu_rate",
+      "severity": "MEDIUM"
+    }
+  ]
+}

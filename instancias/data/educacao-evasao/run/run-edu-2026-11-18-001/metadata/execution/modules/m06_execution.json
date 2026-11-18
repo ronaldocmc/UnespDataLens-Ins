@@ -1,0 +1,286 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M06",
+  "module_name": "Desbalanceamento, Vieses e Equidade",
+  "kind": "operational",
+  "status": "SUCCESS",
+  "objective": "Examinar distribuição de grupos e possíveis diferenças de tratamento ou resultado antes do uso analítico ou preditivo.",
+  "input_summary": "dataset validado + target evadiu + atributo protegido sexo",
+  "output_summary": "relatório de distribuição/fairness + alerta de diferença entre grupos + plano de mitigação",
+  "inputs": [
+    {
+      "id": "dataset:validated:student_semester:v1",
+      "name": "student_semester_validated.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/validated/student_semester_validated.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/validated/student_semester_validated.csv",
+      "role": "",
+      "records": 6,
+      "columns": 18
+    }
+  ],
+  "outputs": [
+    {
+      "id": "artifact:group_distribution",
+      "name": "group_distribution.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m06/group_distribution.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m06/group_distribution.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:fairness_report",
+      "name": "fairness_report.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m06/fairness_report.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m06/fairness_report.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:mitigation_plan",
+      "name": "bias_mitigation_plan.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m06/bias_mitigation_plan.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m06/bias_mitigation_plan.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "artifacts/m06/group_distribution.json",
+    "artifacts/m06/fairness_report.json",
+    "artifacts/m06/bias_mitigation_plan.json"
+  ],
+  "metrics": [
+    {
+      "label": "F: evasão",
+      "value": "0/3 = 0%"
+    },
+    {
+      "label": "M: evasão",
+      "value": "2/3 = 66,7%"
+    },
+    {
+      "label": "SPD",
+      "value": "0.667"
+    },
+    {
+      "label": "Alertas",
+      "value": "1"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "calcular distribuição por grupo",
+      "concreteAction": "Agrupar por sexo",
+      "input": "validated dataset",
+      "result": "F=3, M=3",
+      "registers": "group size",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "artifacts/m06/group_distribution.json",
+        "artifacts/m06/fairness_report.json",
+        "artifacts/m06/bias_mitigation_plan.json"
+      ]
+    },
+    {
+      "responsibility": "calcular taxa da variável-alvo por grupo",
+      "concreteAction": "mean(target)",
+      "input": "evadiu por grupo",
+      "result": "F=0%; M=66,7%",
+      "registers": "group target rate",
+      "events": [
+        "FAIRNESS_MEASURED"
+      ],
+      "transversals": [
+        "M09",
+        "M11"
+      ],
+      "evidence": [
+        "artifacts/m06/group_distribution.json",
+        "artifacts/m06/fairness_report.json",
+        "artifacts/m06/bias_mitigation_plan.json"
+      ]
+    },
+    {
+      "responsibility": "calcular métricas de fairness selecionadas",
+      "concreteAction": "|diferença| > 0.20",
+      "input": "taxas",
+      "result": "ALERT",
+      "registers": "metric, value, threshold",
+      "events": [
+        "FAIRNESS_ALERT"
+      ],
+      "transversals": [
+        "M10",
+        "M15"
+      ],
+      "evidence": [
+        "artifacts/m06/group_distribution.json",
+        "artifacts/m06/fairness_report.json",
+        "artifacts/m06/bias_mitigation_plan.json"
+      ]
+    },
+    {
+      "responsibility": "comparar com limiares definidos",
+      "concreteAction": "Recomendações de investigação e avaliação",
+      "input": "alerta",
+      "result": "plano de mitigação",
+      "registers": "não inferir causalidade",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "artifacts/m06/group_distribution.json",
+        "artifacts/m06/fairness_report.json",
+        "artifacts/m06/bias_mitigation_plan.json"
+      ]
+    },
+    {
+      "responsibility": "registrar alertas sem inferir automaticamente discriminação",
+      "concreteAction": "Recomendações de investigação e avaliação",
+      "input": "alerta",
+      "result": "plano de mitigação",
+      "registers": "não inferir causalidade",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "artifacts/m06/group_distribution.json",
+        "artifacts/m06/fairness_report.json",
+        "artifacts/m06/bias_mitigation_plan.json"
+      ]
+    },
+    {
+      "responsibility": "propor medidas de investigação ou mitigação",
+      "concreteAction": "Recomendações de investigação e avaliação",
+      "input": "alerta",
+      "result": "plano de mitigação",
+      "registers": "não inferir causalidade",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "artifacts/m06/group_distribution.json",
+        "artifacts/m06/fairness_report.json",
+        "artifacts/m06/bias_mitigation_plan.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Selecionar grupos",
+      "input": "validated dataset",
+      "operation": "Agrupar por sexo",
+      "output": "F=3, M=3",
+      "registers": "group size",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Calcular taxas",
+      "input": "evadiu por grupo",
+      "operation": "mean(target)",
+      "output": "F=0%; M=66,7%",
+      "registers": "group target rate",
+      "events": [
+        "FAIRNESS_MEASURED"
+      ],
+      "transversal": [
+        "M09",
+        "M11"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Comparar limiar",
+      "input": "taxas",
+      "operation": "|diferença| > 0.20",
+      "output": "ALERT",
+      "registers": "metric, value, threshold",
+      "events": [
+        "FAIRNESS_ALERT"
+      ],
+      "transversal": [
+        "M10",
+        "M15"
+      ]
+    },
+    {
+      "step": 4,
+      "title": "Gerar mitigação",
+      "input": "alerta",
+      "operation": "Recomendações de investigação e avaliação",
+      "output": "plano de mitigação",
+      "registers": "não inferir causalidade",
+      "events": [],
+      "transversal": []
+    }
+  ],
+  "contract_ref": "contracts/m06_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "prov-m06-001",
+      "activity": "FAIRNESS_MEASURED",
+      "used": [
+        "dataset:validated:student_semester:v1",
+        "sexo",
+        "evadiu"
+      ],
+      "generated": [
+        "artifact:fairness_report:v1"
+      ],
+      "metrics": {
+        "F_rate": 0.0,
+        "M_rate": 0.6666666666666666,
+        "SPD_M_minus_F": 0.667
+      }
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M09",
+      "consumes": [
+        "FAIRNESS_MEASURED"
+      ],
+      "action": "Cataloga o relatório e métricas.",
+      "stores": [
+        "metadata/catalog/catalogo_dados.json"
+      ]
+    },
+    {
+      "id": "M10",
+      "consumes": [
+        "FAIRNESS_ALERT"
+      ],
+      "action": "Registra restrições e necessidade de revisão humana.",
+      "stores": [
+        "metadata/governance/plano_conformidade.json"
+      ]
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "FAIRNESS_MEASURED"
+      ],
+      "action": "Liga relatório ao dataset validado.",
+      "stores": [
+        "metadata/lineage/grafo_linhagem.json"
+      ]
+    },
+    {
+      "id": "M15",
+      "consumes": [
+        "FAIRNESS_ALERT"
+      ],
+      "action": "Mantém alerta observável entre execuções.",
+      "stores": [
+        "metadata/monitoring/alerts.json"
+      ]
+    }
+  ]
+}

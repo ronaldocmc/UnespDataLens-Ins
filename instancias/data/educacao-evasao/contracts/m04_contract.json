@@ -1,0 +1,19 @@
+{
+  "module_id": "M04",
+  "requires": {
+    "dataset": "dataset:integrated:student_semester:v1"
+  },
+  "produces": {
+    "dataset": "dataset:prepared:student_semester:v1",
+    "derived_fields": [
+      "idade",
+      "faixa_etaria",
+      "evadiu"
+    ],
+    "artifacts": [
+      "transformation_plan",
+      "cleaning_rules_register"
+    ]
+  },
+  "next_operational_module": "M05"
+}

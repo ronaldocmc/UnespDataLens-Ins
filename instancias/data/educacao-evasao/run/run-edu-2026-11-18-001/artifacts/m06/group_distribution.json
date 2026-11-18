@@ -1,0 +1,17 @@
+{
+  "attribute": "sexo",
+  "groups": [
+    {
+      "group": "F",
+      "n": 3,
+      "evaded": 0,
+      "target_rate": 0.0
+    },
+    {
+      "group": "M",
+      "n": 3,
+      "evaded": 2,
+      "target_rate": 0.6666666666666666
+    }
+  ]
+}

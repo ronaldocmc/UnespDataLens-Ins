@@ -1,0 +1,324 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M04",
+  "module_name": "Transformação, Limpeza, Enriquecimento e Preparação dos Dados",
+  "kind": "operational",
+  "status": "SUCCESS",
+  "objective": "Preparar o dataset integrado para uso analítico aplicando regras explícitas, documentadas e reproduzíveis.",
+  "input_summary": "dataset integrado student_semester (6 × 15)",
+  "output_summary": "dataset preparado (6 × 18) com idade, faixa_etaria e target evadiu",
+  "inputs": [
+    {
+      "id": "dataset:integrated:student_semester:v1",
+      "name": "student_semester.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/integrated/student_semester.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/integrated/student_semester.csv",
+      "role": "",
+      "records": 6,
+      "columns": 15
+    }
+  ],
+  "outputs": [
+    {
+      "id": "dataset:prepared:student_semester:v1",
+      "name": "student_semester_prepared.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/prepared/student_semester_prepared.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/prepared/student_semester_prepared.csv",
+      "role": "",
+      "records": 6,
+      "columns": 18
+    },
+    {
+      "id": "artifact:transformation_plan",
+      "name": "transformation_plan.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m04/transformation_plan.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m04/transformation_plan.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:cleaning_rules",
+      "name": "cleaning_rules_register.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m04/cleaning_rules_register.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m04/cleaning_rules_register.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "data/prepared/student_semester_prepared.csv",
+    "artifacts/m04/transformation_plan.json",
+    "artifacts/m04/cleaning_rules_register.json"
+  ],
+  "metrics": [
+    {
+      "label": "Linhas",
+      "value": "6 → 6"
+    },
+    {
+      "label": "Duplicatas removidas",
+      "value": "0"
+    },
+    {
+      "label": "Imputações",
+      "value": "0"
+    },
+    {
+      "label": "Atributos derivados",
+      "value": "3"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "padronizar nomes e tipos de colunas",
+      "concreteAction": "trim/upper em categorias",
+      "input": "integrated",
+      "result": "categorias consistentes",
+      "registers": "regras aplicadas",
+      "events": [
+        "TRANSFORMATION_APPLIED"
+      ],
+      "transversals": [
+        "M11"
+      ],
+      "evidence": [
+        "data/prepared/student_semester_prepared.csv",
+        "artifacts/m04/transformation_plan.json",
+        "artifacts/m04/cleaning_rules_register.json"
+      ]
+    },
+    {
+      "responsibility": "normalizar valores categóricos",
+      "concreteAction": "verificar duplicatas/nulos; política de imputação",
+      "input": "integrated",
+      "result": "6 linhas preservadas",
+      "registers": "affected_rows=0",
+      "events": [
+        "TRANSFORMATION_APPLIED"
+      ],
+      "transversals": [
+        "M11",
+        "M15"
+      ],
+      "evidence": [
+        "data/prepared/student_semester_prepared.csv",
+        "artifacts/m04/transformation_plan.json",
+        "artifacts/m04/cleaning_rules_register.json"
+      ]
+    },
+    {
+      "responsibility": "tratar strings vazias e valores ausentes",
+      "concreteAction": "idade na data de referência 2026-11-18",
+      "input": "data_nascimento",
+      "result": "idade",
+      "registers": "fórmula + reference_date",
+      "events": [
+        "FIELD_DERIVED"
+      ],
+      "transversals": [
+        "M09",
+        "M11"
+      ],
+      "evidence": [
+        "data/prepared/student_semester_prepared.csv",
+        "artifacts/m04/transformation_plan.json",
+        "artifacts/m04/cleaning_rules_register.json"
+      ]
+    },
+    {
+      "responsibility": "remover duplicidades segundo chave definida",
+      "concreteAction": "evadiu = 1 se EVADIDO",
+      "input": "situacao",
+      "result": "evadiu",
+      "registers": "regra explícita",
+      "events": [
+        "LABEL_DERIVED"
+      ],
+      "transversals": [
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/prepared/student_semester_prepared.csv",
+        "artifacts/m04/transformation_plan.json",
+        "artifacts/m04/cleaning_rules_register.json"
+      ]
+    },
+    {
+      "responsibility": "derivar atributos de preparação quando necessário",
+      "concreteAction": "evadiu = 1 se EVADIDO",
+      "input": "situacao",
+      "result": "evadiu",
+      "registers": "regra explícita",
+      "events": [
+        "LABEL_DERIVED"
+      ],
+      "transversals": [
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/prepared/student_semester_prepared.csv",
+        "artifacts/m04/transformation_plan.json",
+        "artifacts/m04/cleaning_rules_register.json"
+      ]
+    },
+    {
+      "responsibility": "registrar cada regra e quantidade de registros afetados",
+      "concreteAction": "evadiu = 1 se EVADIDO",
+      "input": "situacao",
+      "result": "evadiu",
+      "registers": "regra explícita",
+      "events": [
+        "LABEL_DERIVED"
+      ],
+      "transversals": [
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/prepared/student_semester_prepared.csv",
+        "artifacts/m04/transformation_plan.json",
+        "artifacts/m04/cleaning_rules_register.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Padronizar",
+      "input": "integrated",
+      "operation": "trim/upper em categorias",
+      "output": "categorias consistentes",
+      "registers": "regras aplicadas",
+      "events": [
+        "TRANSFORMATION_APPLIED"
+      ],
+      "transversal": [
+        "M11"
+      ]
+    },
+    {
+      "step": 2,
+      "title": "Tratar qualidade básica",
+      "input": "integrated",
+      "operation": "verificar duplicatas/nulos; política de imputação",
+      "output": "6 linhas preservadas",
+      "registers": "affected_rows=0",
+      "events": [
+        "TRANSFORMATION_APPLIED"
+      ],
+      "transversal": [
+        "M11",
+        "M15"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Derivar idade",
+      "input": "data_nascimento",
+      "operation": "idade na data de referência 2026-11-18",
+      "output": "idade",
+      "registers": "fórmula + reference_date",
+      "events": [
+        "FIELD_DERIVED"
+      ],
+      "transversal": [
+        "M09",
+        "M11"
+      ]
+    },
+    {
+      "step": 4,
+      "title": "Criar target",
+      "input": "situacao",
+      "operation": "evadiu = 1 se EVADIDO",
+      "output": "evadiu",
+      "registers": "regra explícita",
+      "events": [
+        "LABEL_DERIVED"
+      ],
+      "transversal": [
+        "M11",
+        "M12"
+      ]
+    }
+  ],
+  "contract_ref": "contracts/m04_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "prov-m04-idade",
+      "activity": "FIELD_DERIVED",
+      "used": [
+        "data_nascimento"
+      ],
+      "generated": [
+        "idade"
+      ],
+      "rule": "age_at(data_nascimento, 2026-11-18)"
+    },
+    {
+      "event_id": "prov-m04-target",
+      "activity": "LABEL_DERIVED",
+      "used": [
+        "situacao"
+      ],
+      "generated": [
+        "evadiu"
+      ],
+      "rule": "1 if situacao == EVADIDO else 0"
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M09",
+      "consumes": [
+        "FIELD_DERIVED",
+        "LABEL_DERIVED"
+      ],
+      "action": "Atualiza dicionário com novos campos.",
+      "stores": [
+        "metadata/catalog/dicionario_dados.json"
+      ]
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "TRANSFORMATION_APPLIED",
+        "FIELD_DERIVED",
+        "LABEL_DERIVED"
+      ],
+      "action": "Liga campos derivados às origens.",
+      "stores": [
+        "metadata/lineage/registro_proveniencia.json"
+      ]
+    },
+    {
+      "id": "M12",
+      "consumes": [
+        "DATASET_CREATED"
+      ],
+      "action": "Versiona regras e dataset preparado.",
+      "stores": [
+        "metadata/versions/registro_versoes.json"
+      ]
+    },
+    {
+      "id": "M15",
+      "consumes": [
+        "TRANSFORMATION_APPLIED"
+      ],
+      "action": "Observa volume e transformações anômalas.",
+      "stores": [
+        "metadata/monitoring/baseline_current.json"
+      ]
+    }
+  ]
+}

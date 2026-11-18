@@ -1,0 +1,27 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "module_id": "M03",
+  "requires": {
+    "datasets": [
+      "raw:alunos",
+      "raw:matriculas",
+      "raw:notas",
+      "raw:apoio"
+    ]
+  },
+  "produces": {
+    "dataset": "dataset:integrated:student_semester:v1",
+    "granularity": "student_semester",
+    "artifacts": [
+      "integration_plan",
+      "integration_report",
+      "integration_graph"
+    ],
+    "events": [
+      "TRANSFORMATION_APPLIED",
+      "DATASET_DERIVED",
+      "DATASET_CREATED"
+    ]
+  },
+  "next_operational_module": "M04"
+}

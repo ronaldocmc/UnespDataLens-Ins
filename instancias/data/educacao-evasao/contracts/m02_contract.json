@@ -1,0 +1,32 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "module_id": "M02",
+  "requires": {
+    "artifacts": [
+      "M01/source_inventory",
+      "M01/source_schemas"
+    ],
+    "sources": [
+      "4 source refs"
+    ]
+  },
+  "produces": {
+    "datasets": [
+      "raw:alunos",
+      "raw:matriculas",
+      "raw:notas",
+      "raw:apoio"
+    ],
+    "artifacts": [
+      "ingestion_manifest",
+      "integrity_register",
+      "ingestion_failures"
+    ],
+    "events": [
+      "INGESTION_STARTED",
+      "DATASET_CREATED",
+      "INGESTION_COMPLETED"
+    ]
+  },
+  "next_operational_module": "M03"
+}

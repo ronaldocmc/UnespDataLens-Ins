@@ -1,0 +1,19 @@
+{
+  "relationships": [
+    {
+      "from": "matriculas_pg.aluno_id",
+      "to": "alunos_csv.aluno_id",
+      "type": "N:1"
+    },
+    {
+      "from": "notas_pg.aluno_id",
+      "to": "alunos_csv.aluno_id",
+      "type": "N:1"
+    },
+    {
+      "from": "apoio_api.aluno_id",
+      "to": "alunos_csv.aluno_id",
+      "type": "1:1"
+    }
+  ]
+}

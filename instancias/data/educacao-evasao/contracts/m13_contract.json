@@ -1,0 +1,15 @@
+{
+  "module_id": "M13",
+  "requires": {
+    "dataset": "dataset:analytical:student_risk:v1"
+  },
+  "produces": {
+    "representations": [
+      "tabular_matrix",
+      "graph"
+    ]
+  },
+  "events": [
+    "REPRESENTATION_CREATED"
+  ]
+}

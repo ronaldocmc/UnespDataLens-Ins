@@ -1,0 +1,10 @@
+{
+  "producer":"M09",
+  "consumed_events":["SOURCE_REGISTERED","SCHEMA_OBSERVED","SOURCE_PROFILED"],
+  "entries":[
+    {"source_id":"alunos_csv","business_name":"Cadastro complementar de alunos","owner":"Graduacao","connector":"file","granularity":"aluno"},
+    {"source_id":"matriculas_pg","business_name":"Matriculas do Sistema Academico","owner":"STI / Graduacao","connector":"postgresql","granularity":"aluno_semestre"},
+    {"source_id":"notas_pg","business_name":"Notas e faltas","owner":"STI / Graduacao","connector":"postgresql","granularity":"aluno_disciplina_semestre"},
+    {"source_id":"apoio_api","business_name":"Beneficios e apoio estudantil","owner":"Assistencia Estudantil","connector":"rest_api","granularity":"aluno"}
+  ]
+}

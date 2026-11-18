@@ -1,0 +1,14 @@
+{
+  "module_id": "M07",
+  "requires": {
+    "dataset": "dataset:validated:student_semester:v1",
+    "quality_status": "ACCEPTED_WITH_WARNING"
+  },
+  "produces": {
+    "dataset": "dataset:analytical:student_risk:v1",
+    "rows": 6,
+    "columns": 15,
+    "classification": "RESTRICTED"
+  },
+  "next_operational_module": "M08"
+}

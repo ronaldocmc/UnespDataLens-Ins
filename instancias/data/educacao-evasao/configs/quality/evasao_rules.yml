@@ -1,0 +1,29 @@
+rules:
+  - id: Q01
+    field: aluno_id
+    type: not_null
+    severity: critical
+  - id: Q02
+    field: aluno_id
+    type: unique_by
+    keys: [aluno_id, semestre]
+    severity: critical
+  - id: Q03
+    field: media_nota
+    type: range
+    min: 0
+    max: 10
+    severity: critical
+  - id: Q04
+    field: total_faltas
+    type: range
+    min: 0
+    severity: warning
+  - id: Q05
+    field: situacao
+    type: accepted_values
+    values: [ATIVO, EVADIDO, CONCLUIDO]
+    severity: critical
+acceptance:
+  allow_warnings: true
+  reject_on_critical_failure: true

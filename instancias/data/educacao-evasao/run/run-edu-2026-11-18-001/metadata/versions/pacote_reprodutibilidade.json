@@ -1,0 +1,10 @@
+{
+  "includes": [
+    "pipeline.yml",
+    "checksums",
+    "module contracts",
+    "quality rules",
+    "environment manifest",
+    "lineage references"
+  ]
+}

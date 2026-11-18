@@ -1,0 +1,1 @@
+{"producer":"M11","consumed_events":["SOURCE_REGISTERED","SCHEMA_OBSERVED","SOURCE_CLASSIFIED","SOURCE_VERSION_OBSERVED"],"nodes":[{"id":"source:alunos_csv","type":"source"},{"id":"source:matriculas_pg","type":"source"},{"id":"source:notas_pg","type":"source"},{"id":"source:apoio_api","type":"source"}],"edges":[]}

@@ -1,11 +1,19 @@
 # UnespDataLens-Ins
 
-Instâncias interativas do **UnespDataLens-RM**.
+Ambiente interativo de instâncias do **UnespDataLens-RM**.
 
-## Versão em preparação
+## Versão atual
 
 **V8.3 — Instância Educacional: Risco de Evasão**
 
-Este repositório receberá a implementação completa da interface interativa, incluindo módulos M01–M16, dados da instância, contratos, proveniência, evidências e artefatos de execução.
+A aplicação permite explorar os módulos M01–M16 e inspecionar entradas, processamento, saídas, contratos, proveniência, evidências, módulos transversais e arquivos produzidos pela execução.
 
-Repositório: `ronaldocmc/UnespDataLens-Ins`
+## Abrir
+
+GitHub Pages:
+
+https://ronaldocmc.github.io/UnespDataLens-Ins/
+
+Entrada direta:
+
+`instancias/explorar.html?id=educacao-evasao&module=M01`

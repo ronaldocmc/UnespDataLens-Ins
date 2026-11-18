@@ -1,0 +1,140 @@
+{
+  "nodes": [
+    {
+      "id": "source:alunos_csv",
+      "type": "source"
+    },
+    {
+      "id": "source:matriculas_pg",
+      "type": "source"
+    },
+    {
+      "id": "source:notas_pg",
+      "type": "source"
+    },
+    {
+      "id": "source:apoio_api",
+      "type": "source"
+    },
+    {
+      "id": "dataset:raw:alunos:v1",
+      "type": "dataset"
+    },
+    {
+      "id": "dataset:raw:matriculas:v1",
+      "type": "dataset"
+    },
+    {
+      "id": "dataset:raw:notas:v1",
+      "type": "dataset"
+    },
+    {
+      "id": "dataset:raw:apoio:v1",
+      "type": "dataset"
+    },
+    {
+      "id": "dataset:integrated:student_semester:v1",
+      "type": "dataset"
+    },
+    {
+      "id": "dataset:prepared:student_semester:v1",
+      "type": "dataset"
+    },
+    {
+      "id": "dataset:validated:student_semester:v1",
+      "type": "dataset"
+    },
+    {
+      "id": "dataset:analytical:student_risk:v1",
+      "type": "dataset"
+    },
+    {
+      "id": "feature_set:student_risk:v1",
+      "type": "feature_set"
+    },
+    {
+      "id": "product:DP-EDU-001",
+      "type": "data_product"
+    }
+  ],
+  "edges": [
+    {
+      "from": "source:alunos_csv",
+      "to": "dataset:raw:alunos:v1",
+      "activity": "INGESTION",
+      "module": "M02"
+    },
+    {
+      "from": "source:matriculas_pg",
+      "to": "dataset:raw:matriculas:v1",
+      "activity": "INGESTION",
+      "module": "M02"
+    },
+    {
+      "from": "source:notas_pg",
+      "to": "dataset:raw:notas:v1",
+      "activity": "INGESTION",
+      "module": "M02"
+    },
+    {
+      "from": "source:apoio_api",
+      "to": "dataset:raw:apoio:v1",
+      "activity": "INGESTION",
+      "module": "M02"
+    },
+    {
+      "from": "dataset:raw:alunos:v1",
+      "to": "dataset:integrated:student_semester:v1",
+      "activity": "INTEGRATION",
+      "module": "M03"
+    },
+    {
+      "from": "dataset:raw:matriculas:v1",
+      "to": "dataset:integrated:student_semester:v1",
+      "activity": "INTEGRATION",
+      "module": "M03"
+    },
+    {
+      "from": "dataset:raw:notas:v1",
+      "to": "dataset:integrated:student_semester:v1",
+      "activity": "INTEGRATION",
+      "module": "M03"
+    },
+    {
+      "from": "dataset:raw:apoio:v1",
+      "to": "dataset:integrated:student_semester:v1",
+      "activity": "INTEGRATION",
+      "module": "M03"
+    },
+    {
+      "from": "dataset:integrated:student_semester:v1",
+      "to": "dataset:prepared:student_semester:v1",
+      "activity": "TRANSFORMATION",
+      "module": "M04"
+    },
+    {
+      "from": "dataset:prepared:student_semester:v1",
+      "to": "dataset:validated:student_semester:v1",
+      "activity": "VALIDATION",
+      "module": "M05"
+    },
+    {
+      "from": "dataset:validated:student_semester:v1",
+      "to": "dataset:analytical:student_risk:v1",
+      "activity": "PUBLISH_ANALYTICAL_ASSET",
+      "module": "M07"
+    },
+    {
+      "from": "dataset:analytical:student_risk:v1",
+      "to": "feature_set:student_risk:v1",
+      "activity": "FEATURE_ENGINEERING",
+      "module": "M14"
+    },
+    {
+      "from": "dataset:analytical:student_risk:v1",
+      "to": "product:DP-EDU-001",
+      "activity": "PUBLISH_DATA_PRODUCT",
+      "module": "M08"
+    }
+  ]
+}

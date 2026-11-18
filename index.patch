@@ -1,0 +1,9 @@
+diff --git a/index.html b/index.html
+--- a/index.html
++++ b/index.html
+@@
+-    <nav class="top-nav" aria-label="Navegação principal"><a class="active" href="index.html">Início</a><a href="modelo.html">Modelo de Referência</a><a href="mapa.html">Mapa Geral</a><a href="modulos/index.html">Módulos</a><a href="dimensoes/index.html">Dimensões</a><a href="conceitos/index.html">Conceitos</a><a href="tecnicas/index.html">Técnicas e Tecnologias</a><a href="metodos/index.html">Métodos e Algoritmos</a><a href="artefatos/index.html">Artefatos</a><a href="metricas/index.html">Métricas</a><a href="problemas/index.html">Problemas Tratados</a><a href="aplicacoes/index.html">Aplicações</a><a href="trilhas/index.html">Trilhas de Estudo</a><a href="busca.html">Busca</a></nav>
++    <nav class="top-nav" aria-label="Navegação principal"><a class="active" href="index.html">Início</a><a href="modelo.html">Modelo de Referência</a><a href="mapa.html">Mapa Geral</a><a href="modulos/index.html">Módulos</a><a href="instancias/index.html">Instâncias</a><a href="dimensoes/index.html">Dimensões</a><a href="conceitos/index.html">Conceitos</a><a href="tecnicas/index.html">Técnicas e Tecnologias</a><a href="metodos/index.html">Métodos e Algoritmos</a><a href="artefatos/index.html">Artefatos</a><a href="metricas/index.html">Métricas</a><a href="problemas/index.html">Problemas Tratados</a><a href="aplicacoes/index.html">Aplicações</a><a href="trilhas/index.html">Trilhas de Estudo</a><a href="busca.html">Busca</a></nav>
+@@
+-<div class="hero-actions"><a class="btn light" href="modulos/index.html">Explorar módulos</a><a class="btn ghost" href="mapa.html">Ver mapa geral</a></div>
++<div class="hero-actions"><a class="btn light" href="modulos/index.html">Explorar módulos</a><a class="btn ghost" href="mapa.html">Ver mapa geral</a><a class="btn secondary" href="instancias/index.html">Explorar instâncias</a></div>

@@ -1,0 +1,290 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M08",
+  "module_name": "Disponibilização e Consumo Analítico",
+  "kind": "operational",
+  "status": "SUCCESS",
+  "objective": "Transformar o ativo analítico em produtos de dados consumíveis por públicos autorizados, documentando finalidade e restrições.",
+  "input_summary": "ativo analítico publicado + metadados/governança",
+  "output_summary": "produto DP-EDU-001 com relatório, API proposta, ficha, público e política de acesso",
+  "inputs": [
+    {
+      "id": "dataset:analytical:student_risk:v1",
+      "name": "student_risk.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/analytical/student_risk.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/analytical/student_risk.csv",
+      "role": "",
+      "records": 6,
+      "columns": 15
+    }
+  ],
+  "outputs": [
+    {
+      "id": "product:DP-EDU-001",
+      "name": "Produto: Indicadores de Risco de Evasão",
+      "kind": "data_product",
+      "format": "JSON",
+      "path": "artifacts/m08/product_sheet.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m08/product_sheet.json",
+      "role": ""
+    },
+    {
+      "id": "report:DP-EDU-001",
+      "name": "relatorio_analitico.md",
+      "kind": "report",
+      "format": "Markdown",
+      "path": "reports/relatorio_analitico.md",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/reports/relatorio_analitico.md",
+      "role": ""
+    },
+    {
+      "id": "artifact:data_api",
+      "name": "data_api.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m08/data_api.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m08/data_api.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:data_products",
+      "name": "data_products.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m08/data_products.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m08/data_products.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "artifacts/m08/product_sheet.json",
+    "artifacts/m08/data_products.json",
+    "artifacts/m08/data_api.json",
+    "reports/relatorio_analitico.md"
+  ],
+  "metrics": [
+    {
+      "label": "Produto",
+      "value": "DP-EDU-001"
+    },
+    {
+      "label": "Público",
+      "value": "coordenador_curso"
+    },
+    {
+      "label": "Atualização",
+      "value": "semanal"
+    },
+    {
+      "label": "Canais",
+      "value": "3"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "definir produto de dados",
+      "concreteAction": "Definir finalidade, público, dono e periodicidade",
+      "input": "analytical asset",
+      "result": "DP-EDU-001",
+      "registers": "product spec",
+      "events": [
+        "PRODUCT_DEFINED"
+      ],
+      "transversals": [
+        "M09",
+        "M10"
+      ],
+      "evidence": [
+        "artifacts/m08/product_sheet.json",
+        "artifacts/m08/data_products.json",
+        "artifacts/m08/data_api.json"
+      ]
+    },
+    {
+      "responsibility": "gerar relatório analítico demonstrativo",
+      "concreteAction": "Relatório + endpoint proposto + dashboard conceitual",
+      "input": "produto",
+      "result": "3 canais",
+      "registers": "channel metadata",
+      "events": [
+        "PRODUCT_PUBLISHED"
+      ],
+      "transversals": [
+        "M11",
+        "M12",
+        "M15"
+      ],
+      "evidence": [
+        "artifacts/m08/product_sheet.json",
+        "artifacts/m08/data_products.json",
+        "artifacts/m08/data_api.json"
+      ]
+    },
+    {
+      "responsibility": "registrar possibilidade de API ou dashboard",
+      "concreteAction": "Relatório + endpoint proposto + dashboard conceitual",
+      "input": "produto",
+      "result": "3 canais",
+      "registers": "channel metadata",
+      "events": [
+        "PRODUCT_PUBLISHED"
+      ],
+      "transversals": [
+        "M11",
+        "M12",
+        "M15"
+      ],
+      "evidence": [
+        "artifacts/m08/product_sheet.json",
+        "artifacts/m08/data_products.json",
+        "artifacts/m08/data_api.json"
+      ]
+    },
+    {
+      "responsibility": "documentar público, finalidade, periodicidade e restrições",
+      "concreteAction": "Relatório + endpoint proposto + dashboard conceitual",
+      "input": "produto",
+      "result": "3 canais",
+      "registers": "channel metadata",
+      "events": [
+        "PRODUCT_PUBLISHED"
+      ],
+      "transversals": [
+        "M11",
+        "M12",
+        "M15"
+      ],
+      "evidence": [
+        "artifacts/m08/product_sheet.json",
+        "artifacts/m08/data_products.json",
+        "artifacts/m08/data_api.json"
+      ]
+    },
+    {
+      "responsibility": "ligar o produto aos ativos que o sustentam",
+      "concreteAction": "Relatório + endpoint proposto + dashboard conceitual",
+      "input": "produto",
+      "result": "3 canais",
+      "registers": "channel metadata",
+      "events": [
+        "PRODUCT_PUBLISHED"
+      ],
+      "transversals": [
+        "M11",
+        "M12",
+        "M15"
+      ],
+      "evidence": [
+        "artifacts/m08/product_sheet.json",
+        "artifacts/m08/data_products.json",
+        "artifacts/m08/data_api.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Definir produto",
+      "input": "analytical asset",
+      "operation": "Definir finalidade, público, dono e periodicidade",
+      "output": "DP-EDU-001",
+      "registers": "product spec",
+      "events": [
+        "PRODUCT_DEFINED"
+      ],
+      "transversal": [
+        "M09",
+        "M10"
+      ]
+    },
+    {
+      "step": 2,
+      "title": "Gerar canais",
+      "input": "produto",
+      "operation": "Relatório + endpoint proposto + dashboard conceitual",
+      "output": "3 canais",
+      "registers": "channel metadata",
+      "events": [
+        "PRODUCT_PUBLISHED"
+      ],
+      "transversal": [
+        "M11",
+        "M12",
+        "M15"
+      ]
+    }
+  ],
+  "contract_ref": "contracts/m08_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "prov-m08-001",
+      "activity": "PUBLISH_DATA_PRODUCT",
+      "used": [
+        "dataset:analytical:student_risk:v1"
+      ],
+      "generated": [
+        "product:DP-EDU-001"
+      ],
+      "audience": [
+        "coordenador_curso"
+      ],
+      "access_policy": "restricted"
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M09",
+      "consumes": [
+        "PRODUCT_DEFINED",
+        "PRODUCT_PUBLISHED"
+      ],
+      "action": "Cataloga produto e canais.",
+      "stores": [
+        "metadata/catalog/catalogo_dados.json"
+      ]
+    },
+    {
+      "id": "M10",
+      "consumes": [
+        "PRODUCT_DEFINED"
+      ],
+      "action": "Controla público e finalidade.",
+      "stores": [
+        "metadata/governance/registro_finalidade_uso.json"
+      ]
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "PRODUCT_PUBLISHED"
+      ],
+      "action": "Liga produto ao ativo analítico.",
+      "stores": [
+        "metadata/lineage/grafo_linhagem.json"
+      ]
+    },
+    {
+      "id": "M12",
+      "consumes": [
+        "PRODUCT_PUBLISHED"
+      ],
+      "action": "Versiona ficha e relatório.",
+      "stores": [
+        "metadata/versions/registro_versoes.json"
+      ]
+    },
+    {
+      "id": "M15",
+      "consumes": [
+        "PRODUCT_PUBLISHED"
+      ],
+      "action": "Monitora disponibilidade e atualidade.",
+      "stores": [
+        "metadata/monitoring/asset_evolution_report.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+sources:
+- source_id: apoio_api
+  name: Beneficios e apoio estudantil
+  connector: rest_api
+  base_url: https://api.exemplo.edu.br
+  endpoint: /v1/beneficios-estudantis
+  auth_ref: secret://student-support-api
+  method: GET
+  response_format: json
+  owner: Assistencia Estudantil
+  granularity: aluno
+  candidate_keys:
+  - aluno_id
+  sensitivity: alta
+  update_frequency: diaria

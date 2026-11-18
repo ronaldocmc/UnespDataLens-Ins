@@ -1,0 +1,5 @@
+{
+  "endpoint": "GET /api/v1/products/DP-EDU-001/indicators",
+  "auth": "role-based",
+  "returns": "aggregated_indicators"
+}

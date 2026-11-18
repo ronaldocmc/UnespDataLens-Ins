@@ -1,0 +1,291 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M07",
+  "module_name": "Armazenamento Analítico",
+  "kind": "operational",
+  "status": "SUCCESS",
+  "objective": "Publicar o dataset aprovado como ativo analítico formal do pipeline, com identificação, finalidade, classificação e localização.",
+  "input_summary": "dataset validado + decisão de qualidade + políticas de governança",
+  "output_summary": "ativo analítico publicado dataset:analytical:student_risk:v1 (6 × 15)",
+  "inputs": [
+    {
+      "id": "dataset:validated:student_semester:v1",
+      "name": "validated dataset",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/validated/student_semester_validated.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/validated/student_semester_validated.csv",
+      "role": "",
+      "records": 6,
+      "columns": 18
+    },
+    {
+      "id": "artifact:quality_report",
+      "name": "quality_report.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m05/quality_report.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m05/quality_report.json",
+      "role": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": "dataset:analytical:student_risk:v1",
+      "name": "student_risk.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/analytical/student_risk.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/analytical/student_risk.csv",
+      "role": "Ativo analítico minimizado",
+      "records": 6,
+      "columns": 15
+    },
+    {
+      "id": "artifact:storage_model",
+      "name": "analytical_storage_model.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m07/analytical_storage_model.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m07/analytical_storage_model.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:asset_catalog",
+      "name": "analytical_assets_catalog.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m07/analytical_assets_catalog.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m07/analytical_assets_catalog.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "data/analytical/student_risk.csv",
+    "artifacts/m07/analytical_storage_model.json",
+    "artifacts/m07/analytical_assets_catalog.json"
+  ],
+  "metrics": [
+    {
+      "label": "Ativos publicados",
+      "value": "1"
+    },
+    {
+      "label": "Linhas",
+      "value": "6"
+    },
+    {
+      "label": "Colunas",
+      "value": "15"
+    },
+    {
+      "label": "Classificação",
+      "value": "RESTRICTED"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "persistir dataset validado em camada analytical",
+      "concreteAction": "status sem falha crítica",
+      "input": "validated + quality",
+      "result": "elegível",
+      "registers": "quality_status",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "data/analytical/student_risk.csv",
+        "artifacts/m07/analytical_storage_model.json",
+        "artifacts/m07/analytical_assets_catalog.json"
+      ]
+    },
+    {
+      "responsibility": "atribuir asset_id estável e versão",
+      "concreteAction": "Remover nome e data_nascimento do ativo analítico",
+      "input": "validated",
+      "result": "6 × 15",
+      "registers": "colunas publicadas",
+      "events": [
+        "ANALYTICAL_ASSET_CREATED"
+      ],
+      "transversals": [
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "data/analytical/student_risk.csv",
+        "artifacts/m07/analytical_storage_model.json",
+        "artifacts/m07/analytical_assets_catalog.json"
+      ]
+    },
+    {
+      "responsibility": "registrar finalidade, granularidade, owner e sensibilidade",
+      "concreteAction": "Asset ID + owner + granularidade + sensibilidade",
+      "input": "student_risk.csv",
+      "result": "dataset:analytical:student_risk:v1",
+      "registers": "catalog ref",
+      "events": [
+        "ASSET_PUBLISHED"
+      ],
+      "transversals": [
+        "M15"
+      ],
+      "evidence": [
+        "data/analytical/student_risk.csv",
+        "artifacts/m07/analytical_storage_model.json",
+        "artifacts/m07/analytical_assets_catalog.json"
+      ]
+    },
+    {
+      "responsibility": "publicar no catálogo de ativos",
+      "concreteAction": "Asset ID + owner + granularidade + sensibilidade",
+      "input": "student_risk.csv",
+      "result": "dataset:analytical:student_risk:v1",
+      "registers": "catalog ref",
+      "events": [
+        "ASSET_PUBLISHED"
+      ],
+      "transversals": [
+        "M15"
+      ],
+      "evidence": [
+        "data/analytical/student_risk.csv",
+        "artifacts/m07/analytical_storage_model.json",
+        "artifacts/m07/analytical_assets_catalog.json"
+      ]
+    },
+    {
+      "responsibility": "registrar lineage validated → analytical",
+      "concreteAction": "Asset ID + owner + granularidade + sensibilidade",
+      "input": "student_risk.csv",
+      "result": "dataset:analytical:student_risk:v1",
+      "registers": "catalog ref",
+      "events": [
+        "ASSET_PUBLISHED"
+      ],
+      "transversals": [
+        "M15"
+      ],
+      "evidence": [
+        "data/analytical/student_risk.csv",
+        "artifacts/m07/analytical_storage_model.json",
+        "artifacts/m07/analytical_assets_catalog.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Verificar elegibilidade",
+      "input": "validated + quality",
+      "operation": "status sem falha crítica",
+      "output": "elegível",
+      "registers": "quality_status",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Minimizar/publicar",
+      "input": "validated",
+      "operation": "Remover nome e data_nascimento do ativo analítico",
+      "output": "6 × 15",
+      "registers": "colunas publicadas",
+      "events": [
+        "ANALYTICAL_ASSET_CREATED"
+      ],
+      "transversal": [
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Registrar ativo",
+      "input": "student_risk.csv",
+      "operation": "Asset ID + owner + granularidade + sensibilidade",
+      "output": "dataset:analytical:student_risk:v1",
+      "registers": "catalog ref",
+      "events": [
+        "ASSET_PUBLISHED"
+      ],
+      "transversal": [
+        "M15"
+      ]
+    }
+  ],
+  "contract_ref": "contracts/m07_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "prov-m07-001",
+      "activity": "PUBLISH_ANALYTICAL_ASSET",
+      "used": [
+        "dataset:validated:student_semester:v1"
+      ],
+      "generated": [
+        "dataset:analytical:student_risk:v1"
+      ],
+      "minimized_fields_removed": [
+        "nome",
+        "data_nascimento"
+      ],
+      "classification": "RESTRICTED"
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M09",
+      "consumes": [
+        "ANALYTICAL_ASSET_CREATED"
+      ],
+      "action": "Cataloga o ativo.",
+      "stores": [
+        "metadata/catalog/catalogo_dados.json"
+      ]
+    },
+    {
+      "id": "M10",
+      "consumes": [
+        "ASSET_PUBLISHED"
+      ],
+      "action": "Aplica política RESTRICTED.",
+      "stores": [
+        "metadata/governance/politica_acesso.json"
+      ]
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "ANALYTICAL_ASSET_CREATED"
+      ],
+      "action": "Liga validated → analytical.",
+      "stores": [
+        "metadata/lineage/grafo_linhagem.json"
+      ]
+    },
+    {
+      "id": "M12",
+      "consumes": [
+        "ASSET_PUBLISHED"
+      ],
+      "action": "Versiona arquivo e especificação.",
+      "stores": [
+        "metadata/versions/registro_versoes.json"
+      ]
+    },
+    {
+      "id": "M15",
+      "consumes": [
+        "ASSET_PUBLISHED"
+      ],
+      "action": "Passa a monitorar disponibilidade e drift.",
+      "stores": [
+        "metadata/monitoring/asset_evolution_report.json"
+      ]
+    }
+  ]
+}

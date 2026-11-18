@@ -1,0 +1,24 @@
+{
+  "artifacts": [
+    {
+      "path": "pipeline.yml",
+      "sha256": "9da4f152f1a55b805407e43e27a0320462fac6f88149fa8d326a2b717395149a"
+    },
+    {
+      "path": "data/integrated/student_semester.csv",
+      "sha256": "dc64add495732f54664d619ce8bc60634c7d264c31fc3749ece8e30bbb9df8e3"
+    },
+    {
+      "path": "data/prepared/student_semester_prepared.csv",
+      "sha256": "212d2493b895d4be7a7307540bdc073d60c1e30a47b74427488e17f5f43d579f"
+    },
+    {
+      "path": "data/validated/student_semester_validated.csv",
+      "sha256": "212d2493b895d4be7a7307540bdc073d60c1e30a47b74427488e17f5f43d579f"
+    },
+    {
+      "path": "data/analytical/student_risk.csv",
+      "sha256": "aa7981a72f563bc1e217a7cd17ebad7980fbaa2d7c557130cc00946185bff7d8"
+    }
+  ]
+}

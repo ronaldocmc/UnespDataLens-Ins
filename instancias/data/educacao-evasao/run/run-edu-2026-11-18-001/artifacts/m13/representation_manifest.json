@@ -1,0 +1,18 @@
+{
+  "representations": [
+    {
+      "id": "tabular",
+      "path": "data/analytical/matriz_unidade_atributo.csv",
+      "shape": [
+        6,
+        5
+      ]
+    },
+    {
+      "id": "graph",
+      "path": "artifacts/m13/nodes_edges.json",
+      "nodes": 9,
+      "edges": 12
+    }
+  ]
+}

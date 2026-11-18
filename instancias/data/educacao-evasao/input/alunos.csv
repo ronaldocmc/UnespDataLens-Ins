@@ -1,0 +1,7 @@
+aluno_id,nome,sexo,data_nascimento,cidade,curso,ano_ingresso
+1001,Ana Silva,F,2004-02-10,Presidente Prudente,Computacao,2023
+1002,Joao Santos,M,2003-06-17,Presidente Prudente,Computacao,2022
+1003,Maria Costa,F,2005-01-22,Assis,Computacao,2024
+1004,Carlos Lima,M,2002-09-05,Bauru,Computacao,2021
+1005,Luiza Rocha,F,2004-11-29,Presidente Prudente,Computacao,2023
+1006,Pedro Alves,M,2003-03-14,Marilia,Computacao,2022

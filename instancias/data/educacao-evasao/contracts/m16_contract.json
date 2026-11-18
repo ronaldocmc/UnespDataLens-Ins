@@ -1,0 +1,18 @@
+{
+  "module_id": "M16",
+  "requires": {
+    "evidence": [
+      "catalog",
+      "quality",
+      "lineage",
+      "versions",
+      "monitoring"
+    ],
+    "governance": "M10"
+  },
+  "produces": {
+    "answer": "with evidence refs",
+    "query_record": "Q-001",
+    "evidence_base": 6
+  }
+}

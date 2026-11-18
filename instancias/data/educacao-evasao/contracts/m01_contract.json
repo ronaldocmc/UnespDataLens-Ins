@@ -1,0 +1,35 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "module_id": "M01",
+  "requires": {
+    "config": [
+      "pipeline.yml"
+    ],
+    "sources": [
+      "alunos_csv:file/csv",
+      "matriculas_pg:postgresql/table",
+      "notas_pg:postgresql/view",
+      "apoio_api:rest/json"
+    ]
+  },
+  "produces": {
+    "artifacts": [
+      "source_inventory.json",
+      "source_schemas.json",
+      "source_relationships.json",
+      "source_classification.json",
+      "source_access_registry.json"
+    ],
+    "provenance": [
+      "m01_source_provenance.json"
+    ],
+    "events": [
+      "SOURCE_REGISTERED",
+      "SCHEMA_OBSERVED",
+      "SOURCE_PROFILED",
+      "SOURCE_CLASSIFIED",
+      "SOURCE_VERSION_OBSERVED"
+    ]
+  },
+  "next_operational_module": "M02"
+}

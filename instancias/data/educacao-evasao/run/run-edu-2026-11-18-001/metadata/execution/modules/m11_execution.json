@@ -1,0 +1,227 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M11",
+  "module_name": "Proveniência, Linhagem e Rastreabilidade",
+  "kind": "transversal",
+  "status": "SUCCESS",
+  "objective": "Consolidar os eventos emitidos por todos os módulos em um grafo que explica de onde cada dado veio, como foi transformado e quais produtos gerou.",
+  "input_summary": "eventos de proveniência emitidos ao longo de M01–M16",
+  "output_summary": "grafo de linhagem + registro de proveniência + dependências + impacto",
+  "inputs": [
+    {
+      "id": "events:provenance",
+      "name": "Provenance events",
+      "kind": "events",
+      "format": "JSON",
+      "path": "metadata/lineage/registro_proveniencia.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/lineage/registro_proveniencia.json",
+      "role": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": "lineage:graph",
+      "name": "grafo_linhagem.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/lineage/grafo_linhagem.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/lineage/grafo_linhagem.json",
+      "role": ""
+    },
+    {
+      "id": "lineage:prov",
+      "name": "registro_proveniencia.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/lineage/registro_proveniencia.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/lineage/registro_proveniencia.json",
+      "role": ""
+    },
+    {
+      "id": "lineage:deps",
+      "name": "mapa_dependencias.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/lineage/mapa_dependencias.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/lineage/mapa_dependencias.json",
+      "role": ""
+    },
+    {
+      "id": "lineage:impact",
+      "name": "relatorio_impacto.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/lineage/relatorio_impacto.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/lineage/relatorio_impacto.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "metadata/lineage/grafo_linhagem.json",
+    "metadata/lineage/registro_proveniencia.json",
+    "metadata/lineage/mapa_dependencias.json",
+    "metadata/lineage/relatorio_impacto.json"
+  ],
+  "metrics": [
+    {
+      "label": "Nós",
+      "value": "14"
+    },
+    {
+      "label": "Arestas",
+      "value": "13"
+    },
+    {
+      "label": "Fontes raiz",
+      "value": "4"
+    },
+    {
+      "label": "Produto final",
+      "value": "1"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "normalizar eventos de proveniência",
+      "concreteAction": "Mapear used/generated/activity/module",
+      "input": "M01–M16 events",
+      "result": "eventos normalizados",
+      "registers": "event_id",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/lineage/grafo_linhagem.json",
+        "metadata/lineage/registro_proveniencia.json",
+        "metadata/lineage/mapa_dependencias.json"
+      ]
+    },
+    {
+      "responsibility": "criar nós para fontes, datasets, artefatos, features e produtos",
+      "concreteAction": "Criar nós e arestas",
+      "input": "eventos",
+      "result": "lineage graph",
+      "registers": "from/to/activity",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/lineage/grafo_linhagem.json",
+        "metadata/lineage/registro_proveniencia.json",
+        "metadata/lineage/mapa_dependencias.json"
+      ]
+    },
+    {
+      "responsibility": "criar arestas para uso, geração e derivação",
+      "concreteAction": "Percorrer dependências downstream",
+      "input": "grafo",
+      "result": "impact report",
+      "registers": "affected assets",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/lineage/grafo_linhagem.json",
+        "metadata/lineage/registro_proveniencia.json",
+        "metadata/lineage/mapa_dependencias.json"
+      ]
+    },
+    {
+      "responsibility": "preservar operação e módulo em cada aresta",
+      "concreteAction": "Percorrer dependências downstream",
+      "input": "grafo",
+      "result": "impact report",
+      "registers": "affected assets",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/lineage/grafo_linhagem.json",
+        "metadata/lineage/registro_proveniencia.json",
+        "metadata/lineage/mapa_dependencias.json"
+      ]
+    },
+    {
+      "responsibility": "gerar mapa de dependências e relatório de impacto",
+      "concreteAction": "Percorrer dependências downstream",
+      "input": "grafo",
+      "result": "impact report",
+      "registers": "affected assets",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/lineage/grafo_linhagem.json",
+        "metadata/lineage/registro_proveniencia.json",
+        "metadata/lineage/mapa_dependencias.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Normalizar eventos",
+      "input": "M01–M16 events",
+      "operation": "Mapear used/generated/activity/module",
+      "output": "eventos normalizados",
+      "registers": "event_id",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Construir grafo",
+      "input": "eventos",
+      "operation": "Criar nós e arestas",
+      "output": "lineage graph",
+      "registers": "from/to/activity",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 3,
+      "title": "Calcular impacto",
+      "input": "grafo",
+      "operation": "Percorrer dependências downstream",
+      "output": "impact report",
+      "registers": "affected assets",
+      "events": [],
+      "transversal": []
+    }
+  ],
+  "contract_ref": "contracts/m11_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "lineage-m11-001",
+      "from": "dataset:raw:notas:v1",
+      "to": "dataset:integrated:student_semester:v1",
+      "activity": "AGGREGATION+INTEGRATION",
+      "module": "M03"
+    },
+    {
+      "event_id": "lineage-m11-002",
+      "from": "dataset:analytical:student_risk:v1",
+      "to": "product:DP-EDU-001",
+      "activity": "PUBLISH_DATA_PRODUCT",
+      "module": "M08"
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M01–M08",
+      "consumes": [
+        "PROVENANCE_EVENT"
+      ],
+      "action": "Recebe eventos de origem, ingestão, integração, transformação, validação e publicação.",
+      "stores": [
+        "metadata/lineage/grafo_linhagem.json"
+      ]
+    },
+    {
+      "id": "M14",
+      "consumes": [
+        "FEATURE_DERIVED"
+      ],
+      "action": "Liga features às colunas de origem.",
+      "stores": [
+        "metadata/lineage/registro_proveniencia.json"
+      ]
+    }
+  ]
+}

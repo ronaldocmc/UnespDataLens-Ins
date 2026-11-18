@@ -1,0 +1,14 @@
+{
+  "roles": [
+    "administrador",
+    "engenheiro_dados",
+    "pesquisador_autorizado",
+    "gestor_academico"
+  ],
+  "principles": [
+    "finalidade",
+    "minimização",
+    "rastreabilidade",
+    "menor privilégio"
+  ]
+}

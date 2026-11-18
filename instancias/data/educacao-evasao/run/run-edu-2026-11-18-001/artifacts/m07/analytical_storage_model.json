@@ -1,0 +1,12 @@
+{
+  "layers": [
+    "raw",
+    "integrated",
+    "prepared",
+    "validated",
+    "analytical",
+    "features"
+  ],
+  "published_asset": "dataset:analytical:student_risk:v1",
+  "storage": "CSV didático / DuckDB opcional"
+}

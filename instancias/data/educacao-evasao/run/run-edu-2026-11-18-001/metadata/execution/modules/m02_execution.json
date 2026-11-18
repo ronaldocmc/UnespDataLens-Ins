@@ -1,0 +1,407 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M02",
+  "module_name": "Extração, Ingestão e Armazenamento Bruto",
+  "kind": "operational",
+  "status": "SUCCESS",
+  "objective": "Trazer as fontes inventariadas para a camada raw preservando o conteúdo original e registrando integridade, horário, volume e falhas.",
+  "input_summary": "Inventário e schemas de M01 + acesso às 4 fontes declaradas",
+  "output_summary": "4 materializações raw preservadas + manifesto de ingestão + integridade + falhas",
+  "inputs": [
+    {
+      "id": "artifact:source_inventory",
+      "name": "source_inventory.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m01/source_inventory.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m01/source_inventory.json",
+      "role": "Define o que ingerir"
+    },
+    {
+      "id": "source:alunos_csv",
+      "name": "alunos_csv",
+      "kind": "source",
+      "format": "CSV",
+      "path": "input/alunos.csv",
+      "href": "data/educacao-evasao/input/alunos.csv",
+      "role": "",
+      "records": 6,
+      "columns": 7
+    },
+    {
+      "id": "source:matriculas_pg",
+      "name": "matriculas_pg",
+      "kind": "source",
+      "format": "PostgreSQL",
+      "path": "mock/postgres/matriculas_snapshot.csv",
+      "href": "data/educacao-evasao/mock/postgres/matriculas_snapshot.csv",
+      "role": "",
+      "records": 6,
+      "columns": 4
+    },
+    {
+      "id": "source:notas_pg",
+      "name": "notas_pg",
+      "kind": "source",
+      "format": "PostgreSQL",
+      "path": "mock/postgres/notas_snapshot.csv",
+      "href": "data/educacao-evasao/mock/postgres/notas_snapshot.csv",
+      "role": "",
+      "records": 12,
+      "columns": 5
+    },
+    {
+      "id": "source:apoio_api",
+      "name": "apoio_api",
+      "kind": "source",
+      "format": "REST/JSON",
+      "path": "mock/api/apoio_response.json",
+      "href": "data/educacao-evasao/mock/api/apoio_response.json",
+      "role": "",
+      "records": 6,
+      "columns": 4
+    }
+  ],
+  "outputs": [
+    {
+      "id": "dataset:raw:alunos:v1",
+      "name": "raw/alunos.csv",
+      "kind": "dataset",
+      "format": "CSV",
+      "path": "data/raw/alunos.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/raw/alunos.csv",
+      "role": "Cópia raw do CSV",
+      "records": 6,
+      "columns": 7
+    },
+    {
+      "id": "dataset:raw:matriculas:v1",
+      "name": "raw/matriculas.csv",
+      "kind": "dataset",
+      "format": "CSV snapshot",
+      "path": "data/raw/matriculas.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/raw/matriculas.csv",
+      "role": "Materialização raw da tabela",
+      "records": 6,
+      "columns": 4
+    },
+    {
+      "id": "dataset:raw:notas:v1",
+      "name": "raw/notas.csv",
+      "kind": "dataset",
+      "format": "CSV snapshot",
+      "path": "data/raw/notas.csv",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/raw/notas.csv",
+      "role": "Materialização raw da view",
+      "records": 12,
+      "columns": 5
+    },
+    {
+      "id": "dataset:raw:apoio:v1",
+      "name": "raw/apoio.json",
+      "kind": "dataset",
+      "format": "JSON",
+      "path": "data/raw/apoio.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/data/raw/apoio.json",
+      "role": "Materialização raw da resposta API",
+      "records": 6,
+      "columns": 4
+    },
+    {
+      "id": "artifact:ingestion_manifest",
+      "name": "ingestion_manifest.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m02/ingestion_manifest.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m02/ingestion_manifest.json",
+      "role": ""
+    },
+    {
+      "id": "artifact:integrity_register",
+      "name": "integrity_register.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m02/integrity_register.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m02/integrity_register.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "artifacts/m02/ingestion_manifest.json",
+    "artifacts/m02/integrity_register.json",
+    "artifacts/m02/ingestion_failures.json",
+    "data/raw/alunos.csv",
+    "data/raw/matriculas.csv",
+    "data/raw/notas.csv",
+    "data/raw/apoio.json"
+  ],
+  "metrics": [
+    {
+      "label": "Fontes ingeridas",
+      "value": "4"
+    },
+    {
+      "label": "Falhas",
+      "value": "0"
+    },
+    {
+      "label": "Registros raw",
+      "value": "30"
+    },
+    {
+      "label": "Integridade",
+      "value": "4/4 OK"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "abrir cada fonte declarada no inventário",
+      "concreteAction": "Selecionar conector e credential_ref",
+      "input": "source_inventory",
+      "result": "4 conexões resolvidas",
+      "registers": "source_id + connector",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "artifacts/m02/ingestion_manifest.json",
+        "artifacts/m02/integrity_register.json",
+        "artifacts/m02/ingestion_failures.json"
+      ]
+    },
+    {
+      "responsibility": "copiar os bytes para data/raw sem limpeza ou enriquecimento",
+      "concreteAction": "Leitura sem transformação semântica",
+      "input": "fonte original",
+      "result": "30 registros obtidos",
+      "registers": "query/endpoint/path + timestamp",
+      "events": [
+        "INGESTION_STARTED"
+      ],
+      "transversals": [],
+      "evidence": [
+        "artifacts/m02/ingestion_manifest.json",
+        "artifacts/m02/integrity_register.json",
+        "artifacts/m02/ingestion_failures.json"
+      ]
+    },
+    {
+      "responsibility": "comparar checksum da origem e da cópia",
+      "concreteAction": "Persistir snapshot/cópia na camada raw",
+      "input": "conteúdo extraído",
+      "result": "4 datasets raw",
+      "registers": "path + row_count + column_count",
+      "events": [
+        "DATASET_CREATED"
+      ],
+      "transversals": [
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "evidence": [
+        "artifacts/m02/ingestion_manifest.json",
+        "artifacts/m02/integrity_register.json",
+        "artifacts/m02/ingestion_failures.json"
+      ]
+    },
+    {
+      "responsibility": "registrar data/hora, linhas, colunas e tamanho",
+      "concreteAction": "Comparar checksum/fingerprint",
+      "input": "origem + raw",
+      "result": "4 verificações OK",
+      "registers": "checksum/fingerprint",
+      "events": [
+        "INGESTION_COMPLETED"
+      ],
+      "transversals": [
+        "M11",
+        "M12",
+        "M15"
+      ],
+      "evidence": [
+        "artifacts/m02/ingestion_manifest.json",
+        "artifacts/m02/integrity_register.json",
+        "artifacts/m02/ingestion_failures.json"
+      ]
+    },
+    {
+      "responsibility": "registrar falhas ou rejeições",
+      "concreteAction": "Comparar checksum/fingerprint",
+      "input": "origem + raw",
+      "result": "4 verificações OK",
+      "registers": "checksum/fingerprint",
+      "events": [
+        "INGESTION_COMPLETED"
+      ],
+      "transversals": [
+        "M11",
+        "M12",
+        "M15"
+      ],
+      "evidence": [
+        "artifacts/m02/ingestion_manifest.json",
+        "artifacts/m02/integrity_register.json",
+        "artifacts/m02/ingestion_failures.json"
+      ]
+    },
+    {
+      "responsibility": "emitir evento de lineage da fonte para o dataset raw",
+      "concreteAction": "Comparar checksum/fingerprint",
+      "input": "origem + raw",
+      "result": "4 verificações OK",
+      "registers": "checksum/fingerprint",
+      "events": [
+        "INGESTION_COMPLETED"
+      ],
+      "transversals": [
+        "M11",
+        "M12",
+        "M15"
+      ],
+      "evidence": [
+        "artifacts/m02/ingestion_manifest.json",
+        "artifacts/m02/integrity_register.json",
+        "artifacts/m02/ingestion_failures.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Resolver fonte",
+      "input": "source_inventory",
+      "operation": "Selecionar conector e credential_ref",
+      "output": "4 conexões resolvidas",
+      "registers": "source_id + connector",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Extrair",
+      "input": "fonte original",
+      "operation": "Leitura sem transformação semântica",
+      "output": "30 registros obtidos",
+      "registers": "query/endpoint/path + timestamp",
+      "events": [
+        "INGESTION_STARTED"
+      ],
+      "transversal": []
+    },
+    {
+      "step": 3,
+      "title": "Materializar raw",
+      "input": "conteúdo extraído",
+      "operation": "Persistir snapshot/cópia na camada raw",
+      "output": "4 datasets raw",
+      "registers": "path + row_count + column_count",
+      "events": [
+        "DATASET_CREATED"
+      ],
+      "transversal": [
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ]
+    },
+    {
+      "step": 4,
+      "title": "Validar integridade",
+      "input": "origem + raw",
+      "operation": "Comparar checksum/fingerprint",
+      "output": "4 verificações OK",
+      "registers": "checksum/fingerprint",
+      "events": [
+        "INGESTION_COMPLETED"
+      ],
+      "transversal": [
+        "M11",
+        "M12",
+        "M15"
+      ]
+    }
+  ],
+  "contract_ref": "contracts/m02_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "prov-m02-001",
+      "activity": "INGESTION",
+      "used": [
+        "source:alunos_csv"
+      ],
+      "generated": [
+        "dataset:raw:alunos:v1"
+      ],
+      "copy_mode": "BYTE_PRESERVING_COPY",
+      "checksum_after": "1e9c4b12a29629ec752ad6187db82d4dd620e8bf6888a84611794ef57958071f",
+      "status": "MATCH"
+    },
+    {
+      "event_id": "prov-m02-002",
+      "activity": "INGESTION",
+      "used": [
+        "source:matriculas_pg"
+      ],
+      "generated": [
+        "dataset:raw:matriculas:v1"
+      ],
+      "extraction": "snapshot from public.matriculas",
+      "status": "SUCCESS"
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M09",
+      "consumes": [
+        "DATASET_CREATED"
+      ],
+      "action": "Cataloga os 4 datasets raw.",
+      "stores": [
+        "metadata/catalog/catalogo_dados.json"
+      ]
+    },
+    {
+      "id": "M10",
+      "consumes": [
+        "DATASET_CREATED"
+      ],
+      "action": "Propaga classificação das fontes para raw.",
+      "stores": [
+        "metadata/governance/politica_acesso.json"
+      ]
+    },
+    {
+      "id": "M11",
+      "consumes": [
+        "INGESTION_COMPLETED"
+      ],
+      "action": "Cria arestas source → raw.",
+      "stores": [
+        "metadata/lineage/grafo_linhagem.json"
+      ]
+    },
+    {
+      "id": "M12",
+      "consumes": [
+        "DATASET_CREATED"
+      ],
+      "action": "Versiona as materializações.",
+      "stores": [
+        "metadata/versions/registro_versoes.json"
+      ]
+    },
+    {
+      "id": "M15",
+      "consumes": [
+        "INGESTION_COMPLETED"
+      ],
+      "action": "Registra volume/latência como baseline operacional.",
+      "stores": [
+        "metadata/monitoring/baseline_current.json"
+      ]
+    }
+  ]
+}

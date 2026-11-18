@@ -1,0 +1,38 @@
+{
+  "features": [
+    {
+      "feature_id": "FT-001",
+      "name": "media_nota",
+      "formula": "mean(nota) por aluno-semestre",
+      "sources": [
+        "notas_pg.nota"
+      ]
+    },
+    {
+      "feature_id": "FT-002",
+      "name": "total_faltas",
+      "formula": "sum(faltas) por aluno-semestre",
+      "sources": [
+        "notas_pg.faltas"
+      ]
+    },
+    {
+      "feature_id": "FT-003",
+      "name": "recebe_apoio",
+      "formula": "1 se bolsa ou auxilio_permanencia ou monitoria == SIM",
+      "sources": [
+        "apoio_api.*"
+      ]
+    },
+    {
+      "feature_id": "FT-004",
+      "name": "risco_academico_simples",
+      "formula": "ALTO se media_nota<5 ou total_faltas>30; MEDIO se media_nota<7 ou total_faltas>15; senão BAIXO",
+      "sources": [
+        "FT-001",
+        "FT-002"
+      ],
+      "note": "heurística didática; não é modelo preditivo"
+    }
+  ]
+}

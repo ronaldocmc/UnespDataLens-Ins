@@ -1,0 +1,254 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "pipeline_id": "EDU-EVASAO-01",
+  "module_id": "M10",
+  "module_name": "Governança, Segurança, Privacidade e Conformidade",
+  "kind": "transversal",
+  "status": "SUCCESS",
+  "objective": "Aplicar políticas de responsabilidade, acesso, finalidade, privacidade e conformidade aos ativos produzidos pelo pipeline.",
+  "input_summary": "classificações de M01 + ativos derivados/publicados + papéis e finalidade",
+  "output_summary": "modelo de governança + matriz de permissões + política de acesso + finalidade + conformidade",
+  "inputs": [
+    {
+      "id": "artifact:source_classification",
+      "name": "source_classification.json",
+      "kind": "artifact",
+      "format": "JSON",
+      "path": "artifacts/m01/source_classification.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m01/source_classification.json",
+      "role": ""
+    },
+    {
+      "id": "metadata:catalog",
+      "name": "catalogo_dados.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/catalog/catalogo_dados.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/catalog/catalogo_dados.json",
+      "role": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": "metadata:governance",
+      "name": "modelo_governanca.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/governance/modelo_governanca.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/governance/modelo_governanca.json",
+      "role": ""
+    },
+    {
+      "id": "metadata:permissions",
+      "name": "matriz_permissoes.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/governance/matriz_permissoes.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/governance/matriz_permissoes.json",
+      "role": ""
+    },
+    {
+      "id": "metadata:access",
+      "name": "politica_acesso.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/governance/politica_acesso.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/governance/politica_acesso.json",
+      "role": ""
+    },
+    {
+      "id": "metadata:purpose",
+      "name": "registro_finalidade_uso.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/governance/registro_finalidade_uso.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/governance/registro_finalidade_uso.json",
+      "role": ""
+    },
+    {
+      "id": "metadata:compliance",
+      "name": "plano_conformidade.json",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "metadata/governance/plano_conformidade.json",
+      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/governance/plano_conformidade.json",
+      "role": ""
+    }
+  ],
+  "artifacts": [
+    "metadata/governance/modelo_governanca.json",
+    "metadata/governance/matriz_permissoes.json",
+    "metadata/governance/politica_acesso.json",
+    "metadata/governance/registro_finalidade_uso.json",
+    "metadata/governance/plano_conformidade.json"
+  ],
+  "metrics": [
+    {
+      "label": "Política",
+      "value": "GOV-EDU-001"
+    },
+    {
+      "label": "Classificação",
+      "value": "RESTRICTED"
+    },
+    {
+      "label": "Papéis",
+      "value": "4"
+    },
+    {
+      "label": "Compart. externo",
+      "value": "não"
+    }
+  ],
+  "responsibility_evidence": [
+    {
+      "responsibility": "classificar ativos e dados pessoais",
+      "concreteAction": "Propagar sensibilidade e dados pessoais",
+      "input": "source/asset metadata",
+      "result": "classificação por ativo",
+      "registers": "policy decision",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/governance/modelo_governanca.json",
+        "metadata/governance/matriz_permissoes.json",
+        "metadata/governance/politica_acesso.json"
+      ]
+    },
+    {
+      "responsibility": "definir papéis e permissões",
+      "concreteAction": "Aplicar menor privilégio",
+      "input": "role + purpose + asset",
+      "result": "matriz de permissões",
+      "registers": "ALLOW/RESTRICT/DENY",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/governance/modelo_governanca.json",
+        "metadata/governance/matriz_permissoes.json",
+        "metadata/governance/politica_acesso.json"
+      ]
+    },
+    {
+      "responsibility": "registrar finalidade de uso",
+      "concreteAction": "Vincular uso permitido",
+      "input": "produto/consulta",
+      "result": "purpose record",
+      "registers": "purpose_id",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/governance/modelo_governanca.json",
+        "metadata/governance/matriz_permissoes.json",
+        "metadata/governance/politica_acesso.json"
+      ]
+    },
+    {
+      "responsibility": "definir restrições de compartilhamento",
+      "concreteAction": "Vincular uso permitido",
+      "input": "produto/consulta",
+      "result": "purpose record",
+      "registers": "purpose_id",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/governance/modelo_governanca.json",
+        "metadata/governance/matriz_permissoes.json",
+        "metadata/governance/politica_acesso.json"
+      ]
+    },
+    {
+      "responsibility": "registrar decisões de conformidade e controles",
+      "concreteAction": "Vincular uso permitido",
+      "input": "produto/consulta",
+      "result": "purpose record",
+      "registers": "purpose_id",
+      "events": [],
+      "transversals": [],
+      "evidence": [
+        "metadata/governance/modelo_governanca.json",
+        "metadata/governance/matriz_permissoes.json",
+        "metadata/governance/politica_acesso.json"
+      ]
+    }
+  ],
+  "process_trace": [
+    {
+      "step": 1,
+      "title": "Classificar",
+      "input": "source/asset metadata",
+      "operation": "Propagar sensibilidade e dados pessoais",
+      "output": "classificação por ativo",
+      "registers": "policy decision",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 2,
+      "title": "Autorizar",
+      "input": "role + purpose + asset",
+      "operation": "Aplicar menor privilégio",
+      "output": "matriz de permissões",
+      "registers": "ALLOW/RESTRICT/DENY",
+      "events": [],
+      "transversal": []
+    },
+    {
+      "step": 3,
+      "title": "Registrar finalidade",
+      "input": "produto/consulta",
+      "operation": "Vincular uso permitido",
+      "output": "purpose record",
+      "registers": "purpose_id",
+      "events": [],
+      "transversal": []
+    }
+  ],
+  "contract_ref": "contracts/m10_contract.json",
+  "provenance_records": [
+    {
+      "event_id": "gov-m10-001",
+      "activity": "ACCESS_POLICY_APPLIED",
+      "asset_id": "dataset:analytical:student_risk:v1",
+      "policy_id": "GOV-EDU-001",
+      "decision": "RESTRICT",
+      "allowed_roles": [
+        "pesquisador_autorizado",
+        "gestor_academico"
+      ]
+    }
+  ],
+  "transversal_interactions": [
+    {
+      "id": "M01",
+      "consumes": [
+        "SOURCE_CLASSIFIED"
+      ],
+      "action": "Recebe sensibilidade original.",
+      "stores": [
+        "metadata/governance/politica_acesso.json"
+      ]
+    },
+    {
+      "id": "M07–M08",
+      "consumes": [
+        "ASSET_PUBLISHED",
+        "PRODUCT_PUBLISHED"
+      ],
+      "action": "Controla publicação e consumo.",
+      "stores": [
+        "metadata/governance/matriz_permissoes.json"
+      ]
+    },
+    {
+      "id": "M16",
+      "consumes": [
+        "AGENT_QUERY"
+      ],
+      "action": "Restringe evidências acessíveis.",
+      "stores": [
+        "metadata/agents/agent_governance_plan.json"
+      ]
+    }
+  ]
+}

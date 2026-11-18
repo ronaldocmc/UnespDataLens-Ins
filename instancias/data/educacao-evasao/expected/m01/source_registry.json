@@ -1,0 +1,53 @@
+{
+  "run_id": "run-edu-2026-11-18-001",
+  "module_id": "M01",
+  "sources": [
+    {
+      "source_id": "alunos_csv",
+      "connector": "file",
+      "type": "csv",
+      "location": "instancias/data/educacao-evasao/input/alunos.csv",
+      "owner": "Graduacao",
+      "granularity": "aluno",
+      "candidate_keys": ["aluno_id"],
+      "sensitivity": "alta"
+    },
+    {
+      "source_id": "matriculas_pg",
+      "connector": "postgresql",
+      "connection_ref": "secret://academic-postgres",
+      "host_alias": "sistema-academico",
+      "database": "academico",
+      "object": "public.matriculas",
+      "owner": "STI / Graduacao",
+      "granularity": "aluno_semestre",
+      "candidate_keys": ["matricula_id"],
+      "sensitivity": "alta"
+    },
+    {
+      "source_id": "notas_pg",
+      "connector": "postgresql",
+      "connection_ref": "secret://academic-postgres",
+      "host_alias": "sistema-academico",
+      "database": "academico",
+      "object": "public.vw_notas_faltas",
+      "owner": "STI / Graduacao",
+      "granularity": "aluno_disciplina_semestre",
+      "candidate_keys": ["aluno_id", "disciplina_id", "semestre"],
+      "sensitivity": "media"
+    },
+    {
+      "source_id": "apoio_api",
+      "connector": "rest_api",
+      "base_url": "https://api.exemplo.edu.br",
+      "endpoint": "/v1/beneficios-estudantis",
+      "auth_ref": "secret://student-support-api",
+      "method": "GET",
+      "response_format": "json",
+      "owner": "Assistencia Estudantil",
+      "granularity": "aluno",
+      "candidate_keys": ["aluno_id"],
+      "sensitivity": "alta"
+    }
+  ]
+}

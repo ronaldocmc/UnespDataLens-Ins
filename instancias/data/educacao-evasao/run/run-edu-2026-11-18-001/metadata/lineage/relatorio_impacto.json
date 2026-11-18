@@ -1,0 +1,12 @@
+{
+  "example_question": "Se public.vw_notas_faltas mudar, o que pode ser afetado?",
+  "affected": [
+    "dataset:raw:notas:v1",
+    "dataset:integrated:student_semester:v1",
+    "dataset:prepared:student_semester:v1",
+    "dataset:validated:student_semester:v1",
+    "dataset:analytical:student_risk:v1",
+    "feature_set:student_risk:v1",
+    "product:DP-EDU-001"
+  ]
+}

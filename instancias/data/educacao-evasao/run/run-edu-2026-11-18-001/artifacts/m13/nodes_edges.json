@@ -1,0 +1,102 @@
+{
+  "nodes": [
+    {
+      "id": "student:1001",
+      "type": "student"
+    },
+    {
+      "id": "student:1002",
+      "type": "student"
+    },
+    {
+      "id": "student:1003",
+      "type": "student"
+    },
+    {
+      "id": "student:1004",
+      "type": "student"
+    },
+    {
+      "id": "student:1005",
+      "type": "student"
+    },
+    {
+      "id": "student:1006",
+      "type": "student"
+    },
+    {
+      "id": "course:Computacao",
+      "type": "course"
+    },
+    {
+      "id": "status:ATIVO",
+      "type": "status"
+    },
+    {
+      "id": "status:EVADIDO",
+      "type": "status"
+    }
+  ],
+  "edges": [
+    {
+      "from": "student:1001",
+      "to": "course:Computacao",
+      "type": "ENROLLED_IN"
+    },
+    {
+      "from": "student:1001",
+      "to": "status:ATIVO",
+      "type": "HAS_STATUS"
+    },
+    {
+      "from": "student:1002",
+      "to": "course:Computacao",
+      "type": "ENROLLED_IN"
+    },
+    {
+      "from": "student:1002",
+      "to": "status:EVADIDO",
+      "type": "HAS_STATUS"
+    },
+    {
+      "from": "student:1003",
+      "to": "course:Computacao",
+      "type": "ENROLLED_IN"
+    },
+    {
+      "from": "student:1003",
+      "to": "status:ATIVO",
+      "type": "HAS_STATUS"
+    },
+    {
+      "from": "student:1004",
+      "to": "course:Computacao",
+      "type": "ENROLLED_IN"
+    },
+    {
+      "from": "student:1004",
+      "to": "status:ATIVO",
+      "type": "HAS_STATUS"
+    },
+    {
+      "from": "student:1005",
+      "to": "course:Computacao",
+      "type": "ENROLLED_IN"
+    },
+    {
+      "from": "student:1005",
+      "to": "status:ATIVO",
+      "type": "HAS_STATUS"
+    },
+    {
+      "from": "student:1006",
+      "to": "course:Computacao",
+      "type": "ENROLLED_IN"
+    },
+    {
+      "from": "student:1006",
+      "to": "status:EVADIDO",
+      "type": "HAS_STATUS"
+    }
+  ]
+}
