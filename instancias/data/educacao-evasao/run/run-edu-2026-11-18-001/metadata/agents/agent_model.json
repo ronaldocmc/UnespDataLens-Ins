@@ -1,15 +1,42 @@
 {
   "agent_id": "agent-pipeline-evidence",
+  "version": "8.5",
+  "mode": "evidence_rag",
+  "retrieval": {
+    "strategy": "governed lexical + metadata chunk retrieval",
+    "max_evidence": 6,
+    "chunk_max_chars": 1800,
+    "dynamic_index": true
+  },
   "allowed_sources": [
+    "artifacts",
     "catalog",
+    "governance",
     "quality",
     "fairness",
     "lineage",
     "versions",
-    "monitoring"
+    "monitoring",
+    "contracts",
+    "reports"
   ],
   "forbidden": [
-    "raw personal data unless authorized"
+    "raw personal data unless authorized",
+    "input/mock snapshots with personal data in public demo"
   ],
-  "retrieval": "keyword/metadata demonstrativo"
+  "response_policy": {
+    "cite_evidence_id": true,
+    "cite_run_id": true,
+    "abstain_when_unsupported": true,
+    "do_not_infer_causality": true
+  },
+  "query_log": {
+    "static_example": "metadata/agents/query_register.json",
+    "runtime": "browser localStorage / exportable JSON"
+  },
+  "llm_backend": {
+    "enabled": false,
+    "rule": "never expose provider API keys in GitHub Pages",
+    "adapter": "POST governed evidence to a server-side endpoint when configured"
+  }
 }
