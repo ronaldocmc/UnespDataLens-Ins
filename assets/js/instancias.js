@@ -167,7 +167,7 @@
     setText("#center-provenance-summary", provenanceCount ? `${provenanceCount} registros concretos de rastreabilidade` : "Eventos e rastreabilidade da execução");
     setText("#center-transversal-summary", transversals.length ? transversals.map(x=>x.id).join(" · ") : "Nenhum transversal adicional nesta etapa");
 
-    const trace=$("#module-instance-trace"); if(trace) { const steps=(d.processTrace||[]); trace.innerHTML=renderTrace(steps.slice(0,4)) + (steps.length>4?`<button type="button" class="more-details-button" data-center-tab="process">Ver todos os ${steps.length} passos no Inspector →</button>`:""); }
+    const trace=$("#module-instance-trace"); if(trace) { const steps=(d.processTrace||[]); trace.innerHTML=renderTrace(steps.slice(0,4)) + (steps.length>4?`<button type="button" class="more-details-button" data-center-tab="process">Ver todos os ${steps.length} passos em Detalhes e Evidências →</button>`:""); }
     const trans=$("#module-instance-transversal"); if(trans) trans.innerHTML=renderTransversalCompact(instance,transversals);
     const ex=$("#module-instance-example"); if(ex) ex.innerHTML=renderExample(d.example);
   }
@@ -253,7 +253,7 @@
     if(!metric) return;
     const detailHost=$("#module-detail");
     const tabs=[["inputs","Entradas"],["process","Processamento"],["outputs","Saídas"],["contract","Contrato"],["provenance","Proveniência"],["example","Exemplo"],["integration","Integração"]];
-    detailHost.innerHTML=`<div class="detail-head ${module.kind==='transversal'?'transversal':''}"><div><span class="eyebrow">Composição do indicador</span><h2>Inspector · ${moduleId}</h2></div><div class="detail-actions"><a class="detail-link" href="${escapeHtml(module.conceptualUrl)}" target="_blank" rel="noopener">Documentação conceitual ↗</a><button type="button" class="panel-layout-button inspector-layout-button" data-layout-action="inspector-maximize" title="Maximizar Inspector" aria-label="Maximizar Inspector">⛶</button></div></div>
+    detailHost.innerHTML=`<div class="detail-head ${module.kind==='transversal'?'transversal':''}"><div><span class="eyebrow">Composição do indicador</span><h2>Detalhes e Evidências · ${moduleId}</h2></div><div class="detail-actions"><a class="detail-link" href="${escapeHtml(module.conceptualUrl)}" target="_blank" rel="noopener">Documentação conceitual ↗</a><button type="button" class="panel-layout-button inspector-layout-button" data-layout-action="inspector-maximize" title="Maximizar Detalhes e Evidências" aria-label="Maximizar Detalhes e Evidências">⛶</button></div></div>
       <div class="detail-tabs">${tabs.map(([id,label])=>`<button type="button" data-detail-tab="${id}" data-detail-module="${moduleId}">${label}</button>`).join('')}</div>
       <div class="detail-panel">${renderMetricComposition(instance,moduleId,module,metric,index)}</div>`;
     document.dispatchEvent(new CustomEvent("unespdatalens:detail-rendered", { detail: { moduleId, tab:"metric", metricIndex:index } }));
@@ -453,7 +453,7 @@
     const tabs=[["inputs","Entradas"],["process","Processamento"],["outputs","Saídas"],["contract","Contrato"],["provenance","Proveniência"],["example","Exemplo"],["integration","Integração"]];
     const moduleIds=Object.keys(instance.modules).sort((a,b)=>Number(a.slice(1))-Number(b.slice(1)));
     const index=moduleIds.indexOf(moduleId),prev=index>0?moduleIds[index-1]:"",next=index<moduleIds.length-1?moduleIds[index+1]:"";
-    detailHost.innerHTML=`<div class="detail-head ${module.kind==='transversal'?'transversal':''}"><h2>Inspector · ${moduleId}</h2><div class="detail-actions"><a class="detail-link" href="${escapeHtml(module.conceptualUrl)}" target="_blank" rel="noopener">Documentação conceitual ↗</a><button type="button" class="panel-layout-button inspector-layout-button" data-layout-action="inspector-maximize" title="Maximizar Inspector" aria-label="Maximizar Inspector">⛶</button></div></div>
+    detailHost.innerHTML=`<div class="detail-head ${module.kind==='transversal'?'transversal':''}"><h2>Detalhes e Evidências · ${moduleId}</h2><div class="detail-actions"><a class="detail-link" href="${escapeHtml(module.conceptualUrl)}" target="_blank" rel="noopener">Documentação conceitual ↗</a><button type="button" class="panel-layout-button inspector-layout-button" data-layout-action="inspector-maximize" title="Maximizar Detalhes e Evidências" aria-label="Maximizar Detalhes e Evidências">⛶</button></div></div>
       <div class="detail-tabs">${tabs.map(([id,label])=>`<button type="button" class="${tab===id?'active':''}" data-detail-tab="${id}" data-detail-module="${moduleId}">${label}</button>`).join('')}</div>
       <div class="detail-panel">${renderTab(instance,moduleId,module,tab)}</div>`;
     document.dispatchEvent(new CustomEvent("unespdatalens:detail-rendered", { detail: { moduleId, tab } }));
