@@ -13,7 +13,7 @@
 <div class="app">
   <header class="site-header">
     <div class="header-main">
-      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V8.4</small></a>
+      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V8.5</small></a>
       <div class="instance-header-actions">
         <label for="instance-select">Instância</label>
         <select id="instance-select" aria-label="Selecionar instância"></select>
@@ -169,8 +169,9 @@
               <h2>Pergunte ao Pipeline</h2>
               <p>Faça perguntas sobre esta execução. As respostas são construídas a partir dos artefatos, metadados, lineage, contratos, regras e versões registrados pela própria instância.</p>
             </div>
-            <span class="qa-mode">Sem LLM · evidência local</span>
+            <div><span class="qa-mode rag">M16 · Evidence-RAG</span><small class="qa-mode-sub">recuperação governada · LLM backend opcional</small><button type="button" class="m16-open-button" data-module-id="M16">Abrir módulo M16</button></div>
           </div>
+          <div class="m16-runtime" id="m16-rag-runtime" aria-label="Estado do M16"></div>
           <form class="qa-form" id="pipeline-qa-form">
             <label class="sr-only" for="pipeline-qa-input">Pergunta sobre o pipeline</label>
             <input id="pipeline-qa-input" type="text" autocomplete="off" placeholder="Ex.: De onde exatamente veio este indicador?">
@@ -213,7 +214,9 @@
 <script src="../assets/js/main.js"></script>
 <script src="../assets/js/instancias-data.js"></script>
 <script src="../assets/js/instancias-files.js"></script>
-<script src="../assets/js/instancias.js"></script>\n<script src="../assets/js/pipeline-qa.js"></script>
+<script src="../assets/js/instancias.js"></script>\n<script src="../assets/js/pipeline-qa-config.js"></script>
+<script src="../assets/js/pipeline-qa.js"></script>
+<script src="../assets/js/m16-rag.js"></script>
 <script src="../assets/js/v8-layout.js"></script>
 </body>
 </html>
