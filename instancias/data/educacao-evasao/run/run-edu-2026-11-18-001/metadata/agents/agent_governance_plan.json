@@ -1,8 +1,16 @@
 {
   "rules": [
-    "respeitar M10",
-    "citar evidence_id e run_id",
+    "respeitar as classificações e permissões definidas pelo M10",
+    "não indexar dados pessoais brutos na demonstração pública",
+    "citar evidence_id, path, módulo e run_id",
     "não inferir causalidade",
-    "não expor dados pessoais sem autorização"
+    "abster-se quando não houver evidência suficiente",
+    "não enviar credenciais ou segredos ao navegador ou ao backend LLM",
+    "quando houver LLM, enviar somente trechos autorizados recuperados pelo M16"
+  ],
+  "events": [
+    "EVIDENCE_FILTERED",
+    "EVIDENCE_RETRIEVED",
+    "AGENT_QUERY_COMPLETED"
   ]
 }
