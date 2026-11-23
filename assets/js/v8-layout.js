@@ -55,7 +55,7 @@
 
   function modeLabel() {
     if (state.mode === "center") return "Modo: Visão da execução maximizada";
-    if (state.mode === "inspector") return "Modo: Inspector maximizado";
+    if (state.mode === "inspector") return "Modo: Detalhes e Evidências maximizado";
     if (state.sidebarHidden) return "Modo: Menu recolhido";
     return "Modo: Normal";
   }
@@ -71,7 +71,7 @@
     document.querySelectorAll('[data-layout-action="inspector-maximize"]').forEach((button) => {
       const active = state.mode === "inspector";
       button.textContent = active ? "↙" : "⛶";
-      button.title = active ? "Restaurar Inspector" : "Maximizar Inspector";
+      button.title = active ? "Restaurar Detalhes e Evidências" : "Maximizar Detalhes e Evidências";
       button.setAttribute("aria-label", button.title);
       button.setAttribute("aria-pressed", String(active));
     });
