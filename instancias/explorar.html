@@ -6,14 +6,14 @@
   <meta name="description" content="Explorador interativo de instâncias do pipeline UnespDataLens-RM.">
   <title>Explorar instância · UnespDataLens-RM</title>
   <link rel="stylesheet" href="../assets/css/main.css">
-  <link rel="stylesheet" href="../assets/css/instancias.css">
+  <link rel="stylesheet" href="../assets/css/instancias.css">\n  <link rel="stylesheet" href="../assets/css/pipeline-qa.css">
 </head>
 <body class="instance-explorer-page">
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 <div class="app">
   <header class="site-header">
     <div class="header-main">
-      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V8.3</small></a>
+      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V8.4</small></a>
       <div class="instance-header-actions">
         <label for="instance-select">Instância</label>
         <select id="instance-select" aria-label="Selecionar instância"></select>
@@ -133,7 +133,66 @@
           </div>
         </div>
 
-        <details class="canvas-section all-files-section all-files-drawer">
+
+        <details class="why-panel">
+          <summary>
+            <strong>Por que o UnespDataLens-RM?</strong>
+            <span>Veja quais lacunas o modelo procura resolver e por que a instanciação é importante.</span>
+          </summary>
+          <div class="why-panel-body">
+            <p class="why-thesis">O resultado de um pipeline não é somente o dataset final. É o conjunto formado por dados + artefatos + metadados + evidências + lineage + regras + métricas + versões + decisões.</p>
+            <div class="why-compare">
+              <article>
+                <h4>Pipeline que funciona</h4>
+                <p>Extrai, transforma, integra e entrega o produto analítico. O resultado pode estar correto, mas parte das decisões de engenharia pode continuar dispersa em scripts, configurações e conhecimento tácito.</p>
+              </article>
+              <article>
+                <h4>Pipeline verificável</h4>
+                <p>Além de produzir o resultado, preserva evidências suficientes para explicar sua origem, qualidade, governança, transformação, versão, impacto e condições de reprodução.</p>
+              </article>
+            </div>
+            <div class="why-points">
+              <div><strong>Fragmentação</strong><span>Integra processo operacional e preocupações transversais em um mesmo modelo.</span></div>
+              <div><strong>Conhecimento tácito</strong><span>Transforma decisões de engenharia em artefatos explícitos e consultáveis.</span></div>
+              <div><strong>Rastreabilidade</strong><span>Relaciona fontes, transformações, datasets, features e produtos por lineage.</span></div>
+              <div><strong>Governança</strong><span>Registra classificação, finalidade, acesso, responsabilidades e restrições.</span></div>
+              <div><strong>Reprodutibilidade</strong><span>Preserva versões, ambiente, dependências, configurações e manifesto da execução.</span></div>
+              <div><strong>Instanciação</strong><span>Permite verificar se o modelo é operacionalizável, detectar lacunas e comparar implementações.</span></div>
+            </div>
+          </div>
+        </details>
+
+        <section class="pipeline-qa-section" id="pipeline-qa">
+          <div class="qa-head">
+            <div>
+              <span class="eyebrow">Consulta baseada em evidências</span>
+              <h2>Pergunte ao Pipeline</h2>
+              <p>Faça perguntas sobre esta execução. As respostas são construídas a partir dos artefatos, metadados, lineage, contratos, regras e versões registrados pela própria instância.</p>
+            </div>
+            <span class="qa-mode">Sem LLM · evidência local</span>
+          </div>
+          <form class="qa-form" id="pipeline-qa-form">
+            <label class="sr-only" for="pipeline-qa-input">Pergunta sobre o pipeline</label>
+            <input id="pipeline-qa-input" type="text" autocomplete="off" placeholder="Ex.: De onde exatamente veio este indicador?">
+            <button type="submit" class="qa-submit">Responder com evidências</button>
+          </form>
+          <div class="qa-suggestions" aria-label="Perguntas sugeridas">
+            <button type="button" data-qa-question="Quais são as quatro fontes utilizadas nesta execução?">Quais são as fontes?</button>
+            <button type="button" data-qa-question="De onde exatamente veio este indicador?">De onde veio este indicador?</button>
+            <button type="button" data-qa-question="Qual versão das fontes foi utilizada?">Qual versão das fontes?</button>
+            <button type="button" data-qa-question="Quais transformações foram realizadas?">Quais transformações?</button>
+            <button type="button" data-qa-question="Quais regras de qualidade foram aplicadas?">Quais regras de qualidade?</button>
+            <button type="button" data-qa-question="Quem pode utilizar os dados?">Quem pode acessar?</button>
+            <button type="button" data-qa-question="Alguma variável foi imputada? Qual método?">Houve imputação?</button>
+            <button type="button" data-qa-question="A integração eliminou registros? Qual foi a cardinalidade?">A integração perdeu registros?</button>
+            <button type="button" data-qa-question="Houve mudança de schema?">Houve schema drift?</button>
+            <button type="button" data-qa-question="O resultado pode ser reproduzido seis meses depois?">É reproduzível?</button>
+            <button type="button" data-qa-question="Como a feature risco_academico_simples foi calculada?">Como esta feature foi calculada?</button>
+            <button type="button" data-qa-question="Se a fonte public.vw_notas_faltas mudar, quais produtos serão afetados?">Qual o impacto de uma mudança?</button>
+          </div>
+          <div id="pipeline-qa-answer" aria-live="polite"></div>
+        </section>
+\n        <details class="canvas-section all-files-section all-files-drawer">
           <summary>
             <span><span class="eyebrow">Execução completa</span><strong>Todos os arquivos da instância e da execução</strong></span>
             <small>Configurações, dados, artefatos, contratos, metadados, logs e relatórios</small>
