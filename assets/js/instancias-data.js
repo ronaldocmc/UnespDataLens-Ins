@@ -8558,14 +8558,14 @@ window.UNESP_DATALENS_INSTANCIAS = {
           "inputs": [
             "artefatos, relatórios e metadados autorizados",
             "catálogo, lineage e versões",
-            "perguntas demonstrativas"
+            "perguntas livres ou estruturadas"
           ],
           "process": [
-            "indexar evidências permitidas",
+            "indexar dinamicamente evidências permitidas em trechos rastreáveis",
             "associar cada trecho ao artefato e versão de origem",
-            "recuperar evidências relevantes para a pergunta",
-            "responder indicando as evidências usadas",
-            "registrar consulta, fontes recuperadas e contexto"
+            "recuperar e ranquear evidências relevantes para a pergunta",
+            "responder com evidências explícitas ou abster-se quando o suporte for insuficiente",
+            "registrar consulta, evidências recuperadas, modo e status"
           ],
           "outputs": [
             "metadata/agents/evidence_base.json",
@@ -8663,24 +8663,24 @@ window.UNESP_DATALENS_INSTANCIAS = {
           "conceptualUrl": "https://ronaldocmc.github.io/UnespDataLens-RM/modulos/m16.html",
           "primaryOutput": "Consultas apoiadas por evidências",
           "instance": {
-            "inputSummary": "catálogo + qualidade + fairness + lineage + versões + monitoramento, filtrados por governança",
-            "outputSummary": "base de evidências + modelo de agente + registro de consulta + plano de governança do agente",
+            "inputSummary": "pergunta + artefatos/metadados/contratos/relatórios autorizados, filtrados por M10",
+            "outputSummary": "resposta suportada por evidências ou abstenção + evidence refs + registro exportável da consulta",
             "metrics": [
               {
-                "label": "Evidências",
+                "label": "Índice",
+                "value": "dinâmico"
+              },
+              {
+                "label": "Máx. evidências",
                 "value": "6"
               },
               {
-                "label": "Consulta exemplo",
-                "value": "1"
-              },
-              {
                 "label": "Status",
-                "value": "SUPPORTED"
+                "value": "SUPPORTED/ABSTAIN"
               },
               {
-                "label": "Acesso",
-                "value": "governado"
+                "label": "Dados brutos",
+                "value": "bloqueados"
               }
             ],
             "inputs": [
@@ -8774,7 +8774,7 @@ window.UNESP_DATALENS_INSTANCIAS = {
                 "title": "Indexar evidências",
                 "input": "artefatos permitidos",
                 "operation": "Criar evidence_id + path + run_id",
-                "output": "6 evidence items",
+                "output": "índice dinâmico de evidências autorizadas",
                 "registers": "evidence metadata",
                 "events": [],
                 "transversal": []
@@ -8798,7 +8798,7 @@ window.UNESP_DATALENS_INSTANCIAS = {
                 "title": "Recuperar",
                 "input": "pergunta",
                 "operation": "Buscar evidências relevantes",
-                "output": "4 evidence refs",
+                "output": "até 6 evidence refs",
                 "registers": "evidence_ids",
                 "events": [
                   "EVIDENCE_RETRIEVED"
@@ -8839,7 +8839,7 @@ window.UNESP_DATALENS_INSTANCIAS = {
               "produces": {
                 "answer": "with evidence refs",
                 "query_record": "Q-001",
-                "evidence_base": 6
+                "evidence_base": "dynamic_governed_index"
               }
             },
             "provenanceRecords": [
