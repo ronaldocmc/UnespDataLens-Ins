@@ -257,6 +257,128 @@
     };
   }
 
+
+  function storageAnswer(instance) {
+    const ingestionPath = path(instance, "artifacts/m02/ingestion_manifest.json");
+    const storagePath = path(instance, "artifacts/m07/analytical_storage_model.json");
+    const catalogPath = path(instance, "artifacts/m07/analytical_assets_catalog.json");
+    const ingestion = readJson(ingestionPath, {});
+    const storage = readJson(storagePath, {});
+    const catalog = readJson(catalogPath, {});
+    const rawRows = (ingestion.items || []).map(x =>
+      `<tr><td><code>${esc(x.raw_asset)}</code></td><td><code>${esc(x.path)}</code></td><td>${esc(x.rows)} × ${esc(x.columns)}</td><td><code>${esc(String(x.checksum_sha256 || "").slice(0,16))}…</code></td></tr>`
+    ).join("");
+    const analyticalRows = (catalog.assets || []).map(x =>
+      `<tr><td><code>${esc(x.asset_id)}</code></td><td><code>${esc(x.path)}</code></td><td>${esc(x.rows)} × ${esc(x.columns)}</td><td>${esc(x.status)}</td></tr>`
+    ).join("");
+    return {
+      title: "Como e onde os dados foram armazenados?",
+      answer: `<p>O modelo de armazenamento desta instância organiza os dados em <b>${esc((storage.layers || []).length)} camadas</b>: <code>${esc((storage.layers || []).join(" → "))}</code>. A demonstração usa <b>${esc(storage.storage || "—")}</b>.</p>
+        <h4>Camada raw preservada pelo M02</h4>
+        <div class="qa-table-wrap"><table class="qa-table"><thead><tr><th>Ativo</th><th>Local</th><th>Dimensão</th><th>Checksum</th></tr></thead><tbody>${rawRows}</tbody></table></div>
+        <h4>Ativo analítico publicado pelo M07</h4>
+        <div class="qa-table-wrap"><table class="qa-table"><thead><tr><th>Ativo</th><th>Local</th><th>Dimensão</th><th>Status</th></tr></thead><tbody>${analyticalRows}</tbody></table></div>
+        <p>Assim, a instância não guarda apenas o resultado final: preserva a passagem por <code>raw</code>, <code>integrated</code>, <code>prepared</code>, <code>validated</code>, <code>analytical</code> e <code>features</code>.</p>`,
+      modules: ["M02", "M07", "M11", "M12"],
+      evidence: [
+        evidence("Manifesto de ingestão", ingestionPath, "Registra os ativos raw, locais, volumes, checksums e timestamps de ingestão."),
+        evidence("Modelo de armazenamento analítico", storagePath, "Define as camadas e a tecnologia/formato de armazenamento da instância."),
+        evidence("Catálogo de ativos analíticos", catalogPath, "Registra o ativo publicado, localização, dimensão, granularidade e status.")
+      ]
+    };
+  }
+
+  function techniquesAnswer(instance) {
+    const integrationPath = path(instance, "artifacts/m03/integration_plan.json");
+    const transformPath = path(instance, "artifacts/m04/transformation_plan.json");
+    const cleaningPath = path(instance, "artifacts/m04/cleaning_rules_register.json");
+    const qualityPath = path(instance, "artifacts/m05/quality_report.json");
+    const featurePath = path(instance, "artifacts/m14/feature_catalog.json");
+    const integration = readJson(integrationPath, {});
+    const transform = readJson(transformPath, {});
+    const cleaning = readJson(cleaningPath, {});
+    const quality = readJson(qualityPath, {});
+    const features = readJson(featurePath, {});
+
+    const integrationRows = (integration.operations || []).map(x => {
+      let detail = "";
+      if (x.type === "aggregate") detail = `group_by: ${(x.group_by || []).join(", ")} · ${Object.entries(x.aggregations || {}).map(([k,v])=>k+"="+v).join(", ")}`;
+      if (x.type === "join") detail = `${x.how} join · chaves: ${(x.on || []).join(", ")}`;
+      return `<tr><td><code>${esc(x.id)}</code></td><td>${esc(x.type)}</td><td>${esc(detail)}</td></tr>`;
+    }).join("");
+
+    const transformRows = (transform.operations || []).map(x =>
+      `<tr><td><code>${esc(x.field)}</code></td><td><code>${esc(x.operation)}</code></td><td>${esc(x.rule || x.source || x.reference_date || "—")}</td></tr>`
+    ).join("");
+
+    const featureRows = (features.features || []).slice(0,6).map(x =>
+      `<tr><td><code>${esc(x.name)}</code></td><td>${esc(x.formula)}</td></tr>`
+    ).join("");
+
+    return {
+      title: "Quais técnicas foram empregadas no pipeline?",
+      answer: `<p>As técnicas estão registradas por etapa, em vez de ficarem apenas implícitas no código.</p>
+        <h4>M03 · Integração</h4>
+        <div class="qa-table-wrap"><table class="qa-table"><thead><tr><th>Operação</th><th>Tipo</th><th>Detalhes</th></tr></thead><tbody>${integrationRows}</tbody></table></div>
+        <h4>M04 · Preparação e transformação</h4>
+        <div class="qa-table-wrap"><table class="qa-table"><thead><tr><th>Campo</th><th>Técnica/operação</th><th>Parâmetro/regra</th></tr></thead><tbody>${transformRows}</tbody></table></div>
+        <p>Nesta execução foram removidas <b>${esc(cleaning.duplicates_removed)}</b> duplicidades e realizadas <b>${esc(cleaning.nulls_imputed)}</b> imputações. Foram normalizadas as categorias <code>${esc((cleaning.categories_normalized || []).join(", "))}</code> e derivados <code>${esc((cleaning.derived_columns || []).join(", "))}</code>.</p>
+        <h4>M05 · Qualidade</h4>
+        <p>Foram executadas <b>${esc(quality.rules_executed)}</b> regras de qualidade, com <b>${esc(quality.passed)}</b> PASS e <b>${esc(quality.warnings)}</b> WARNING.</p>
+        ${featureRows ? `<h4>M14 · Engenharia de features</h4><div class="qa-table-wrap"><table class="qa-table"><thead><tr><th>Feature</th><th>Fórmula</th></tr></thead><tbody>${featureRows}</tbody></table></div>` : ""}`,
+      modules: ["M03", "M04", "M05", "M14"],
+      evidence: [
+        evidence("Plano de integração", integrationPath, "Registra agregações, tipos de join e chaves utilizadas."),
+        evidence("Plano de transformação", transformPath, "Registra operações aplicadas a cada campo."),
+        evidence("Registro de limpeza", cleaningPath, "Registra duplicidades, imputações, normalizações e colunas derivadas."),
+        evidence("Relatório de qualidade", qualityPath, "Registra as técnicas/regras de validação e seus resultados."),
+        evidence("Catálogo de features", featurePath, "Registra as fórmulas das features produzidas.")
+      ]
+    };
+  }
+
+  function dataVersioningAnswer(instance) {
+    const sourcePath = path(instance, "metadata/versions/source_versions.json");
+    const artifactsPath = path(instance, "metadata/versions/registro_versoes.json");
+    const ingestionPath = path(instance, "artifacts/m02/ingestion_manifest.json");
+    const catalogPath = path(instance, "artifacts/m07/analytical_assets_catalog.json");
+    const sources = readJson(sourcePath, {});
+    const artifacts = readJson(artifactsPath, {});
+    const ingestion = readJson(ingestionPath, {});
+    const catalog = readJson(catalogPath, {});
+
+    const sourceRows = (sources.versions || []).map(x =>
+      `<tr><td><code>${esc(x.source_id)}</code></td><td><code>${esc(x.version_ref)}</code></td></tr>`
+    ).join("");
+    const artifactRows = (artifacts.artifacts || []).map(x =>
+      `<tr><td><code>${esc(x.path)}</code></td><td><code>${esc(String(x.sha256 || "").slice(0,24))}…</code></td></tr>`
+    ).join("");
+    const rawRows = (ingestion.items || []).map(x =>
+      `<tr><td><code>${esc(x.raw_asset)}</code></td><td><code>${esc(x.checksum_sha256)}</code></td><td>${esc(x.ingested_at)}</td></tr>`
+    ).join("");
+    const published = (catalog.assets || [])[0];
+
+    return {
+      title: "Como as fontes e os datasets foram versionados?",
+      answer: `<p>O UnespDataLens-RM diferencia <b>versão da fonte observada</b> de <b>versão do artefato materializado</b>.</p>
+        <h4>Fontes originais</h4>
+        <div class="qa-table-wrap"><table class="qa-table"><thead><tr><th>Fonte</th><th>Referência de versão</th></tr></thead><tbody>${sourceRows}</tbody></table></div>
+        <p>Arquivos usam checksum; fontes PostgreSQL/API usam referências de fingerprint que combinam consulta/resposta e schema observado.</p>
+        <h4>Ativos raw materializados</h4>
+        <div class="qa-table-wrap"><table class="qa-table"><thead><tr><th>Ativo</th><th>SHA-256</th><th>Ingestão</th></tr></thead><tbody>${rawRows}</tbody></table></div>
+        <h4>Datasets derivados</h4>
+        <div class="qa-table-wrap"><table class="qa-table"><thead><tr><th>Artefato</th><th>SHA-256</th></tr></thead><tbody>${artifactRows}</tbody></table></div>
+        ${published ? `<p>O ativo publicado é <code>${esc(published.asset_id)}</code>, explicitamente identificado como versão <b>v1</b>, derivado de <code>${esc(published.source)}</code>.</p>` : ""}`,
+      modules: ["M01", "M02", "M07", "M12"],
+      evidence: [
+        evidence("Versões das fontes", sourcePath, "Registra version_ref/fingerprint de cada fonte original."),
+        evidence("Registro de versões dos artefatos", artifactsPath, "Registra SHA-256 dos datasets integrado, preparado, validado e analítico."),
+        evidence("Manifesto de ingestão", ingestionPath, "Registra checksums e timestamps dos ativos raw."),
+        evidence("Catálogo de ativos analíticos", catalogPath, "Registra o identificador versionado do ativo publicado e seu predecessor.")
+      ]
+    };
+  }
+
   function fallbackSearch(instance, question) {
     const tokens = normalize(question).split(/\s+/).filter(t => t.length >= 4);
     const prefix = String(instance.dataBase || "").replace(/^\.\//, "") + "/";
@@ -281,7 +403,10 @@
     const q = normalize(question);
     if (/quais.*font|quantas.*font|fontes.*(usad|entrada)/.test(q)) return sourcesAnswer(instance);
     if (/de onde.*(indicador|ativo|produto|resultado)|origem.*(indicador|ativo|produto)|linhagem|lineage/.test(q)) return lineageAnswer(instance);
+    if (/versionamento.*(base|banco|dataset|dado|fonte)|como.*(fonte|base|dataset).*version|versao.*dataset|versoes.*dataset|hash.*dataset/.test(q)) return dataVersioningAnswer(instance);
     if (/versao.*fonte|versoes.*fonte|fingerprint.*fonte/.test(q)) return versionsAnswer(instance);
+    if (/armazen|onde.*(dado|dataset|ativo).*guard|camada.*(raw|analytical|analit)|onde.*dataset/.test(q)) return storageAnswer(instance);
+    if (/tecnica|metodo.*(integracao|transformacao|preparacao)|tipo.*join|join.*utiliz|agregacao.*utiliz/.test(q)) return techniquesAnswer(instance);
     if (/transforma|limpeza|prepara.*dado/.test(q)) return transformationsAnswer(instance);
     if (/regra.*qualidade|qualidade.*regra|validacao.*dado/.test(q)) return qualityAnswer(instance);
     if (/quem.*(usar|acessar)|permiss|politica.*acesso/.test(q)) return accessAnswer(instance);
