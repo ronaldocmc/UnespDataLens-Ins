@@ -285,7 +285,10 @@
     return [
       /quais.*font|quantas.*font|fontes.*(usad|entrada)/,
       /de onde.*(indicador|ativo|produto|resultado)|origem.*(indicador|ativo|produto)|linhagem|lineage/,
+      /versionamento.*(base|banco|dataset|dado|fonte)|como.*(fonte|base|dataset).*version|versao.*dataset|versoes.*dataset|hash.*dataset/,
       /versao.*fonte|versoes.*fonte|fingerprint.*fonte/,
+      /armazen|onde.*(dado|dataset|ativo).*guard|camada.*(raw|analytical|analit)|onde.*dataset/,
+      /tecnica|metodo.*(integracao|transformacao|preparacao)|tipo.*join|join.*utiliz|agregacao.*utiliz/,
       /transforma|limpeza|prepara.*dado/,
       /regra.*qualidade|qualidade.*regra|validacao.*dado/,
       /quem.*(usar|acessar)|permiss|politica.*acesso/,
