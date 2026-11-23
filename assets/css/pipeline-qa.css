@@ -221,3 +221,89 @@
 @media (max-width: 950px) {
   .m16-runtime { grid-template-columns:1fr 1fr; }
 }
+
+/* Perguntas livres e catálogo de sugestões — V8.6 */
+.qa-free-label {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  margin:12px 0 8px;
+  padding:10px 12px;
+  border:1px solid #c9dcec;
+  border-radius:11px;
+  background:#f8fbfe;
+}
+.qa-free-label strong { color:var(--blue); font-size:.82rem; }
+.qa-free-label span { color:var(--muted); font-size:.72rem; text-align:right; max-width:620px; }
+.qa-suggestion-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:12px 0 4px;
+}
+.qa-suggestion-heading strong { color:var(--blue); font-size:.8rem; }
+.qa-suggestion-heading span { color:var(--muted); font-size:.68rem; }
+.qa-suggestions-primary { margin-top:6px; }
+.qa-more-questions {
+  margin-top:11px;
+  border:1px solid #d6e3ee;
+  border-radius:12px;
+  background:#fbfdff;
+  overflow:hidden;
+}
+.qa-more-questions summary {
+  cursor:pointer;
+  list-style:none;
+  padding:10px 12px;
+  color:var(--blue);
+  font-size:.76rem;
+  font-weight:800;
+  background:#f4f9fd;
+}
+.qa-more-questions summary::-webkit-details-marker { display:none; }
+.qa-more-questions summary::after { content:" +"; }
+.qa-more-questions[open] summary::after { content:" −"; }
+.qa-question-groups {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  padding:12px;
+}
+.qa-question-groups section {
+  padding:11px;
+  border:1px solid #dbe6ef;
+  border-radius:10px;
+  background:#fff;
+}
+.qa-question-groups h4 {
+  margin:0 0 8px;
+  color:var(--blue);
+  font-size:.76rem;
+}
+.qa-question-groups button {
+  display:block;
+  width:100%;
+  margin:5px 0;
+  padding:7px 8px;
+  border:1px solid #d1e0eb;
+  border-radius:8px;
+  background:#f9fbfd;
+  color:#174b76;
+  text-align:left;
+  font-size:.7rem;
+  cursor:pointer;
+}
+.qa-question-groups button:hover {
+  background:#edf6fd;
+  border-color:#9fc5e7;
+}
+
+@media (max-width: 950px) {
+  .qa-free-label,
+  .qa-suggestion-heading { flex-direction:column; }
+  .qa-free-label span,
+  .qa-suggestion-heading span { text-align:left; }
+  .qa-question-groups { grid-template-columns:1fr; }
+}
