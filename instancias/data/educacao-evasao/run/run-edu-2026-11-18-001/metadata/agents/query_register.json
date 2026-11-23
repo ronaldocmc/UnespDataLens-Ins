@@ -10,7 +10,25 @@
         "EV-M12-MANIFEST"
       ],
       "answer": "A execução foi aceita com warning: 12 regras avaliadas, 11 PASS e 1 WARNING não crítico; o ativo publicado deriva do dataset validado da mesma execução.",
-      "status": "SUPPORTED_BY_EVIDENCE"
+      "status": "SUPPORTED_BY_EVIDENCE",
+      "mode": "STRUCTURED_EVIDENCE"
     }
-  ]
+  ],
+  "runtime_queries": {
+    "persistence": "browser localStorage",
+    "export": "JSON por consulta",
+    "fields": [
+      "query_id",
+      "asked_at",
+      "instance_id",
+      "run_id",
+      "question",
+      "mode",
+      "status",
+      "evidence_ids",
+      "evidence_paths",
+      "events"
+    ],
+    "note": "A demonstração em GitHub Pages não grava consultas no repositório. Em produção, o backend deve persistir este registro."
+  }
 }
