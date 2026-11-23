@@ -5,226 +5,69 @@
   "module_name": "Agentes Inteligentes de Apoio ao Pipeline",
   "kind": "transversal",
   "status": "SUCCESS",
-  "objective": "Permitir consultas sobre o pipeline usando evidências governadas e rastreáveis produzidas pelos próprios módulos.",
-  "input_summary": "catálogo + qualidade + fairness + lineage + versões + monitoramento, filtrados por governança",
-  "output_summary": "base de evidências + modelo de agente + registro de consulta + plano de governança do agente",
+  "objective": "Permitir consultas livres ou estruturadas sobre o pipeline usando somente evidências governadas e rastreáveis produzidas pelos próprios módulos.",
+  "input_summary": "pergunta + artefatos/metadados/contratos/relatórios autorizados, filtrados por M10",
+  "output_summary": "resposta suportada por evidências ou abstenção + evidence refs + registro da consulta",
   "inputs": [
     {
-      "id": "metadata:catalog",
-      "name": "catálogo",
-      "kind": "metadata",
-      "format": "JSON",
-      "path": "metadata/catalog/catalogo_dados.json",
-      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/catalog/catalogo_dados.json",
-      "role": ""
+      "id": "query:text",
+      "name": "pergunta",
+      "kind": "query",
+      "format": "TEXT",
+      "path": "runtime"
     },
     {
-      "id": "artifact:quality_report",
-      "name": "quality report",
-      "kind": "artifact",
-      "format": "JSON",
-      "path": "artifacts/m05/quality_report.json",
-      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/artifacts/m05/quality_report.json",
-      "role": ""
+      "id": "evidence:governed-index",
+      "name": "índice governado de evidências",
+      "kind": "metadata",
+      "format": "JSON/TEXT",
+      "path": "artifacts/** + metadata/** + contracts/** + reports/**"
     },
     {
-      "id": "lineage:graph",
-      "name": "lineage",
+      "id": "governance:m10",
+      "name": "políticas de acesso",
       "kind": "metadata",
       "format": "JSON",
-      "path": "metadata/lineage/grafo_linhagem.json",
-      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/lineage/grafo_linhagem.json",
-      "role": ""
-    },
-    {
-      "id": "versions:manifest",
-      "name": "manifest",
-      "kind": "metadata",
-      "format": "JSON",
-      "path": "metadata/versions/manifesto_execucao.json",
-      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/versions/manifesto_execucao.json",
-      "role": ""
-    },
-    {
-      "id": "monitoring:drift",
-      "name": "drift",
-      "kind": "metadata",
-      "format": "JSON",
-      "path": "metadata/monitoring/data_drift_report.json",
-      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/monitoring/data_drift_report.json",
-      "role": ""
+      "path": "metadata/governance/**"
     }
   ],
   "outputs": [
     {
+      "id": "agent:answer",
+      "name": "resposta fundamentada",
+      "kind": "runtime",
+      "format": "HTML/JSON",
+      "path": "runtime"
+    },
+    {
       "id": "agent:evidence",
-      "name": "evidence_base.json",
+      "name": "evidence refs",
       "kind": "metadata",
       "format": "JSON",
-      "path": "metadata/agents/evidence_base.json",
-      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/agents/evidence_base.json",
-      "role": ""
+      "path": "runtime"
+    },
+    {
+      "id": "agent:query-record",
+      "name": "registro da consulta",
+      "kind": "metadata",
+      "format": "JSON",
+      "path": "localStorage/export"
     },
     {
       "id": "agent:model",
       "name": "agent_model.json",
       "kind": "metadata",
       "format": "JSON",
-      "path": "metadata/agents/agent_model.json",
-      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/agents/agent_model.json",
-      "role": ""
-    },
-    {
-      "id": "agent:queries",
-      "name": "query_register.json",
-      "kind": "metadata",
-      "format": "JSON",
-      "path": "metadata/agents/query_register.json",
-      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/agents/query_register.json",
-      "role": ""
-    },
-    {
-      "id": "agent:governance",
-      "name": "agent_governance_plan.json",
-      "kind": "metadata",
-      "format": "JSON",
-      "path": "metadata/agents/agent_governance_plan.json",
-      "href": "data/educacao-evasao/run/run-edu-2026-11-18-001/metadata/agents/agent_governance_plan.json",
-      "role": ""
-    }
-  ],
-  "artifacts": [
-    "metadata/agents/evidence_base.json",
-    "metadata/agents/agent_model.json",
-    "metadata/agents/query_register.json",
-    "metadata/agents/agent_governance_plan.json"
-  ],
-  "metrics": [
-    {
-      "label": "Evidências",
-      "value": "6"
-    },
-    {
-      "label": "Consulta exemplo",
-      "value": "1"
-    },
-    {
-      "label": "Status",
-      "value": "SUPPORTED"
-    },
-    {
-      "label": "Acesso",
-      "value": "governado"
-    }
-  ],
-  "responsibility_evidence": [
-    {
-      "responsibility": "indexar evidências permitidas",
-      "concreteAction": "Criar evidence_id + path + run_id",
-      "input": "artefatos permitidos",
-      "result": "6 evidence items",
-      "registers": "evidence metadata",
-      "events": [],
-      "transversals": [],
-      "evidence": [
-        "metadata/agents/evidence_base.json",
-        "metadata/agents/agent_model.json",
-        "metadata/agents/query_register.json"
-      ]
-    },
-    {
-      "responsibility": "associar cada trecho ao artefato e versão de origem",
-      "concreteAction": "Filtrar fontes conforme M10",
-      "input": "query context",
-      "result": "evidências autorizadas",
-      "registers": "access context",
-      "events": [
-        "EVIDENCE_FILTERED"
-      ],
-      "transversals": [
-        "M10"
-      ],
-      "evidence": [
-        "metadata/agents/evidence_base.json",
-        "metadata/agents/agent_model.json",
-        "metadata/agents/query_register.json"
-      ]
-    },
-    {
-      "responsibility": "recuperar evidências relevantes para a pergunta",
-      "concreteAction": "Buscar evidências relevantes",
-      "input": "pergunta",
-      "result": "4 evidence refs",
-      "registers": "evidence_ids",
-      "events": [
-        "EVIDENCE_RETRIEVED"
-      ],
-      "transversals": [
-        "M11",
-        "M12"
-      ],
-      "evidence": [
-        "metadata/agents/evidence_base.json",
-        "metadata/agents/agent_model.json",
-        "metadata/agents/query_register.json"
-      ]
-    },
-    {
-      "responsibility": "responder indicando as evidências usadas",
-      "concreteAction": "Compor resposta com suporte explícito",
-      "input": "evidence refs",
-      "result": "SUPPORTED_BY_EVIDENCE",
-      "registers": "query_id + answer + evidence_ids",
-      "events": [
-        "AGENT_QUERY_COMPLETED"
-      ],
-      "transversals": [
-        "M09",
-        "M15"
-      ],
-      "evidence": [
-        "metadata/agents/evidence_base.json",
-        "metadata/agents/agent_model.json",
-        "metadata/agents/query_register.json"
-      ]
-    },
-    {
-      "responsibility": "registrar consulta, fontes recuperadas e contexto",
-      "concreteAction": "Compor resposta com suporte explícito",
-      "input": "evidence refs",
-      "result": "SUPPORTED_BY_EVIDENCE",
-      "registers": "query_id + answer + evidence_ids",
-      "events": [
-        "AGENT_QUERY_COMPLETED"
-      ],
-      "transversals": [
-        "M09",
-        "M15"
-      ],
-      "evidence": [
-        "metadata/agents/evidence_base.json",
-        "metadata/agents/agent_model.json",
-        "metadata/agents/query_register.json"
-      ]
+      "path": "metadata/agents/agent_model.json"
     }
   ],
   "process_trace": [
     {
       "step": 1,
-      "title": "Indexar evidências",
-      "input": "artefatos permitidos",
-      "operation": "Criar evidence_id + path + run_id",
-      "output": "6 evidence items",
-      "registers": "evidence metadata",
-      "events": [],
-      "transversal": []
-    },
-    {
-      "step": 2,
       "title": "Aplicar governança",
-      "input": "query context",
-      "operation": "Filtrar fontes conforme M10",
-      "output": "evidências autorizadas",
+      "input": "escopo da execução",
+      "operation": "Excluir data/**, input/** e mock/** na demonstração pública",
+      "output": "artefatos autorizados",
       "registers": "access context",
       "events": [
         "EVIDENCE_FILTERED"
@@ -234,12 +77,28 @@
       ]
     },
     {
+      "step": 2,
+      "title": "Indexar",
+      "input": "artefatos autorizados",
+      "operation": "Segmentar conteúdo em trechos e associar path, módulo e evidence_id",
+      "output": "índice dinâmico",
+      "registers": "EV-AUTO-*",
+      "events": [
+        "EVIDENCE_INDEXED"
+      ],
+      "transversal": [
+        "M09",
+        "M11",
+        "M12"
+      ]
+    },
+    {
       "step": 3,
       "title": "Recuperar",
-      "input": "pergunta",
-      "operation": "Buscar evidências relevantes",
-      "output": "4 evidence refs",
-      "registers": "evidence_ids",
+      "input": "pergunta livre",
+      "operation": "Pontuar relevância lexical + metadados + sinônimos",
+      "output": "até 6 evidências",
+      "registers": "evidence_ids + scores",
       "events": [
         "EVIDENCE_RETRIEVED"
       ],
@@ -250,18 +109,50 @@
     },
     {
       "step": 4,
-      "title": "Responder e registrar",
-      "input": "evidence refs",
-      "operation": "Compor resposta com suporte explícito",
-      "output": "SUPPORTED_BY_EVIDENCE",
-      "registers": "query_id + answer + evidence_ids",
+      "title": "Responder",
+      "input": "evidências recuperadas",
+      "operation": "Responder de forma estruturada ou extractiva; backend LLM é opcional e server-side",
+      "output": "SUPPORTED_BY_RETRIEVAL ou INSUFFICIENT_EVIDENCE",
+      "registers": "answer_status",
       "events": [
         "AGENT_QUERY_COMPLETED"
       ],
       "transversal": [
-        "M09",
+        "M10",
         "M15"
       ]
+    },
+    {
+      "step": 5,
+      "title": "Registrar",
+      "input": "pergunta + evidências + resposta",
+      "operation": "Persistir localmente e permitir exportação JSON",
+      "output": "query record",
+      "registers": "query_id + evidence paths + mode",
+      "events": [
+        "QUERY_LOGGED"
+      ],
+      "transversal": [
+        "M09"
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "label": "Índice",
+      "value": "dinâmico"
+    },
+    {
+      "label": "Máx. evidências",
+      "value": "6"
+    },
+    {
+      "label": "Dados brutos",
+      "value": "bloqueados"
+    },
+    {
+      "label": "LLM",
+      "value": "backend opcional"
     }
   ],
   "contract_ref": "contracts/m16_contract.json",
@@ -276,48 +167,32 @@
         "EV-M12-MANIFEST"
       ],
       "answer_status": "SUPPORTED_BY_EVIDENCE"
+    },
+    {
+      "query_id": "Q-LOCAL-*",
+      "question": "pergunta livre",
+      "evidence_ids": [
+        "EV-AUTO-*"
+      ],
+      "answer_status": "SUPPORTED_BY_RETRIEVAL | INSUFFICIENT_EVIDENCE"
     }
   ],
   "transversal_interactions": [
     {
       "id": "M10",
-      "consumes": [
-        "query access context"
-      ],
-      "action": "Define quais evidências podem ser consultadas.",
-      "stores": [
-        "metadata/agents/agent_governance_plan.json"
-      ]
+      "action": "Filtra o que pode ser indexado e consultado."
     },
     {
       "id": "M11",
-      "consumes": [
-        "lineage"
-      ],
-      "action": "Permite explicar origem das evidências.",
-      "stores": [
-        "metadata/agents/evidence_base.json"
-      ]
+      "action": "Fornece lineage e proveniência para explicar origem e impacto."
     },
     {
       "id": "M12",
-      "consumes": [
-        "versions"
-      ],
-      "action": "Garante que a resposta cite a versão certa.",
-      "stores": [
-        "metadata/agents/query_register.json"
-      ]
+      "action": "Fornece versão, commit e contexto reprodutível."
     },
     {
       "id": "M15",
-      "consumes": [
-        "alerts"
-      ],
-      "action": "Inclui alertas atuais nas evidências.",
-      "stores": [
-        "metadata/agents/evidence_base.json"
-      ]
+      "action": "Fornece estado corrente, drift e alertas."
     }
   ]
 }
