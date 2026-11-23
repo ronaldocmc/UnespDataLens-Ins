@@ -14,7 +14,7 @@
 <div class="app">
   <header class="site-header">
     <div class="header-main">
-      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V8.7</small></a>
+      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V8.8</small></a>
       <div class="instance-header-actions">
         <label for="instance-select">Instância</label>
         <select id="instance-select" aria-label="Selecionar instância"></select>
@@ -135,31 +135,197 @@
         </div>
 
 
-        <details class="why-panel">
+        <details class="why-panel why-panel-expanded" open>
           <summary>
-            <strong>Por que o UnespDataLens-RM?</strong>
-            <span>Veja quais lacunas o modelo procura resolver e por que a instanciação é importante.</span>
+            <div>
+              <span class="eyebrow">Lacunas, vantagens e contribuições</span>
+              <strong>Por que usar o UnespDataLens-RM?</strong>
+            </div>
+            <span>Da execução do pipeline à produção de evidências verificáveis.</span>
           </summary>
-          <div class="why-panel-body">
-            <p class="why-thesis">O resultado de um pipeline não é somente o dataset final. É o conjunto formado por dados + artefatos + metadados + evidências + lineage + regras + métricas + versões + decisões.</p>
-            <div class="why-compare">
-              <article>
-                <h4>Pipeline que funciona</h4>
-                <p>Extrai, transforma, integra e entrega o produto analítico. O resultado pode estar correto, mas parte das decisões de engenharia pode continuar dispersa em scripts, configurações e conhecimento tácito.</p>
-              </article>
-              <article>
-                <h4>Pipeline verificável</h4>
-                <p>Além de produzir o resultado, preserva evidências suficientes para explicar sua origem, qualidade, governança, transformação, versão, impacto e condições de reprodução.</p>
-              </article>
+
+          <div class="why-panel-body why-longform">
+            <div class="why-intro-grid">
+              <div>
+                <p class="why-thesis">O resultado de um pipeline não é somente o dataset final. É o conjunto formado por <b>dados + artefatos + metadados + evidências + lineage + regras + métricas + versões + decisões</b>.</p>
+                <p>O UnespDataLens-RM procura tornar explícito aquilo que frequentemente fica disperso em scripts, configurações, ferramentas e conhecimento das pessoas: <b>como o resultado foi produzido, com quais dados, técnicas, regras, versões e condições de uso</b>.</p>
+              </div>
+              <aside class="why-highlight">
+                <span>Ideia central</span>
+                <strong>De um pipeline que funciona para um pipeline verificável.</strong>
+                <p>Não basta produzir o resultado. É preciso conseguir demonstrar por que ele pode ser considerado rastreável, governado e reproduzível.</p>
+              </aside>
             </div>
-            <div class="why-points">
-              <div><strong>Fragmentação</strong><span>Integra processo operacional e preocupações transversais em um mesmo modelo.</span></div>
-              <div><strong>Conhecimento tácito</strong><span>Transforma decisões de engenharia em artefatos explícitos e consultáveis.</span></div>
-              <div><strong>Rastreabilidade</strong><span>Relaciona fontes, transformações, datasets, features e produtos por lineage.</span></div>
-              <div><strong>Governança</strong><span>Registra classificação, finalidade, acesso, responsabilidades e restrições.</span></div>
-              <div><strong>Reprodutibilidade</strong><span>Preserva versões, ambiente, dependências, configurações e manifesto da execução.</span></div>
-              <div><strong>Instanciação</strong><span>Permite verificar se o modelo é operacionalizável, detectar lacunas e comparar implementações.</span></div>
-            </div>
+
+            <section class="why-section">
+              <div class="why-section-head">
+                <span>1</span>
+                <div><h3>A principal lacuna científica</h3><p>O problema não é a ausência de ferramentas de ETL, orquestração, catálogo ou ML. A lacuna está na integração dessas preocupações em um modelo operacionalizável e avaliável.</p></div>
+              </div>
+              <blockquote class="why-quote"><b>Faltam modelos de referência operacionalizáveis e avaliáveis</b> que integrem o ciclo completo da Engenharia Analítica de Dados com preocupações de qualidade, governança, semântica, proveniência, linhagem, versionamento, reprodutibilidade e monitoramento, sem vincular essas propriedades a um conjunto específico de tecnologias.</blockquote>
+              <p>As abordagens existentes tendem a tratar essas propriedades de forma parcial ou separada, dificultando avaliar o pipeline analítico como um <b>sistema completo</b>.</p>
+            </section>
+
+            <section class="why-section">
+              <div class="why-section-head">
+                <span>2</span>
+                <div><h3>O que a instanciação revela</h3><p>Instanciar o modelo obriga a transformar conceitos em decisões concretas e evidencia limitações que podem ficar ocultas no nível conceitual.</p></div>
+              </div>
+
+              <div class="why-evolution-card">
+                <div>
+                  <small>Exemplo de refinamento descoberto na instanciação</small>
+                  <pre><code>arquivo → checksum
+banco   → query/schema fingerprint
+API     → response/schema fingerprint</code></pre>
+                </div>
+                <p>Uma regra genérica como “registrar versão da fonte” não é suficiente. Ao instanciar o modelo, percebemos que tipos diferentes de fonte exigem estratégias diferentes de identificação e versionamento.</p>
+              </div>
+
+              <p>Isso é exatamente o que uma instanciação deve fazer em uma pesquisa orientada por <b>Design Science</b>: revelar limitações, testar a operacionalização dos conceitos e fornecer evidências para refinar o artefato.</p>
+            </section>
+
+            <section class="why-section">
+              <div class="why-section-head">
+                <span>3</span>
+                <div><h3>A instância não é apenas um exemplo didático</h3><p>Ela possui funções científicas e de engenharia que vão além de ilustrar o modelo.</p></div>
+              </div>
+
+              <div class="why-function-grid">
+                <article><b>1. Demonstração</b><p>Mostra concretamente como módulos, contratos, artefatos e preocupações transversais funcionam em uma execução realista.</p></article>
+                <article><b>2. Verificação</b><p>Revela inconsistências, ambiguidades e partes insuficientemente especificadas do UnespDataLens-RM.</p></article>
+                <article><b>3. Validação</b><p>Permite verificar se uma implementação atende aos requisitos, invariantes e evidências esperadas pelo modelo.</p></article>
+                <article><b>4. Experimentação</b><p>Cria condições para comparar pipelines ad hoc com pipelines orientados pelo UnespDataLens-RM.</p></article>
+              </div>
+
+              <div class="why-compare-flow">
+                <div><span>Baseline</span><strong>Pipeline ad hoc</strong><small>construído normalmente</small></div>
+                <b>versus</b>
+                <div><span>UnespDataLens</span><strong>Pipeline orientado pelo modelo</strong><small>com contratos, evidências e rastreabilidade</small></div>
+              </div>
+            </section>
+
+            <section class="why-section">
+              <div class="why-section-head">
+                <span>4</span>
+                <div><h3>Como transformar a proposta em contribuição científica testável</h3><p>A instanciação permite avaliar empiricamente se o uso do modelo produz pipelines com melhores propriedades de engenharia.</p></div>
+              </div>
+
+              <div class="why-metric-grid">
+                <span>Completude de lineage</span>
+                <span>Reprodutibilidade</span>
+                <span>Cobertura de metadados</span>
+                <span>Detecção de defeitos</span>
+                <span>Descobribilidade</span>
+                <span>Documentação</span>
+                <span>Governança</span>
+                <span>Impact analysis</span>
+                <span>Portabilidade</span>
+                <span>Esforço adicional</span>
+              </div>
+
+              <p>Essa comparação é mais defensável cientificamente do que afirmar apenas que “foi criado um framework com 16 módulos”, porque permite medir <b>efeitos concretos da adoção do modelo</b>.</p>
+            </section>
+
+            <section class="why-section">
+              <div class="why-section-head">
+                <span>5</span>
+                <div><h3>A principal contribuição do UnespDataLens-RM</h3><p>Transformar requisitos dispersos em uma estrutura integrada, instanciável e avaliável.</p></div>
+              </div>
+
+              <blockquote class="why-quote contribution"><b>A principal contribuição do UnespDataLens-RM é transformar requisitos dispersos de Engenharia Analítica de Dados em uma estrutura integrada, instanciável e avaliável</b>, na qual cada etapa do pipeline produz não apenas dados transformados, mas também evidências estruturadas sobre qualidade, governança, proveniência, versão, rastreabilidade e reprodutibilidade.</blockquote>
+
+              <div class="why-contribution-grid">
+                <article>
+                  <span>Contribuição conceitual</span>
+                  <p>Formaliza o que constitui um <b>pipeline analítico confiável</b>.</p>
+                  <pre><code>fonte
+processo
+ativo
+evidência
+regra
+métrica
+versão
+dependência
+responsabilidade</code></pre>
+                </article>
+                <article>
+                  <span>Contribuição metodológica</span>
+                  <p>Define uma maneira sistemática de transformar o modelo em implementação e avaliação.</p>
+                  <pre><code>especificar
+   ↓
+instanciar
+   ↓
+implementar
+   ↓
+verificar
+   ↓
+avaliar</code></pre>
+                </article>
+                <article>
+                  <span>Contribuição tecnológica</span>
+                  <p>Mantém a essência do modelo independente da tecnologia usada em cada módulo.</p>
+                  <pre><code>CSV
+PostgreSQL
+API
+Excel
+Data Lake
+Kafka
+...</code></pre>
+                </article>
+                <article>
+                  <span>Contribuição empírica</span>
+                  <p>Permite medir se pipelines orientados pelo UnespDataLens-RM apresentam vantagens sobre abordagens ad hoc.</p>
+                  <strong class="why-card-emphasis">O modelo passa a ser empiricamente avaliável.</strong>
+                </article>
+              </div>
+            </section>
+
+            <section class="why-section why-verifiable">
+              <div class="why-section-head">
+                <span>6</span>
+                <div><h3>Pipeline verificável: uma contribuição central</h3><p>A questão não é apenas declarar que o pipeline é confiável, mas demonstrar isso por meio de evidências.</p></div>
+              </div>
+
+              <div class="why-verifiable-question">
+                <span>Questão científica</span>
+                <strong>Como sabemos que o pipeline é confiável?</strong>
+              </div>
+
+              <div class="why-evidence-grid">
+                <article>
+                  <small>REQUISITO</small>
+                  <b>A fonte deve possuir proveniência.</b>
+                  <span>EVIDÊNCIA</span>
+                  <code>m01_source_provenance.json</code>
+                </article>
+                <article>
+                  <small>REQUISITO</small>
+                  <b>Transformações devem ser rastreáveis.</b>
+                  <span>EVIDÊNCIA</span>
+                  <code>transformation_rules.json + lineage graph</code>
+                </article>
+                <article>
+                  <small>REQUISITO</small>
+                  <b>A execução deve ser reproduzível.</b>
+                  <span>EVIDÊNCIA</span>
+                  <code>manifest + versões + checksums + configuração + ambiente</code>
+                </article>
+              </div>
+
+              <p class="why-final-statement"><b>UnespDataLens-RM não apenas orienta como construir o pipeline;</b> ele possibilita verificar se determinadas propriedades do pipeline estão efetivamente sustentadas por evidências.</p>
+            </section>
+
+            <section class="why-section why-instance-role">
+              <div class="why-section-head">
+                <span>7</span>
+                <div><h3>O papel desta instância educacional</h3><p>A instância “Educação — Risco de Evasão” transforma a proposta em uma execução observável e inspecionável.</p></div>
+              </div>
+              <div class="why-flow">
+                <span>Modelo de Referência</span><b>→</b><span>Instanciação</span><b>→</b><span>Implementação</span><b>→</b><span>Evidências</span><b>→</b><span>Avaliação</span>
+              </div>
+              <p>É por isso que esta interface permite navegar por entradas, processamento, saídas, contratos, proveniência, integrações transversais e pelo <b>Pergunte ao Pipeline</b>: cada elemento procura demonstrar como a engenharia que produziu o resultado pode ser inspecionada e verificada.</p>
+            </section>
           </div>
         </details>
 
