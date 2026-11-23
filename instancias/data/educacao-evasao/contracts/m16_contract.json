@@ -1,18 +1,31 @@
 {
   "module_id": "M16",
   "requires": {
-    "evidence": [
-      "catalog",
-      "quality",
-      "lineage",
-      "versions",
-      "monitoring"
+    "question": "texto livre ou pergunta estruturada",
+    "evidence_scope": [
+      "artifacts",
+      "metadata",
+      "contracts",
+      "reports"
     ],
-    "governance": "M10"
+    "governance": "M10",
+    "lineage": "M11",
+    "versions": "M12"
   },
   "produces": {
-    "answer": "with evidence refs",
-    "query_record": "Q-001",
-    "evidence_base": 6
-  }
+    "answer": "supported by evidence or abstention",
+    "evidence_refs": "até 6 trechos governados",
+    "query_record": "query_id + question + evidence_ids + paths + status + mode",
+    "events": [
+      "EVIDENCE_FILTERED",
+      "EVIDENCE_RETRIEVED",
+      "AGENT_QUERY_COMPLETED"
+    ]
+  },
+  "invariants": [
+    "raw personal data is not indexed in the public demo",
+    "answers must expose supporting evidence",
+    "unsupported questions must abstain rather than invent",
+    "LLM credentials never run in GitHub Pages"
+  ]
 }
