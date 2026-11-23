@@ -14,7 +14,7 @@
 <div class="app">
   <header class="site-header">
     <div class="header-main">
-      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V8.5</small></a>
+      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V8.6</small></a>
       <div class="instance-header-actions">
         <label for="instance-select">Instância</label>
         <select id="instance-select" aria-label="Selecionar instância"></select>
@@ -173,25 +173,74 @@
             <div><span class="qa-mode rag">M16 · Evidence-RAG</span><small class="qa-mode-sub">recuperação governada · LLM backend opcional</small><button type="button" class="m16-open-button" data-module-id="M16">Abrir módulo M16</button></div>
           </div>
           <div class="m16-runtime" id="m16-rag-runtime" aria-label="Estado do M16"></div>
+          <div class="qa-free-label">
+            <strong>Faça sua própria pergunta</strong>
+            <span>Você não está limitado às sugestões abaixo. O M16 procura evidências nos artefatos autorizados desta execução.</span>
+          </div>
           <form class="qa-form" id="pipeline-qa-form">
-            <label class="sr-only" for="pipeline-qa-input">Pergunta sobre o pipeline</label>
-            <input id="pipeline-qa-input" type="text" autocomplete="off" placeholder="Ex.: De onde exatamente veio este indicador?">
+            <label class="sr-only" for="pipeline-qa-input">Digite qualquer pergunta sobre esta execução</label>
+            <input id="pipeline-qa-input" type="text" autocomplete="off" placeholder="Digite qualquer pergunta sobre esta execução...">
             <button type="submit" class="qa-submit">Responder com evidências</button>
           </form>
-          <div class="qa-suggestions" aria-label="Perguntas sugeridas">
+
+          <div class="qa-suggestion-heading"><strong>Perguntas rápidas</strong><span>Clique em uma sugestão ou escreva uma pergunta diferente acima.</span></div>
+          <div class="qa-suggestions qa-suggestions-primary" aria-label="Perguntas rápidas sugeridas">
             <button type="button" data-qa-question="Quais são as quatro fontes utilizadas nesta execução?">Quais são as fontes?</button>
             <button type="button" data-qa-question="De onde exatamente veio este indicador?">De onde veio este indicador?</button>
-            <button type="button" data-qa-question="Qual versão das fontes foi utilizada?">Qual versão das fontes?</button>
             <button type="button" data-qa-question="Quais transformações foram realizadas?">Quais transformações?</button>
             <button type="button" data-qa-question="Quais regras de qualidade foram aplicadas?">Quais regras de qualidade?</button>
-            <button type="button" data-qa-question="Quem pode utilizar os dados?">Quem pode acessar?</button>
-            <button type="button" data-qa-question="Alguma variável foi imputada? Qual método?">Houve imputação?</button>
-            <button type="button" data-qa-question="A integração eliminou registros? Qual foi a cardinalidade?">A integração perdeu registros?</button>
-            <button type="button" data-qa-question="Houve mudança de schema?">Houve schema drift?</button>
             <button type="button" data-qa-question="O resultado pode ser reproduzido seis meses depois?">É reproduzível?</button>
-            <button type="button" data-qa-question="Como a feature risco_academico_simples foi calculada?">Como esta feature foi calculada?</button>
             <button type="button" data-qa-question="Se a fonte public.vw_notas_faltas mudar, quais produtos serão afetados?">Qual o impacto de uma mudança?</button>
           </div>
+
+          <details class="qa-more-questions">
+            <summary>Ver mais perguntas sugeridas</summary>
+            <div class="qa-question-groups">
+              <section>
+                <h4>Origem, proveniência e lineage</h4>
+                <button type="button" data-qa-question="Qual versão das fontes foi utilizada nesta execução?">Qual versão das fontes foi utilizada?</button>
+                <button type="button" data-qa-question="Quais módulos participam da rastreabilidade do ativo analítico?">Quais módulos participam da rastreabilidade?</button>
+                <button type="button" data-qa-question="Quais evidências permitem rastrear o dataset final até as fontes originais?">Quais evidências ligam o resultado às fontes?</button>
+                <button type="button" data-qa-question="Qual é a cadeia de dependências até o produto analítico final?">Qual é a cadeia de dependências?</button>
+              </section>
+
+              <section>
+                <h4>Integração, preparação e qualidade</h4>
+                <button type="button" data-qa-question="Alguma variável foi imputada? Qual método?">Houve imputação?</button>
+                <button type="button" data-qa-question="A integração eliminou registros? Qual foi a cardinalidade?">A integração perdeu registros?</button>
+                <button type="button" data-qa-question="Foram removidas duplicidades durante a preparação dos dados?">Foram removidas duplicidades?</button>
+                <button type="button" data-qa-question="Qual regra de qualidade ficou em WARNING e por quê?">Qual regra ficou em WARNING?</button>
+                <button type="button" data-qa-question="Qual foi o resultado geral da validação de qualidade?">Qual foi o resultado da validação?</button>
+              </section>
+
+              <section>
+                <h4>Governança, acesso e versionamento</h4>
+                <button type="button" data-qa-question="Quem pode utilizar os dados e quais papéis estão autorizados?">Quem pode utilizar os dados?</button>
+                <button type="button" data-qa-question="Qual é a classificação de sensibilidade do ativo analítico?">Qual a classificação de sensibilidade?</button>
+                <button type="button" data-qa-question="Qual versão do pipeline produziu este resultado?">Qual versão do pipeline?</button>
+                <button type="button" data-qa-question="Qual commit está associado a esta execução?">Qual commit produziu a execução?</button>
+                <button type="button" data-qa-question="Quais informações foram preservadas para permitir a reprodução futura?">O que foi preservado para reprodução?</button>
+              </section>
+
+              <section>
+                <h4>Features, monitoramento e evolução</h4>
+                <button type="button" data-qa-question="Como a feature risco_academico_simples foi calculada?">Como a feature risco_academico_simples foi calculada?</button>
+                <button type="button" data-qa-question="Quais features foram produzidas pelo pipeline e de onde vieram?">Quais features foram produzidas?</button>
+                <button type="button" data-qa-question="Houve mudança de schema nesta execução?">Houve schema drift?</button>
+                <button type="button" data-qa-question="Quais alertas de data drift foram registrados?">Quais alertas de drift foram registrados?</button>
+                <button type="button" data-qa-question="Qual é a situação atual do ativo analítico segundo o monitoramento?">Qual é a situação atual do ativo?</button>
+              </section>
+
+              <section>
+                <h4>Modelo, execução e impacto</h4>
+                <button type="button" data-qa-question="Quais módulos produziram evidências nesta execução?">Quais módulos produziram evidências?</button>
+                <button type="button" data-qa-question="Quais contratos foram utilizados nesta execução?">Quais contratos foram utilizados?</button>
+                <button type="button" data-qa-question="Quais artefatos sustentam o produto analítico final?">Quais artefatos sustentam o produto final?</button>
+                <button type="button" data-qa-question="Se a fonte alunos_csv mudar, quais ativos e produtos podem ser afetados?">Se alunos_csv mudar, o que será afetado?</button>
+                <button type="button" data-qa-question="Quais limitações desta execução estão registradas nos artefatos?">Quais limitações estão registradas?</button>
+              </section>
+            </div>
+          </details>
           <div id="pipeline-qa-answer" aria-live="polite"></div>
         </section>
 
