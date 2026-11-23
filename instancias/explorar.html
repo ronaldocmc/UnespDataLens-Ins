@@ -1,3 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Explorador interativo de instâncias do pipeline UnespDataLens-RM.">
+  <title>Explorar instância · UnespDataLens-RM</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/instancias.css">
+  <link rel="stylesheet" href="../assets/css/pipeline-qa.css">
+</head>
+<body class="instance-explorer-page">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<div class="app">
+  <header class="site-header">
+    <div class="header-main">
+      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V8.7</small></a>
+      <div class="instance-header-actions">
+        <label for="instance-select">Instância</label>
+        <select id="instance-select" aria-label="Selecionar instância"></select>
+        <a class="btn compact secondary" href="index.html">Catálogo</a>
+      </div>
+    </div>
+    <nav class="top-nav" aria-label="Navegação principal">
+      <a href="https://ronaldocmc.github.io/UnespDataLens-RM/">Início</a>
+      <a href="https://ronaldocmc.github.io/UnespDataLens-RM/modelo.html">Modelo de Referência</a>
+      <a href="https://ronaldocmc.github.io/UnespDataLens-RM/mapa.html">Mapa Geral</a>
+      <a href="https://ronaldocmc.github.io/UnespDataLens-RM/modulos/">Módulos</a>
+      <a class="active" href="index.html">Instâncias</a>
+      <a href="https://ronaldocmc.github.io/UnespDataLens-RM/dimensoes/">Dimensões</a>
+      <a href="https://ronaldocmc.github.io/UnespDataLens-RM/artefatos/">Artefatos</a>
+      <a href="https://ronaldocmc.github.io/UnespDataLens-RM/metricas/">Métricas</a>
+      <a href="https://ronaldocmc.github.io/UnespDataLens-RM/aplicacoes/">Aplicações</a>
+    </nav>
+  </header>
+
+  <main class="instance-main" id="conteudo">
+    <div class="instance-summary" id="instance-summary"></div>
+
+    <div class="layout-toolbar" role="toolbar" aria-label="Controles do layout">
+      <div class="layout-toolbar-left">
+        <button type="button" class="layout-button" id="modules-toggle" aria-pressed="false" title="Ocultar ou mostrar o menu de módulos">☰ <span>Módulos</span></button>
+        <button type="button" class="layout-button" id="restore-layout" title="Restaurar as três áreas da interface">↺ <span>Restaurar layout</span></button>
+      </div>
+      <div class="layout-mode-indicator" id="layout-mode-indicator" aria-live="polite">Modo: Normal</div>
+    </div>
+
+    <div class="instance-workspace" id="instance-workspace">
+      <aside class="instance-sidebar" id="instance-sidebar">
+        <div class="sidebar-title">
+          <div class="sidebar-title-row">
+            <div class="sidebar-title-copy">
+              <span class="eyebrow">Explorador</span>
+              <h2>Módulos</h2>
+            </div>
+            <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-expanded="true" aria-controls="module-list" title="Recolher menu de módulos">
+              <span class="sidebar-toggle-icon" aria-hidden="true">‹</span>
+              <span class="sr-only">Recolher menu de módulos</span>
+            </button>
+          </div>
+          <p>Clique para inspecionar a implementação da instância.</p>
+        </div>
+        <div id="module-list"></div>
+      </aside>
+
+      <div class="workspace-splitter sidebar-splitter" data-splitter="sidebar" role="separator" aria-orientation="vertical" aria-label="Redimensionar menu de módulos" tabindex="0"></div>
+
+      <section class="instance-canvas" id="instance-canvas">
+        <div class="canvas-section selected-execution-section">
+          <div class="selected-execution-head">
+            <div>
+              <span class="eyebrow">Execução do módulo selecionado</span>
+              <h2 id="selected-module-label">M01 — Fontes e Inventário de Dados</h2>
+              <p id="selected-module-objective" class="selected-module-objective"></p>
+            </div>
+            <div class="selected-execution-status">
+              <span class="chip green">SUCCESS</span>
+              <span class="chip" id="selected-module-kind">Operacional</span>
+              <button type="button" class="panel-layout-button" data-layout-action="center-maximize" title="Maximizar visão da execução" aria-label="Maximizar visão da execução">⛶</button>
+            </div>
+          </div>
+
+          <div id="module-instance-metrics" class="module-metrics"></div>
+
+          <div class="execution-map-title">
+            <div><span class="eyebrow">Fluxo desta execução</span><strong>Clique em uma etapa para inspecionar os arquivos, registros e conteúdos.</strong></div>
+          </div>
+
+          <div class="execution-lane" aria-label="Fluxo da execução do módulo">
+            <button type="button" class="execution-stage inputs" data-center-tab="inputs">
+              <span class="stage-number">1</span>
+              <span class="stage-icon" aria-hidden="true">↓</span>
+              <span class="stage-kicker">Entradas</span>
+              <strong id="center-input-title">Ativos recebidos</strong>
+              <small id="center-input-summary"></small>
+              <span class="stage-action">Inspecionar →</span>
+            </button>
+            <span class="execution-arrow" aria-hidden="true">→</span>
+            <button type="button" class="execution-stage process" data-center-tab="process">
+              <span class="stage-number">2</span>
+              <span class="stage-icon" aria-hidden="true">⚙</span>
+              <span class="stage-kicker">Processamento</span>
+              <strong id="center-process-title">Responsabilidades executadas</strong>
+              <small id="center-process-summary"></small>
+              <span class="stage-action">Ver evidências →</span>
+            </button>
+            <span class="execution-arrow" aria-hidden="true">→</span>
+            <button type="button" class="execution-stage outputs" data-center-tab="outputs">
+              <span class="stage-number">3</span>
+              <span class="stage-icon" aria-hidden="true">↑</span>
+              <span class="stage-kicker">Saídas</span>
+              <strong id="center-output-title">Ativos produzidos</strong>
+              <small id="center-output-summary"></small>
+              <span class="stage-action">Abrir resultados →</span>
+            </button>
+          </div>
+
+          <div class="crosscut-section">
+            <div class="crosscut-section-label">Registros que acompanham a execução</div>
+            <div class="crosscut-lane">
+              <button type="button" class="crosscut-stage" data-center-tab="provenance">
+                <span class="crosscut-icon">↳</span><div><span>Proveniência</span><strong id="center-provenance-summary"></strong></div>
+              </button>
+              <button type="button" class="crosscut-stage" data-center-tab="integration">
+                <span class="crosscut-icon">⇄</span><div><span>Transversais</span><strong id="center-transversal-summary"></strong></div>
+              </button>
+              <button type="button" class="crosscut-stage" data-center-tab="contract">
+                <span class="crosscut-icon">{ }</span><div><span>Contrato</span><strong>Entradas, saídas e obrigações</strong></div>
+              </button>
               <button type="button" class="crosscut-stage" data-center-tab="example">
                 <span class="crosscut-icon">◎</span><div><span>Exemplo</span><strong>Dados e resultado desta etapa</strong></div>
               </button>
