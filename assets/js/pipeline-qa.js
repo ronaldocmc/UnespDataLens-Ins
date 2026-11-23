@@ -403,9 +403,9 @@
     const q = normalize(question);
     if (/quais.*font|quantas.*font|fontes.*(usad|entrada)/.test(q)) return sourcesAnswer(instance);
     if (/de onde.*(indicador|ativo|produto|resultado)|origem.*(indicador|ativo|produto)|linhagem|lineage/.test(q)) return lineageAnswer(instance);
-    if (/versionamento.*(base|banco|dataset|dado|fonte)|como.*(fonte|base|dataset).*version|versao.*dataset|versoes.*dataset|hash.*dataset/.test(q)) return dataVersioningAnswer(instance);
+    if (/versionamento.*(base|banco|dataset|dado|fonte)|como.*(fonte|base|dataset).*version|versao.*(dataset|ativo)|versoes.*dataset|hash.*dataset/.test(q)) return dataVersioningAnswer(instance);
     if (/versao.*fonte|versoes.*fonte|fingerprint.*fonte/.test(q)) return versionsAnswer(instance);
-    if (/armazen|onde.*(dado|dataset|ativo).*guard|camada.*(raw|analytical|analit)|onde.*dataset/.test(q)) return storageAnswer(instance);
+    if (/armazen|onde.*(dado|dataset|ativo).*guard|camada.*(raw|analytical|analit)|onde.*dataset|dados.*brut.*preserv|preserv.*dados.*brut/.test(q)) return storageAnswer(instance);
     if (/tecnica|metodo.*(integracao|transformacao|preparacao)|tipo.*join|join.*utiliz|agregacao.*utiliz/.test(q)) return techniquesAnswer(instance);
     if (/transforma|limpeza|prepara.*dado/.test(q)) return transformationsAnswer(instance);
     if (/regra.*qualidade|qualidade.*regra|validacao.*dado/.test(q)) return qualityAnswer(instance);
