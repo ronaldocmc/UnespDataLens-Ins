@@ -14,7 +14,7 @@
 <div class="app">
   <header class="site-header">
     <div class="header-main">
-      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V9.4</small></a>
+      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V9.5</small></a>
       <div class="instance-header-actions">
         <label for="instance-select">Instância</label>
         <select id="instance-select" aria-label="Selecionar instância"></select>
@@ -45,7 +45,7 @@
 
     <div class="layout-toolbar" role="toolbar" aria-label="Controles do layout">
       <div class="layout-toolbar-left">
-        <button type="button" class="layout-button" id="modules-toggle" aria-pressed="false" title="Ocultar ou mostrar a navegação desta instância">☰ <span>Navegação</span></button>
+        <button type="button" class="layout-button" id="modules-toggle" aria-pressed="false" title="Ocultar ou mostrar o menu lateral">☰ <span>Menu lateral</span></button>
         <button type="button" class="layout-button" id="restore-layout" title="Restaurar as três áreas da interface">↺ <span>Restaurar layout</span></button>
       </div>
       <div class="layout-mode-indicator" id="layout-mode-indicator" aria-live="polite">Modo: Normal</div>
@@ -56,15 +56,13 @@
         <div class="sidebar-title">
           <div class="sidebar-title-row">
             <div class="sidebar-title-copy">
-              <span class="eyebrow">Explorador</span>
-              <h2>Nesta instância</h2>
+              <h2>Navegação da instância</h2>
             </div>
-            <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-expanded="true" aria-controls="module-list" title="Recolher navegação da instância">
+            <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-expanded="true" aria-controls="module-list" title="Ocultar menu lateral">
               <span class="sidebar-toggle-icon" aria-hidden="true">‹</span>
-              <span class="sr-only">Recolher navegação da instância</span>
+              <span class="sr-only">Ocultar menu lateral</span>
             </button>
           </div>
-          <p>Acesse objetivos e contribuições ou inspecione os módulos desta execução.</p>
         </div>
         <div id="module-list"></div>
       </aside>
