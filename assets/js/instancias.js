@@ -41,7 +41,8 @@
     renderRunFileBrowser(instance);
     renderModuleMenu(instance);
     const initialModule = params.get("module") && instance.modules[params.get("module")] ? params.get("module") : "M01";
-    activateModule(instance, initialModule, "inputs", false);
+    if (params.get("view") === "why") activateWhyView(instance, false);
+    else activateModule(instance, initialModule, "inputs", false);
     initSidebarToggle();
 
     document.addEventListener("click", (event) => {
@@ -80,6 +81,13 @@
         return;
       }
 
+      const instanceViewButton = event.target.closest("[data-instance-view]");
+      if (instanceViewButton) {
+        event.preventDefault();
+        if (instanceViewButton.dataset.instanceView === "why") activateWhyView(instance, true);
+        return;
+      }
+
       const moduleButton = event.target.closest("[data-module-id]");
       if (moduleButton) { activateModule(instance, moduleButton.dataset.moduleId, "inputs", true); return; }
       const navButton = event.target.closest("[data-module-nav]");
@@ -92,7 +100,7 @@
     // recolhimento completo, persistência e restauração global do layout.
     const toggle = document.getElementById("sidebar-toggle");
     if (!toggle) return;
-    toggle.title = "Ocultar menu de módulos";
+    toggle.title = "Ocultar menu lateral";
     toggle.setAttribute("aria-expanded", "true");
   }
 
@@ -127,10 +135,49 @@
   }
   function pipelineNode(id,module){ return `<button class="pipeline-node ${module.kind === "transversal" ? "transversal" : ""}" type="button" data-module-id="${id}"><span class="node-id">${id}</span><span class="node-name">${escapeHtml(module.name)}</span><span class="node-output">${escapeHtml((module.instance && module.instance.outputSummary) || module.primaryOutput || "")}</span></button>`; }
   function renderRunFlow(instance){ const host=$("#run-flow"); if(host) host.innerHTML=instance.runFlow.map(([a,b])=>`<div class="run-step"><strong>${escapeHtml(a)}</strong><span>${escapeHtml(b)}</span></div>`).join(""); }
-  function renderModuleMenu(instance){ const host=$("#module-list"); if(!host)return; const groups=[["Módulos operacionais",sortedModules(instance,"operational")],["Módulos transversais",sortedModules(instance,"transversal")]]; host.innerHTML=groups.map(([title,modules])=>`<div class="module-group-title">${escapeHtml(title)}</div><div class="module-menu">${modules.map(([id,m])=>`<button type="button" class="${m.kind === "transversal" ? "transversal" : ""}" data-module-id="${id}"><span class="menu-id">${id}</span><span class="menu-name">${escapeHtml(m.name)}</span></button>`).join("")}</div>`).join(""); }
+  function renderModuleMenu(instance){
+    const host=$("#module-list"); if(!host)return;
+    const about = `<div class="module-group-title">Sobre a instância</div>
+      <div class="module-menu instance-view-menu">
+        <button type="button" class="instance-view-button" data-instance-view="why">
+          <span class="menu-id info">?</span>
+          <span class="menu-name">Por que usar o UnespDataLens-RM?</span>
+        </button>
+      </div>`;
+    const groups=[["Módulos operacionais",sortedModules(instance,"operational")],["Módulos transversais",sortedModules(instance,"transversal")]];
+    host.innerHTML = about + groups.map(([title,modules])=>`<div class="module-group-title">${escapeHtml(title)}</div><div class="module-menu">${modules.map(([id,m])=>`<button type="button" class="${m.kind === "transversal" ? "transversal" : ""}" data-module-id="${id}"><span class="menu-id">${id}</span><span class="menu-name">${escapeHtml(m.name)}</span></button>`).join("")}</div>`).join("");
+  }
+
+  function setCenterView(view) {
+    const workspace = $("#instance-workspace");
+    const why = $("#why-view");
+    const moduleViews = $(".module-center-view");
+    const isWhy = view === "why";
+    if (workspace) workspace.classList.toggle("why-view-active", isWhy);
+    if (why) why.hidden = !isWhy;
+    moduleViews.forEach(el => { el.hidden = isWhy; });
+    $("[data-instance-view]").forEach(b => b.classList.toggle("active", isWhy && b.dataset.instanceView === "why"));
+    if (isWhy) $("[data-module-id]").forEach(b => b.classList.remove("active"));
+  }
+
+  function activateWhyView(instance, updateUrl=true) {
+    setCenterView("why");
+    document.body.dataset.activeView = "why";
+    const why = $("#why-view");
+    if (why) why.scrollTop = 0;
+    if (updateUrl && history.replaceState) {
+      const url = new URL(location.href);
+      url.searchParams.set("id", instance.id);
+      url.searchParams.set("view", "why");
+      url.searchParams.delete("module");
+      history.replaceState({}, "", url);
+    }
+  }
 
   function activateModule(instance,moduleId,tab="overview",updateUrl=true){
     const module=instance.modules[moduleId]; if(!module)return;
+    setCenterView("module");
+    document.body.dataset.activeView = "module";
     document.body.dataset.activeModule = moduleId;
     $$('[data-module-id]').forEach((b)=>b.classList.toggle('active',b.dataset.moduleId===moduleId));
     renderModuleCanvas(instance,moduleId,module);
@@ -139,7 +186,7 @@
       b.dataset.moduleId = moduleId;
       b.classList.toggle('active', b.dataset.centerTab === tab);
     });
-    if(updateUrl && history.replaceState){ const url=new URL(location.href); url.searchParams.set('id',instance.id); url.searchParams.set('module',moduleId); history.replaceState({},'',url); }
+    if(updateUrl && history.replaceState){ const url=new URL(location.href); url.searchParams.set('id',instance.id); url.searchParams.set('module',moduleId); url.searchParams.delete('view'); history.replaceState({},'',url); }
   }
 
   function renderModuleCanvas(instance,moduleId,module){
