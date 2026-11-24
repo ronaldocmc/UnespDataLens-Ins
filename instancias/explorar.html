@@ -14,7 +14,7 @@
 <div class="app">
   <header class="site-header">
     <div class="header-main">
-      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V8.9</small></a>
+      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V9.0</small></a>
       <div class="instance-header-actions">
         <label for="instance-select">Instância</label>
         <select id="instance-select" aria-label="Selecionar instância"></select>
@@ -39,7 +39,7 @@
 
     <div class="layout-toolbar" role="toolbar" aria-label="Controles do layout">
       <div class="layout-toolbar-left">
-        <button type="button" class="layout-button" id="modules-toggle" aria-pressed="false" title="Ocultar ou mostrar o menu de módulos">☰ <span>Módulos</span></button>
+        <button type="button" class="layout-button" id="modules-toggle" aria-pressed="false" title="Ocultar ou mostrar o menu de módulos">☰ <span>Menu</span></button>
         <button type="button" class="layout-button" id="restore-layout" title="Restaurar as três áreas da interface">↺ <span>Restaurar layout</span></button>
       </div>
       <div class="layout-mode-indicator" id="layout-mode-indicator" aria-live="polite">Modo: Normal</div>
@@ -51,14 +51,14 @@
           <div class="sidebar-title-row">
             <div class="sidebar-title-copy">
               <span class="eyebrow">Explorador</span>
-              <h2>Módulos</h2>
+              <h2>Navegação</h2>
             </div>
             <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-expanded="true" aria-controls="module-list" title="Recolher menu de módulos">
               <span class="sidebar-toggle-icon" aria-hidden="true">‹</span>
               <span class="sr-only">Recolher menu de módulos</span>
             </button>
           </div>
-          <p>Clique para inspecionar a implementação da instância.</p>
+          <p>Acesse a fundamentação científica ou inspecione os módulos da instância.</p>
         </div>
         <div id="module-list"></div>
       </aside>
@@ -66,7 +66,7 @@
       <div class="workspace-splitter sidebar-splitter" data-splitter="sidebar" role="separator" aria-orientation="vertical" aria-label="Redimensionar menu de módulos" tabindex="0"></div>
 
       <section class="instance-canvas" id="instance-canvas">
-        <div class="canvas-section selected-execution-section">
+        <div class="canvas-section selected-execution-section module-center-view">
           <div class="selected-execution-head">
             <div>
               <span class="eyebrow">Execução do módulo selecionado</span>
@@ -135,7 +135,7 @@
         </div>
 
 
-        <section class="why-panel why-panel-expanded why-central-section" aria-labelledby="why-title">
+        <section class="why-panel why-panel-expanded why-central-section" id="why-view" aria-labelledby="why-title" hidden>
           <header class="why-central-head">
             <span class="why-central-kicker">Fundamentação científica da instância</span>
             <h2 id="why-title">Por que usar o UnespDataLens-RM?</h2>
@@ -327,7 +327,7 @@ Kafka
           </div>
         </section>
 
-        <section class="pipeline-qa-section" id="pipeline-qa">
+        <section class="pipeline-qa-section module-center-view" id="pipeline-qa">
           <div class="qa-head">
             <div>
               <span class="eyebrow">Consulta baseada em evidências</span>
@@ -423,7 +423,7 @@ Kafka
           <div id="pipeline-qa-answer" aria-live="polite"></div>
         </section>
 
-        <details class="canvas-section all-files-section all-files-drawer">
+        <details class="canvas-section all-files-section all-files-drawer module-center-view">
           <summary>
             <span><span class="eyebrow">Execução completa</span><strong>Todos os arquivos da instância e da execução</strong></span>
             <small>Configurações, dados, artefatos, contratos, metadados, logs e relatórios</small>
