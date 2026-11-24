@@ -151,13 +151,13 @@
   function setCenterView(view) {
     const workspace = $("#instance-workspace");
     const why = $("#why-view");
-    const moduleViews = $(".module-center-view");
+    const moduleViews = $$(".module-center-view");
     const isWhy = view === "why";
     if (workspace) workspace.classList.toggle("why-view-active", isWhy);
     if (why) why.hidden = !isWhy;
     moduleViews.forEach(el => { el.hidden = isWhy; });
-    $("[data-instance-view]").forEach(b => b.classList.toggle("active", isWhy && b.dataset.instanceView === "why"));
-    if (isWhy) $("[data-module-id]").forEach(b => b.classList.remove("active"));
+    $$("[data-instance-view]").forEach(b => b.classList.toggle("active", isWhy && b.dataset.instanceView === "why"));
+    if (isWhy) $$("[data-module-id]").forEach(b => b.classList.remove("active"));
   }
 
   function activateWhyView(instance, updateUrl=true) {
