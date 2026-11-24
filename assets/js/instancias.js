@@ -137,8 +137,7 @@
   function renderRunFlow(instance){ const host=$("#run-flow"); if(host) host.innerHTML=instance.runFlow.map(([a,b])=>`<div class="run-step"><strong>${escapeHtml(a)}</strong><span>${escapeHtml(b)}</span></div>`).join(""); }
   function renderModuleMenu(instance){
     const host=$("#module-list"); if(!host)return;
-    const about = `<div class="module-group-title">Sobre a instância</div>
-      <div class="module-menu instance-view-menu">
+    const about = `<div class="module-menu instance-view-menu">
         <button type="button" class="instance-view-button" data-instance-view="why">
           <span class="menu-id info">?</span>
           <span class="menu-name">Objetivos e Contribuições</span>
