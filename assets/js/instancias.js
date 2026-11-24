@@ -141,7 +141,7 @@
       <div class="module-menu instance-view-menu">
         <button type="button" class="instance-view-button" data-instance-view="why">
           <span class="menu-id info">?</span>
-          <span class="menu-name">Por que usar o UnespDataLens-RM?</span>
+          <span class="menu-name">Objetivos e Contribuições</span>
         </button>
       </div>`;
     const groups=[["Módulos operacionais",sortedModules(instance,"operational")],["Módulos transversais",sortedModules(instance,"transversal")]];
