@@ -660,3 +660,69 @@
   .why-central-head h2 { font-size:1.3rem; }
   .why-central-section .why-panel-body { padding:14px; }
 }
+
+/* Navegação científica pelo menu lateral — V9.0 */
+.instance-view-menu {
+  margin-bottom:8px;
+  padding-bottom:8px;
+  border-bottom:1px solid #dce7ef;
+}
+.instance-view-button .menu-id.info {
+  color:#fff;
+  background:#0b5f9f;
+}
+.instance-view-button.active {
+  border-color:#8dbde2 !important;
+  background:#eaf4ff !important;
+  box-shadow:inset 3px 0 0 #0b5f9f;
+}
+.instance-view-button.active .menu-name {
+  color:#003f73;
+  font-weight:800;
+}
+
+/* Quando a fundamentação científica é selecionada, ela ocupa a área central
+   e o painel direito deixa de competir visualmente com o conteúdo. */
+.instance-workspace.why-view-active {
+  grid-template-columns:
+    var(--v8-sidebar-width)
+    var(--v8-splitter-width)
+    minmax(620px,1fr);
+}
+.instance-workspace.why-view-active .inspector-splitter,
+.instance-workspace.why-view-active .instance-detail {
+  display:none !important;
+}
+.instance-workspace.why-view-active .instance-canvas {
+  grid-column:3;
+}
+.instance-workspace.sidebar-collapsed.why-view-active {
+  grid-template-columns:minmax(620px,1fr);
+}
+.instance-workspace.sidebar-collapsed.why-view-active .instance-canvas {
+  grid-column:1;
+}
+.instance-workspace.why-view-active .why-central-section {
+  margin:0;
+}
+.instance-workspace.why-view-active .why-panel-body {
+  max-width:1180px;
+  margin:0 auto;
+}
+.instance-workspace.why-view-active .why-central-head {
+  padding-top:28px;
+  padding-bottom:24px;
+}
+.instance-workspace.why-view-active .why-central-head h2 {
+  font-size:1.75rem;
+}
+
+@media (max-width:1320px) {
+  .instance-workspace.why-view-active,
+  .instance-workspace.sidebar-collapsed.why-view-active {
+    grid-template-columns:minmax(0,1fr);
+  }
+  .instance-workspace.why-view-active .instance-canvas {
+    grid-column:1;
+  }
+}
