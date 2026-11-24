@@ -4,17 +4,17 @@ Ambiente interativo de instâncias do **UnespDataLens-RM**.
 
 ## Versão atual
 
-**V8.9 — Instância Educacional: Risco de Evasão**
+**V9.0 — Instância Educacional: Risco de Evasão**
 
 A aplicação permite explorar os módulos M01–M16 e inspecionar entradas, processamento, saídas, contratos, proveniência, evidências, módulos transversais e arquivos produzidos pela execução.
 
-### Destaques da V8.9
+### Destaques da V9.0
 
 - seção **Por que o UnespDataLens-RM?**;
 - **Pergunte ao Pipeline** com respostas estruturadas baseadas em evidências;
 - campo de perguntas livres destacado e catálogo ampliado de sugestões por tema;
 - perguntas e respostas estruturadas sobre armazenamento, técnicas empregadas e versionamento de fontes/datasets;
-- seção central permanente **Por que usar o UnespDataLens-RM?**, com destaque visual para lacuna científica, Design Science, funções da instanciação, avaliação experimental, contribuições e pipeline verificável;
+- visão própria **Por que usar o UnespDataLens-RM?** no menu lateral, separada dos módulos e dedicada à lacuna científica, Design Science, funções da instanciação, avaliação experimental, contribuições e pipeline verificável;
 - **M16 Evidence-RAG** para perguntas livres;
 - índice dinâmico de artefatos autorizados;
 - bloqueio de dados pessoais brutos na demonstração pública;
