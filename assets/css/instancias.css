@@ -1367,3 +1367,17 @@ body.v8-panel-maximized #restore-layout {
   hyphens: auto;
 }
 .execution-stage strong { line-height: 1.12; }
+
+/* V9.5 — navegação lateral mais direta */
+.sidebar-title {
+  padding:14px 12px 12px;
+}
+.sidebar-title-copy h2 {
+  margin:0;
+  color:var(--blue);
+  font-size:1.05rem;
+  line-height:1.2;
+}
+.sidebar-title-row {
+  align-items:center;
+}
