@@ -89,11 +89,11 @@
 
     if (modulesToggle) {
       modulesToggle.setAttribute("aria-pressed", String(!state.sidebarHidden));
-      modulesToggle.title = state.sidebarHidden ? "Mostrar menu de módulos" : "Ocultar menu de módulos";
+      modulesToggle.title = state.sidebarHidden ? "Mostrar menu lateral" : "Ocultar menu lateral";
     }
     if (sidebarToggle) {
       sidebarToggle.setAttribute("aria-expanded", String(!state.sidebarHidden));
-      sidebarToggle.title = state.sidebarHidden ? "Mostrar menu de módulos" : "Ocultar menu de módulos";
+      sidebarToggle.title = state.sidebarHidden ? "Mostrar menu lateral" : "Ocultar menu lateral";
       const sr = sidebarToggle.querySelector(".sr-only");
       if (sr) sr.textContent = sidebarToggle.title;
     }
