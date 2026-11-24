@@ -726,3 +726,140 @@
     grid-column:1;
   }
 }
+
+/* Hipótese, Objetivos e Contribuições — V9.1 */
+.why-source-link {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:12px;
+  padding:7px 10px;
+  border:1px solid #b9d2e7;
+  border-radius:9px;
+  background:#fff;
+  color:#0b5f9f;
+  font-size:.72rem;
+  font-weight:800;
+  text-decoration:none;
+}
+.why-source-link:hover { background:#edf7ff; }
+
+.why-problem-grid,
+.why-hypothesis-grid,
+.why-objectives-grid,
+.why-evaluation-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.why-problem-grid article,
+.why-hypothesis-grid article,
+.why-objectives-grid article,
+.why-evaluation-grid article {
+  padding:13px;
+  border:1px solid #dce7ef;
+  border-radius:12px;
+  background:#fbfdff;
+}
+.why-problem-grid b,
+.why-evaluation-grid b {
+  display:block;
+  color:var(--blue);
+  font-size:.8rem;
+}
+.why-problem-grid p,
+.why-evaluation-grid p,
+.why-objectives-grid p,
+.why-hypothesis-grid p {
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:.75rem;
+  line-height:1.48;
+}
+.why-hypothesis-grid article > span,
+.why-objectives-grid article > span {
+  display:block;
+  margin-bottom:6px;
+  color:#4d3887;
+  font-size:.66rem;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.why-hypothesis-grid strong {
+  display:block;
+  color:#173d5e;
+  font-size:.83rem;
+  line-height:1.38;
+}
+.why-objective-statement {
+  margin:0 !important;
+  padding:16px 18px;
+  border-left:5px solid #0b5f9f;
+  border-radius:11px;
+  background:#f1f8ff;
+  color:#173d5e !important;
+  font-size:.9rem !important;
+  line-height:1.6 !important;
+}
+.why-refinement-note {
+  margin:13px 0 0 !important;
+  padding:11px 13px;
+  border-radius:10px;
+  background:#f8fbfe;
+}
+.why-contribution-potential {
+  border-style:dashed !important;
+  background:#faf8ff !important;
+}
+.why-evaluation-grid {
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.why-experiment-box {
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:12px;
+  align-items:center;
+  margin:14px 0 12px;
+}
+.why-experiment-box > div {
+  padding:13px;
+  border:1px solid #d3e2ee;
+  border-radius:11px;
+  background:#f8fbfe;
+  text-align:center;
+}
+.why-experiment-box > div:last-child {
+  background:#f0faf5;
+  border-color:#c9e5d7;
+}
+.why-experiment-box span,
+.why-experiment-box strong { display:block; }
+.why-experiment-box span {
+  color:var(--muted);
+  font-size:.66rem;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.why-experiment-box strong {
+  margin-top:4px;
+  color:var(--blue);
+  font-size:.82rem;
+}
+.why-experiment-box > b {
+  color:#6a7c8a;
+  font-size:.72rem;
+}
+.why-hypothesis { background:linear-gradient(180deg,#fff,#fbfaff); }
+.why-evaluation { background:linear-gradient(180deg,#fff,#fbfdff); }
+
+@media (max-width:980px) {
+  .why-problem-grid,
+  .why-hypothesis-grid,
+  .why-objectives-grid,
+  .why-evaluation-grid,
+  .why-experiment-box {
+    grid-template-columns:1fr;
+  }
+  .why-experiment-box > b { text-align:center; }
+}
