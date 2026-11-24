@@ -14,7 +14,7 @@
 <div class="app">
   <header class="site-header">
     <div class="header-main">
-      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V9.2</small></a>
+      <a class="brand" href="https://ronaldocmc.github.io/UnespDataLens-RM/"><span>UNESP</span>DataLens-RM<small>Instância interativa do pipeline · V9.3</small></a>
       <div class="instance-header-actions">
         <label for="instance-select">Instância</label>
         <select id="instance-select" aria-label="Selecionar instância"></select>
@@ -138,9 +138,9 @@
         <section class="why-panel why-panel-expanded why-central-section" id="why-view" aria-labelledby="why-title" hidden>
           <header class="why-central-head">
             <span class="why-central-kicker">Fundamentação científica e estratégia de avaliação</span>
-            <h2 id="why-title">Hipótese, Objetivos e Contribuições do UnespDataLens-RM</h2>
-            <p>Problema de pesquisa, pressuposto científico, objetivos, papel da instanciação, contribuições e avaliação do modelo de referência.</p>
-            <a class="why-source-link" href="https://ronaldocmc.github.io/UnespDataLens-RM/modelo.html#hipotese-ou-pressuposto-da-pesquisa" target="_blank" rel="noopener">Ver texto-base no Modelo de Referência ↗</a>
+            <h2 id="why-title">Hipóteses, Objetivos e Contribuições do UnespDataLens-RM</h2>
+            <p>Problema de pesquisa, proposição, hipóteses, objetivos, papel da instanciação, contribuições e avaliação do modelo de referência.</p>
+            <a class="why-source-link" href="https://ronaldocmc.github.io/UnespDataLens-RM/modelo.html#hipoteses-da-pesquisa" target="_blank" rel="noopener">Ver texto-base no Modelo de Referência ↗</a>
           </header>
 
           <div class="why-panel-body why-longform">
@@ -165,22 +165,15 @@
               <div class="why-section-head">
                 <span>2</span>
                 <div>
-                  <h3>Pressupostos, hipótese central e hipóteses de avaliação</h3>
-                  <p>Os dois enunciados originais permanecem como pressupostos gerais. Para publicação e avaliação empírica, eles são operacionalizados em uma hipótese central e hipóteses específicas testáveis.</p>
+                  <h3>Hipóteses da pesquisa</h3>
+                  <p>A proposição de pesquisa sintetiza a ideia que orienta o artefato. A partir dela, define-se uma hipótese central e hipóteses específicas que podem ser avaliadas empiricamente.</p>
                 </div>
               </div>
 
-              <div class="why-hypothesis-grid">
-                <article>
-                  <span>Pressuposto geral 1</span>
-                  <strong>Um modelo modular pode elevar a qualidade e a confiabilidade dos ativos analíticos.</strong>
-                  <p>A formalização por módulos técnico-operacionais e transversais busca aumentar qualidade, rastreabilidade, governança, reprodutibilidade, reutilização e confiabilidade.</p>
-                </article>
-                <article>
-                  <span>Pressuposto geral 2</span>
-                  <strong>A integração das preocupações transversais pode reduzir a fragmentação.</strong>
-                  <p>Metadados, catálogo, semântica, lineage, versionamento, qualidade, feature engineering, monitoramento e agentes devem atuar de forma integrada.</p>
-                </article>
+              <div class="why-research-proposition">
+                <span>Proposição de Pesquisa</span>
+                <strong>A organização modular do pipeline e a integração sistemática de capacidades transversais podem reduzir a fragmentação dos processos analíticos e favorecer a produção de ativos mais confiáveis, rastreáveis, governados e reprodutíveis.</strong>
+                <p>Essa proposição reúne as ideias que originalmente apareciam separadas — modularização do pipeline e integração de metadados, qualidade, governança, proveniência, lineage, versionamento, monitoramento e apoio inteligente — e fornece a base conceitual para as hipóteses testáveis.</p>
               </div>
 
               <div class="why-central-hypothesis">
@@ -189,25 +182,25 @@
               </div>
 
               <div class="why-evaluation-hypotheses">
-                <article><span>H1</span><div><b>Rastreabilidade e proveniência</b><p>Maior completude de rastreabilidade e proveniência do que em pipelines ad hoc.</p></div></article>
-                <article><span>H2</span><div><b>Reprodutibilidade e versionamento</b><p>Maior capacidade de reproduzir e comparar execuções.</p></div></article>
-                <article><span>H3</span><div><b>Metadados e descobribilidade</b><p>Maior cobertura documental e menor esforço para localizar e compreender ativos.</p></div></article>
-                <article><span>H4</span><div><b>Governança verificável</b><p>Maior cobertura e verificabilidade de responsabilidades, permissões, sensibilidade e finalidade.</p></div></article>
-                <article><span>H5</span><div><b>Detecção de defeitos e lacunas</b><p>Maior capacidade de detectar inconsistências, defeitos e lacunas de especificação.</p></div></article>
-                <article><span>H6</span><div><b>Análise de impacto</b><p>Maior precisão e menor esforço para identificar ativos e produtos afetados por mudanças.</p></div></article>
-                <article><span>H7</span><div><b>Esforço de engenharia × benefício posterior</b><p>Maior esforço inicial pode ser compensado por ganhos posteriores em manutenção, descoberta e reprodução.</p></div></article>
-                <article><span>H8</span><div><b>Verificação baseada em evidências</b><p>Maior capacidade de responder corretamente e com evidências a perguntas sobre o pipeline.</p></div></article>
+                <article><span>H1</span><div><b>Rastreabilidade e proveniência</b><p>Pipelines orientados pelo UnespDataLens-RM apresentam maior completude de rastreabilidade e proveniência do que pipelines ad hoc.</p></div></article>
+                <article><span>H2</span><div><b>Reprodutibilidade e versionamento</b><p>Pipelines orientados pelo modelo apresentam maior capacidade de reproduzir e comparar execuções.</p></div></article>
+                <article><span>H3</span><div><b>Metadados e descobribilidade</b><p>A integração sistemática de metadados aumenta a cobertura documental e reduz o esforço para localizar e compreender ativos.</p></div></article>
+                <article><span>H4</span><div><b>Governança verificável</b><p>O modelo aumenta a cobertura e a verificabilidade de responsabilidades, permissões, sensibilidade, finalidade e restrições de uso.</p></div></article>
+                <article><span>H5</span><div><b>Detecção de defeitos e lacunas</b><p>Artefatos, contratos, métricas e critérios estruturados aumentam a capacidade de detectar inconsistências e lacunas de especificação.</p></div></article>
+                <article><span>H6</span><div><b>Análise de impacto</b><p>O lineage estruturado aumenta a precisão e reduz o esforço para identificar ativos e produtos afetados por mudanças.</p></div></article>
+                <article><span>H7</span><div><b>Esforço de engenharia × benefício posterior</b><p>O esforço inicial adicional pode ser compensado por ganhos posteriores em rastreabilidade, manutenção, descoberta e reprodução.</p></div></article>
+                <article><span>H8</span><div><b>Verificação baseada em evidências</b><p>Evidências estruturadas aumentam a capacidade de responder corretamente, de forma rastreável e fundamentada, a perguntas sobre o pipeline.</p></div></article>
               </div>
 
               <div class="why-first-study">
-                <span>Prioridade para o primeiro estudo comparativo</span>
+                <span>Hipóteses prioritárias para avaliação inicial</span>
                 <div>
                   <b>H1 · Rastreabilidade</b>
                   <b>H2 · Reprodutibilidade</b>
                   <b>H3 · Metadados/descobribilidade</b>
                   <b>H8 · Verificação baseada em evidências</b>
                 </div>
-                <p>As demais hipóteses podem ser avaliadas em estudos complementares, evitando que um único artigo tente validar todo o modelo simultaneamente.</p>
+                <p>A avaliação inicial pode concentrar-se nessas quatro hipóteses, enquanto as demais são investigadas em estudos e instanciações complementares.</p>
               </div>
             </section>
 
