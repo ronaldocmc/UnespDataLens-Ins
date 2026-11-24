@@ -863,3 +863,99 @@
   }
   .why-experiment-box > b { text-align:center; }
 }
+
+/* Hipótese central e hipóteses de avaliação — V9.2 */
+.why-central-hypothesis {
+  margin:14px 0;
+  padding:16px 18px;
+  border:1px solid #bfd8ea;
+  border-left:5px solid #0b5f9f;
+  border-radius:12px;
+  background:linear-gradient(135deg,#eef7ff,#f8fbfe);
+}
+.why-central-hypothesis span {
+  display:block;
+  margin-bottom:6px;
+  color:#0b5f9f;
+  font-size:.68rem;
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.why-central-hypothesis strong {
+  color:#173d5e;
+  font-size:.9rem;
+  line-height:1.55;
+}
+.why-evaluation-hypotheses {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+}
+.why-evaluation-hypotheses article {
+  display:grid;
+  grid-template-columns:36px 1fr;
+  gap:10px;
+  padding:12px;
+  border:1px solid #dce7ef;
+  border-radius:11px;
+  background:#fbfdff;
+}
+.why-evaluation-hypotheses article > span {
+  display:grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  background:#4d3887;
+  color:#fff;
+  font-size:.7rem;
+  font-weight:900;
+}
+.why-evaluation-hypotheses b {
+  color:#173d5e;
+  font-size:.78rem;
+}
+.why-evaluation-hypotheses p {
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:.72rem;
+  line-height:1.45;
+}
+.why-first-study {
+  margin-top:13px;
+  padding:13px 14px;
+  border:1px dashed #baaee0;
+  border-radius:11px;
+  background:#faf8ff;
+}
+.why-first-study > span {
+  display:block;
+  margin-bottom:7px;
+  color:#4d3887;
+  font-size:.68rem;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.why-first-study > div {
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.why-first-study > div b {
+  padding:6px 8px;
+  border-radius:999px;
+  background:#eee9fb;
+  color:#4d3887;
+  font-size:.68rem;
+}
+.why-first-study p {
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:.72rem;
+  line-height:1.45;
+}
+
+@media (max-width:980px) {
+  .why-evaluation-hypotheses { grid-template-columns:1fr; }
+}
